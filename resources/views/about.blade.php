@@ -18,7 +18,7 @@ $page = 'about';
                 <a class="link" href="#">About Hosteller</a>
             </li>
         </ul> -->
-        <h1 class="page_title">About Hosteller</h1>
+        <h1 class="page_title">About</h1>
         <p class="page_header-text" data-aos="fade-up" data-aos-delay="50">
             Discover our story and what makes us the perfect choice for your stay
         </p>
