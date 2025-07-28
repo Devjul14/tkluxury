@@ -8,7 +8,7 @@ class ContactController extends Controller
 {
     public function index()
     {
-        return view('contacts.index');
+        return view('contacts');
     }
 
     public function store(Request $request)
@@ -39,4 +39,4 @@ class ContactController extends Controller
         // Alternative contact page layout
         return view('contacts.v2');
     }
-} 
+}

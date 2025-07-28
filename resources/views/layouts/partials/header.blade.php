@@ -106,11 +106,11 @@
                         <div class="dropdown-menu collapse" id="contactsMenu">
                             <ul class="dropdown-list">
                                 <li class="list-item">
-                                    <a class="dropdown-item nav-item" data-page="contacts01" href="{{ route('contacts.index') }}">Contacts V1</a>
+                                    <a class="dropdown-item nav-item" data-page="contacts01" href="{{ route('contacts.index') }}">Contacts</a>
                                 </li>
-                                <li class="list-item">
+                                <!-- <li class="list-item">
                                     <a class="dropdown-item nav-item" data-page="contacts02" href="{{ route('contacts.v2') }}">Contacts V2</a>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
                     </li>
