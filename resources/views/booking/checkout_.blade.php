@@ -1,4 +1,4 @@
-@use('Illuminate\Support\Number')
+@use('Illuminate\Support\Number');
 @extends('layouts.app')
 
 @section('title', 'Checkout')
@@ -365,7 +365,7 @@ textarea.form-group_field {
                         <a class="link" href="{{ route('rooms.index') }}">Rooms</a>
                     </li>
                     <li class="list-item">
-                        <a class="link" href="{{ route('rooms.show', $booking->room->id) }}">{{ $booking->room->description }}</a>
+                        <a class="link" href="{{ route('rooms.show', $room->id) }}">{{ $room->description }}</a>
                     </li>
                     <li class="list-item">
                         <a class="link" href="{{ route('booking.checkout', $booking->booking_reference) }}">Checkout</a>
@@ -397,7 +397,7 @@ textarea.form-group_field {
                                                 type="text"
                                                 id="name"
                                                 name="name"
-                                                value="{{ old('name', $booking->student->name) }}"
+                                                value="{{ old('name', $student->name) }}"
                                                 required
                                             />
                                             @error('name')
@@ -413,7 +413,7 @@ textarea.form-group_field {
                                                 type="text"
                                                 id="passport"
                                                 name="passport"
-                                                value="{{ old('passport', $booking->student->passport ?? '') }}"
+                                                value="{{ old('passport', $student->passport ?? '') }}"
                                                 required
                                             />
                                             @error('passport')
@@ -433,7 +433,7 @@ textarea.form-group_field {
                                                 type="email"
                                                 id="email"
                                                 name="email"
-                                                value="{{ old('email', $booking->student->email) }}"
+                                                value="{{ old('email', $student->email) }}"
                                                 required
                                             />
                                             @error('email')
@@ -449,7 +449,7 @@ textarea.form-group_field {
                                                 type="tel"
                                                 id="phone"
                                                 name="phone"
-                                                value="{{ old('phone', $booking->student->phone) }}"
+                                                value="{{ old('phone', $student->phone) }}"
                                                 required
                                             />
                                             @error('phone')
@@ -465,7 +465,7 @@ textarea.form-group_field {
                                             id="date_of_birth"
                                             name="date_of_birth"
                                             type="date"
-                                            value="{{ old('address', $booking->student->date_of_birth) }}"
+                                            value="{{ old('address', $student->date_of_birth) }}"
                                         />
                                         @error('address')
                                             <span class="form-group_error">{{ $message }}</span>
@@ -479,7 +479,7 @@ textarea.form-group_field {
                                             id="address"
                                             name="address"
                                             rows="3"
-                                        >{{ old('address', $booking->student->address) }}</textarea>
+                                        >{{ old('address', $student->address) }}</textarea>
                                         @error('address')
                                             <span class="form-group_error">{{ $message }}</span>
                                         @enderror
@@ -502,7 +502,7 @@ textarea.form-group_field {
                                         name="special_requests"
                                         rows="4"
                                         placeholder="Any special requests or preferences..."
-                                    >{{ old('special_requests', $booking->student->special_requests) }}</textarea>
+                                    >{{ old('special_requests', $student->special_requests) }}</textarea>
                                     @error('special_requests')
                                         <span class="form-group_error">{{ $message }}</span>
                                     @enderror
@@ -637,11 +637,11 @@ textarea.form-group_field {
                         
                         <div class="checkout_main-sidebar_summary_room">
                             <div class="checkout_main-sidebar_summary_room-media">
-                                <img class="checkout_main-sidebar_summary_room-media_img" src="{{ $booking->room->image ? asset($booking->room->image) : asset('img/hero.webp') }}" alt="{{ $booking->room->name }}" />
+                                <img class="checkout_main-sidebar_summary_room-media_img" src="{{ $room->image ? asset($room->image) : url('asset/img/placeholder.jpg') }}" alt="{{ $room->name }}" />
                             </div>
                             <div class="checkout_main-sidebar_summary_room-content">
-                                <h4 class="checkout_main-sidebar_summary_room-content_title">{{ $booking->room->description }}</h4>
-                                <p class="checkout_main-sidebar_summary_room-content_text">{{ $booking->room->room_type }}</p>
+                                <h4 class="checkout_main-sidebar_summary_room-content_title">{{ $room->description }}</h4>
+                                <p class="checkout_main-sidebar_summary_room-content_text">{{ $room->type }}</p>
                             </div>
                         </div>
 
@@ -659,16 +659,16 @@ textarea.form-group_field {
                         <div class="checkout_main-sidebar_summary_pricing">
                             <div class="checkout_main-sidebar_summary_pricing_item">
                                 <span class="label">Price per month:</span>
-                                <span class="value">{{ Number::currency($booking->room->price_per_month, env('APP_DEFAULT_CURRENCY', 'IDR')) }}</span>
+                                <span class="value">{{ Number::currency($room->price_per_month, env('APP_DEFAULT_CURRENCY', 'USD')) }}</span>
                             </div>
                             <div class="checkout_main-sidebar_summary_pricing_item">
                                 <span class="label">Subtotal:</span>
-                                <span class="value">{{ Number::currency($booking->total_amount - $booking->service_fee - $booking->tax - $booking->security_deposit, env('APP_DEFAULT_CURRENCY', 'IDR')) }}</span>
+                                <span class="value">{{ Number::currency($total_amount - $booking->service_fee - $booking->tax - $booking->security_deposit, env('APP_DEFAULT_CURRENCY', 'USD')) }}</span>
                             </div>
                             @if($booking->tax > 0)
                             <div class="checkout_main-sidebar_summary_pricing_item">
                                 <span class="label">Tax:</span>
-                                <span class="value">{{ Number::currency($booking->tax, env('APP_DEFAULT_CURRENCY', 'IDR')) }}</span>
+                                <span class="value">{{ Number::currency($booking->tax, env('APP_DEFAULT_CURRENCY', 'USD')) }}</span>
                             </div>
                             @endif
                             @if($booking->service_fee > 0)
@@ -679,7 +679,7 @@ textarea.form-group_field {
                             @endif
                             <div class="checkout_main-sidebar_summary_pricing_item checkout_main-sidebar_summary_pricing_item--total">
                                 <span class="label">Total:</span>
-                                <span class="value">{{ Number::currency($booking->total_amount, env('APP_DEFAULT_CURRENCY', 'IDR')) }}</span>
+                                <span class="value">{{ Number::currency($total_amount, env('APP_DEFAULT_CURRENCY', 'IDR')) }}</span>
                             </div>
                         </div>
 

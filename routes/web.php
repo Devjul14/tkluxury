@@ -31,7 +31,7 @@ Route::get('/rooms/{id}', [RoomController::class, 'show'])->name('rooms.show');
 // Booking routes
 Route::get('/booking/search', [BookingController::class, 'search'])->name('booking.search');
 Route::post('/booking/search', [BookingController::class, 'search'])->name('booking.search.post');
-Route::get('/booking/checkout', [BookingController::class, 'checkout'])->name('booking.checkout');
+Route::match(['get', 'post'], '/booking/{booking_reference}/checkout', [BookingController::class, 'checkout'])->name('booking.checkout');
 Route::post('/booking/store', [BookingController::class, 'store'])->name('booking.store');
 Route::post('/booking/process', [BookingController::class, 'process'])->name('booking.process');
 Route::get('/booking/confirmation', [BookingController::class, 'confirmation'])->name('booking.confirmation');

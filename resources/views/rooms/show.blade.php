@@ -1,4 +1,4 @@
-@use('Illuminate\Support\Number');
+@use('Illuminate\Support\Number')
 
 @extends('layouts.app')
 
@@ -360,7 +360,11 @@ $page = 'room';
                             <span class="pricing_price h2">$59</span>
                             / 1 night
                         </span>
-                        <form class="booking" action="#" method="post" autocomplete="off" data-type="booking">
+                        <form class="booking" action="{{ route('booking.store') }}" method="POST" autocomplete="off" data-type="booking">
+                            @csrf
+
+                            <input type="hidden" name="room_id" value="{{ $room->id }}">
+
                             <div class="booking_group d-flex flex-column">
                                 <label class="booking_group-label h5" for="checkIn">Check-in</label>
                                 <div class="booking_group-wrapper">
@@ -371,12 +375,13 @@ $page = 'room';
                                         data-start="true"
                                         type="text"
                                         id="checkIn"
-                                        name="contactsDate"
+                                        name="check_in"
                                         placeholder="Add arrival date"
                                         readonly />
                                     <i class="icon-chevron_down icon"></i>
                                 </div>
                             </div>
+
                             <div class="booking_group d-flex flex-column">
                                 <label class="booking_group-label h5" for="checkOut">Check-out</label>
                                 <div class="booking_group-wrapper">
@@ -387,14 +392,16 @@ $page = 'room';
                                         data-end="true"
                                         type="text"
                                         id="checkOut"
-                                        name="contactsDate"
+                                        name="check_out"
                                         placeholder="Add departure date"
                                         readonly />
                                     <i class="icon-chevron_down icon"></i>
                                 </div>
                             </div>
+
                             <button class="booking_btn btn theme-element theme-element--accent" type="submit">Book now</button>
                         </form>
+
                     </div>
                     <div class="room_main-cards_card accent">
                         <h3 class="title">Stay Longer, Save More</h3>
@@ -846,4 +853,16 @@ $page = 'room';
 
 @push('scripts')
 <script src="{{ asset('asset/js/room.min.js') }}"></script>
+
+<script>
+        const bookings = document.querySelectorAll('button[type="submit"]');
+
+        bookings.forEach((booking) => {
+            booking.addEventListener('click', function (e) {
+                e.preventDefault();
+                const form = this.closest('form');
+                form.submit();
+            });
+        });
+    </script>
 @endpush
