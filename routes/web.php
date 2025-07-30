@@ -1,22 +1,22 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\RoomController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\RoomController;
+use Illuminate\Support\Facades\Route;
 
 /*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+ * |--------------------------------------------------------------------------
+ * | Web Routes
+ * |--------------------------------------------------------------------------
+ * |
+ * | Here is where you can register web routes for your application. These
+ * | routes are loaded by the RouteServiceProvider and all of them will
+ * | be assigned to the "web" middleware group. Make something great!
+ * |
+ */
 
 // Home page
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -37,7 +37,7 @@ Route::post('/booking/search', [BookingController::class, 'search'])->name('book
 Route::match(['get', 'post'], '/booking/{booking_reference}/checkout', [BookingController::class, 'checkout'])->name('booking.checkout');
 Route::post('/booking/store', [BookingController::class, 'store'])->name('booking.store');
 Route::post('/booking/process', [BookingController::class, 'process'])->name('booking.process');
-Route::get('/booking/confirmation', [BookingController::class, 'confirmation'])->name('booking.confirmation');
+Route::get('/booking/confirmed', [BookingController::class, 'confirmation'])->name('booking.confirmation');
 Route::get('/booking/download/{id}', [BookingController::class, 'download'])->name('booking.download');
 
 // Contact routes

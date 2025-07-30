@@ -1,3 +1,5 @@
+@use('Carbon\Carbon')
+
 @extends('layouts.app')
 
 @section('title', 'Booking Confirmation')
@@ -5,6 +7,199 @@
 @php
     $page = 'confirmation';
 @endphp
+
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('asset/css/room.min.css') }}">
+    <style>
+    /* General Reset & Base */
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+    img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    /* Container */
+    /* .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: auto;
+        padding: 2rem 1rem;
+    } */
+
+    /* Section Layout */
+
+
+    /* Headings */
+
+    /* Booking Summary */
+    .confirmation_main-content_summary_booking {
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        margin-top: 1rem;
+    }
+    .confirmation_main-content_summary_booking_header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+    .status-success {
+        color: #28a745;
+        font-weight: 600;
+        background-color: #d4edda;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        font-size: 0.9rem;
+    }
+
+    /* Room Info */
+    .confirmation_main-content_summary_booking_room {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+    .confirmation_main-content_summary_booking_room-media {
+        flex-shrink: 0;
+        width: 100px;
+        height: 75px;
+        overflow: hidden;
+        border-radius: 4px;
+    }
+    .confirmation_main-content_summary_booking_room-content_title {
+        font-weight: 600;
+        font-size: 1rem;
+    }
+    .confirmation_main-content_summary_booking_room-content_text {
+        font-size: 0.9rem;
+        color: #666;
+    }
+
+    /* Booking Details & Pricing */
+    .confirmation_main-content_summary_booking_details,
+    .confirmation_main-content_summary_booking_pricing {
+        margin-top: 1rem;
+    }
+    .confirmation_main-content_summary_booking_details_item,
+    .confirmation_main-content_summary_booking_pricing_item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+    }
+    .label {
+        font-weight: 500;
+    }
+    .value {
+        font-weight: 400;
+        color: #333;
+    }
+    .confirmation_main-content_summary_booking_pricing_item--total .value {
+        font-weight: 700;
+        color: #111;
+    }
+
+    /* Guest Info */
+    .confirmation_main-content_guest_details_item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Special Requests */
+    .confirmation_main-content_requests-text {
+        background: #fff;
+        padding: 1rem;
+        border-radius: 6px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        margin-top: 0.5rem;
+    }
+
+    /* Action Buttons */
+    .confirmation_main-content_actions_buttons {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.25rem;
+        border-radius: 6px;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: background-color 0.2s ease;
+    }
+    .btn--primary {
+        background-color: #007bff;
+        color: #fff;
+    }
+    .btn--primary:hover {
+        background-color: #0069d9;
+    }
+    .btn--secondary {
+        background-color: #6c757d;
+        color: #fff;
+    }
+    .btn--secondary:hover {
+        background-color: #5a6268;
+    }
+
+    /* Sidebar Info */
+    .confirmation_main-sidebar_info,
+    .confirmation_main-sidebar_contact {
+        background: #fff;
+        border-radius: 8px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        margin-bottom: 1.5rem;
+    }
+    .confirmation_main-sidebar_info_list-item,
+    .confirmation_main-sidebar_contact_details_item {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+    .confirmation_main-sidebar_info_list-item .icon,
+    .confirmation_main-sidebar_contact_details_item .icon {
+        color: #007bff;
+        font-size: 1.25rem;
+        flex-shrink: 0;
+    }
+    .confirmation_main-sidebar_info_list-item h4,
+    .confirmation_main-sidebar_contact_details_item h4 {
+        margin-bottom: 0.25rem;
+        font-size: 1rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .confirmation_main {
+            flex-direction: column;
+        }
+
+        .confirmation_main-content_actions_buttons {
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .confirmation_main-content_summary_booking_room {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .confirmation_main-content_summary_booking_room-media {
+            width: 100%;
+            height: auto;
+        }
+    }
+    </style>
+@endpush
 
 @section('content')
     <header class="page">
@@ -47,11 +242,11 @@
                             <div class="confirmation_main-content_summary_booking_details">
                                 <div class="confirmation_main-content_summary_booking_details_item">
                                     <span class="label">Check-in:</span>
-                                    <span class="value">{{ $booking->check_in->format('l, M d, Y') }}</span>
+                                    <span class="value">{{ Carbon::parse($booking->check_in)->format('l, M d, Y') }}</span>
                                 </div>
                                 <div class="confirmation_main-content_summary_booking_details_item">
                                     <span class="label">Check-out:</span>
-                                    <span class="value">{{ $booking->check_out->format('l, M d, Y') }}</span>
+                                    <span class="value">{{ Carbon::parse($booking->check_out)->format('l, M d, Y') }}</span>
                                 </div>
                                 <div class="confirmation_main-content_summary_booking_details_item">
                                     <span class="label">Guests:</span>
@@ -129,7 +324,7 @@
                                 <i class="icon-home icon"></i>
                                 <span>Back to Home</span>
                             </a>
-                            <a class="btn btn--secondary" href="{{ route('booking.download', $booking->id) }}" target="_blank">
+                            <a class="btn btn--secondary" href="{{ route('booking.download', $booking->booking_reference) }}" target="_blank">
                                 <i class="icon-download icon"></i>
                                 <span>Download Receipt</span>
                             </a>
