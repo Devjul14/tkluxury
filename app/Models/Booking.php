@@ -4,6 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Property;
+use App\Models\Room;
+use App\Models\User;
+use App\Models\Payment;
+use App\Models\MaintenanceRequest;
 
 class Booking extends Model
 {
@@ -68,7 +73,7 @@ class Booking extends Model
         return $this->hasMany(Payment::class);
     }
 
-    public function contract()
+    public function contracts()
     {
         return $this->hasOne(Contract::class);
     }

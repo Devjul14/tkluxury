@@ -86,7 +86,6 @@ class BookingController extends Controller
         // dd($booking->toArray());
         session()->put('booking', $booking);
 
-        \Log::info('Success store booking');
 
         // For now, redirect to checkout
         return redirect()->route('booking.checkout', [
