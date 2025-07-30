@@ -1,7 +1,7 @@
 <header class="header d-flex align-items-center" data-page="{{ $page ?? 'home' }}">
     <div class="container position-relative d-flex justify-content-between align-items-center">
         <a class="brand d-flex align-items-center" href="{{ route('home') }}">
-            <img src="{{ asset('img/brand.jpg') }}" width="50" height="55" alt="Brand Logo" />
+            <img src="{{ asset('storage/' . (setting('brand') ?? 'img/brand.jpg')) }}" width="50" height="55" alt="Brand Logo" />
         </a>
 
 
