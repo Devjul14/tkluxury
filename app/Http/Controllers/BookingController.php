@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Carbon\Carbon;
-use App\Models\Room;
 use App\Models\Booking;
+use App\Models\Room;
 use App\Models\User;
-use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class BookingController extends Controller
 {
@@ -25,14 +26,13 @@ class BookingController extends Controller
             // Redirect to rooms page with search parameters
             return redirect()->route('rooms.index', $request->all());
         }
-        
+
         // Show search form
         return view('booking.search');
     }
 
     public function store(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'room_id' => 'required|integer',
             'check_in' => 'required|date_format:m.d.Y|after:today',
@@ -47,7 +47,7 @@ class BookingController extends Controller
             $errors = $validator->errors()->toArray();
             return redirect()->back()->withErrors($validator)->withInput();
         }
-        
+
         // If validation passes, continue with your logic
         $data = $validator->validated();
         // dd($data);
@@ -58,62 +58,52 @@ class BookingController extends Controller
         $checkInCarbon = Carbon::createFromFormat('m.d.Y', $data['check_in']);
         $checkOutCarbon = Carbon::createFromFormat('m.d.Y', $data['check_out']);
 
-        $bookingReference = "BOOK-" . $checkInCarbon->format('YmdHis') . "-" . str_pad($room->id, 5, '0', STR_PAD_LEFT);
-        $durationMonths = $checkOutCarbon->diffInMonths($checkInCarbon);
-        $totalAmount = $room->price_per_month * $durationMonths;
-        
-        $booking = Booking::create([
-            "student_id" => $user->id,
-            "nights" => $checkOutCarbon->diffInDays($checkInCarbon),
-            "property_id" => $room->property_id,
-            "room_id" => $room->id,
-            "duration_months" => $durationMonths,
-            "booking_date" => now(),
-            "check_in_date" => $checkInCarbon,
-            "check_out_date" => $checkOutCarbon,
-            "status" => "pending",
-            "booking_reference" => $bookingReference,
-            "security_deposit" => $room->property->security_deposit,
-            "monthly_rent" => $room->price_per_month,
-            "subtotal" => $totalAmount,
-            "tax" => ($totalAmount) * config('hostel.booking.tax_rate', 0.08),
-            "service_fee" => ($totalAmount) * config('hostel.booking.service_fee_rate', 0.05),
-            "total_amount" => $totalAmount + (($totalAmount) * config('hostel.booking.tax_rate', 0.08)) + (($totalAmount) * config('hostel.booking.service_fee_rate', 0.05)),
+        $bookingReference = 'BOOK-' . $checkInCarbon->format('YmdHis') . '-' . str_pad($room->id, 5, '0', STR_PAD_LEFT);
+        $durationMonths = $checkInCarbon->diffInMonths($checkOutCarbon);
+        $totalRentAmount = $room->price_per_month * $durationMonths;
+        $totalAmount = $totalRentAmount + (($totalRentAmount) * config('hostel.booking.tax_rate', 0.08)) + (($totalRentAmount) * config('hostel.booking.service_fee_rate', 0.05));
+
+        $booking = new Booking([
+            'property_id' => $room->property_id,
+            'room_id' => $room->id,
+            'duration_months' => $durationMonths,
+            'booking_date' => now(),
+            'check_in_date' => $checkInCarbon,
+            'check_out_date' => $checkOutCarbon,
+            'status' => 'pending',
+            'booking_reference' => $bookingReference,
+            'security_deposit' => $room->property->security_deposit,
+            'monthly_rent' => $room->price_per_month,
+            'subtotal' => $totalRentAmount,
+            'down_payment_amount' => $totalRentAmount * config('hostel.booking.down_payment_rate', 0.1),
+            'tax' => ($totalRentAmount) * config('hostel.booking.tax_rate', 0.08),
+            'service_fee' => ($totalRentAmount) * config('hostel.booking.service_fee_rate', 0.05),
+            'total_amount' => $totalAmount,
         ]);
 
-        // $booking = collect([
-        //     "nights" => $checkOutCarbon->diffInDays($checkInCarbon),
-        //     "property_id" => $room->property_id,
-        //     "room_id" => $room->id,
-        //     "check_in_date" => $checkInCarbon,
-        //     "check_out_date" => $checkOutCarbon,
-        //     "status" => "pending",
-        //     "booking_reference" => $bookingReference,
-        //     "subtotal" => $room->price * $checkOutCarbon->diffInDays($checkInCarbon),
-        //     "tax" => ($room->price * $checkOutCarbon->diffInDays($checkInCarbon)) * config('hostel.booking.tax_rate', 0.08),
-        //     "service_fee" => ($room->price * $checkOutCarbon->diffInDays($checkInCarbon)) * config('hostel.booking.service_fee_rate', 0.05),
-        //     "total" => ($room->price * $checkOutCarbon->diffInDays($checkInCarbon)) + (($room->price * $checkOutCarbon->diffInDays($checkInCarbon)) * config('hostel.booking.tax_rate', 0.08)) + (($room->price * $checkOutCarbon->diffInDays($checkInCarbon)) * config('hostel.booking.service_fee_rate', 0.05)), // Sum up correctly
-        // ]);
-        $data['booking'] = $booking;
-        $data['room'] = $room;
+        $booking->setRelation('room', $room);
 
-         \Log::info('Success store booking');
+        // dd($booking->toArray());
+        session()->put('booking', $booking);
+
+        \Log::info('Success store booking');
 
         // For now, redirect to checkout
         return redirect()->route('booking.checkout', [
             $booking->booking_reference,
-            'room_id' => $request->room_id,
-            'check_in' => $request->check_in,
-            'check_out' => $request->check_out,
         ]);
     }
 
-    public function checkout(string $bookingReference,Request $request)
+    public function checkout(string $bookingReference, Request $request)
     {
         $booking = Booking::with(['room', 'student'])
             ->where('booking_reference', $bookingReference)
-            ->firstOrFail();
-        
+            ->first() ?? session()->get('booking');
+
+        if (!$booking) {
+            abort(404);
+        }
+
         return view('booking.checkout', [
             'booking' => $booking,
         ]);
@@ -147,7 +137,7 @@ class BookingController extends Controller
             'description' => 'Desc',
             'type' => 'type',
             'price' => 89,
-            'image' => 'img/hero.webp',            
+            'image' => 'img/hero.webp',
             'price_per_month' => 100,
         ];
 
@@ -171,18 +161,14 @@ class BookingController extends Controller
         $booking->total = $booking->subtotal + $booking->tax + $booking->service_fee;
         $total_amount = $booking->total;
 
-        return view('booking.checkout', compact('booking', 'room','student','total_amount'));
+        return view('booking.checkout', compact('booking', 'room', 'student', 'total_amount'));
     }
-
 
     public function process(Request $request)
     {
-        dd($request);
         // Handle payment processing
         $request->validate([
-            'booking_id' => 'required',
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'email' => 'required|email',
             'phone' => 'required|string|max:20',
             'card_number' => 'required|string|min:13|max:19',
@@ -190,38 +176,29 @@ class BookingController extends Controller
             'cvv' => 'required|string|min:3|max:4',
             'card_holder' => 'required|string|max:255',
             'terms' => 'required|accepted',
+            'date_of_birth' => 'required|date',
         ]);
 
-        // Process payment logic here
-        // For demo purposes, we'll simulate a successful payment
+        $booking = session()->get('booking');
 
-        // Create booking confirmation
-        $booking = (object) [
-            'id' => $request->booking_id ?: 'BK' . strtoupper(uniqid()),
-            'booking_number' => 'BK' . strtoupper(uniqid()),
-            'room' => (object) [
-                'id' => $request->get('room_id', 1),
-                'name' => 'Superior Double Bed Private Ensuite',
-                'image' => 'img/room-1.jpg',
-            ],
-            'check_in' => Carbon::parse($request->get('check_in', now()->addDays(1))),
-            'check_out' => Carbon::parse($request->get('check_out', now()->addDays(3))),
-            'guests' => $request->get('guests', 1),
-            'nights' => Carbon::parse($request->get('check_out', now()->addDays(3)))->diffInDays(Carbon::parse($request->get('check_in', now()->addDays(1)))),
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
+        // create student data
+        $student = new User([
+            'name' => $request->name,
             'email' => $request->email,
+            'password' => bcrypt('password'),
             'phone' => $request->phone,
-            'address' => $request->address,
-            'special_requests' => $request->special_requests,
-            'subtotal' => 89 * (Carbon::parse($request->get('check_out', now()->addDays(3)))->diffInDays(Carbon::parse($request->get('check_in', now()->addDays(1))))),
-            'tax' => 0,
-            'service_fee' => 0,
-            'total' => 89 * (Carbon::parse($request->get('check_out', now()->addDays(3)))->diffInDays(Carbon::parse($request->get('check_in', now()->addDays(1))))),
-            'payment_status' => 'paid',
-            'booking_status' => 'confirmed',
-            'created_at' => now(),
-        ];
+            'user_type' => 'student',
+            'profile_image' => null,
+            'date_of_birth' => $request->date_of_birth,
+            'gender' => $request->gender,
+            'nationality' => $request->nationality,
+            'emergency_contact_name' => null,
+            'emergency_contact_phone' => null,
+            'is_active' => false,
+            'password' => ucwords(Str::random(8)) . str_pad(random_int(1, 100), 2, '0', STR_PAD_LEFT),
+        ]);
+
+        $booking->setRelation('student', $student);
 
         // Store booking in session for confirmation page
         session(['booking_confirmation' => $booking]);
@@ -232,14 +209,19 @@ class BookingController extends Controller
     public function confirmation()
     {
         // Get booking from session
-        $booking = session('booking_confirmation');
+        $booking = session()->get('booking_confirmation');
+        $booking->student->save();
+        $student = $booking->student->fresh();
+
+        $booking->student_id = $student->id;
+        $booking->save();
 
         if (!$booking) {
             return redirect()->route('home');
         }
 
         // Clear session
-        session()->forget('booking_confirmation');
+        // session()->forget('booking_confirmation');
 
         return view('booking.confirmation', compact('booking'));
     }
@@ -250,4 +232,4 @@ class BookingController extends Controller
         // For demo purposes, redirect to confirmation page
         return redirect()->route('booking.confirmation');
     }
-} 
+}

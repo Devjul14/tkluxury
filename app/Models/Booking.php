@@ -27,6 +27,10 @@ class Booking extends Model
         'key_handover_date',
         'check_in_notes',
         'check_out_notes',
+        'down_payment_amount',
+        'tax',
+        'service_fee',
+        'subtotal',
     ];
 
     protected $casts = [
@@ -37,6 +41,10 @@ class Booking extends Model
         'monthly_rent' => 'decimal:2',
         'security_deposit' => 'decimal:2',
         'total_amount' => 'decimal:2',
+        'down_payment_amount' => 'decimal:2',
+        'tax' => 'decimal:2',
+        'service_fee' => 'decimal:2',
+        'subtotal' => 'decimal:2',
     ];
 
     // Relationships
