@@ -121,6 +121,11 @@ class SettingResource extends Resource
                         'footer' => 'Footer',
                         'general' => 'General',
                     ]),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
             ]);
     }
 
