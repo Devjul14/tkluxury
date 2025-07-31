@@ -363,8 +363,9 @@ function calculateNightsBetweenDates($checkInDate, $checkOutDate)
 @endphp
 
 @section('content')
-{{ $errors }}
-    <header class="page">
+
+
+<header class="page">
             <div class="container">
                 <ul class="breadcrumbs d-flex flex-wrap align-content-center">
                     <li class="list-item">
@@ -534,13 +535,13 @@ function calculateNightsBetweenDates($checkInDate, $checkOutDate)
                                             required
                                         >
                                         <option value="">Select Payment Method</option>
-                                        <option value="credit_card">Credit Card</option>
-                                        <option value="debit_card">Debit Card</option>
-                                        <option value="cash">Cash</option>
-                                        <option value="check">Check</option>
-                                        <option value="paypal">PayPal</option>
-                                        <option value="stripe">Stripe</option>
-                                        <option value="bank_transfer">Bank Transfer</option>
+                                        <option value="credit_card" {{ old('payment_method') == 'credit_card' ? 'selected' : '' }}>Credit Card</option>
+                                        <option value="debit_card" {{ old('payment_method') == 'debit_card' ? 'selected' : '' }}>Debit Card</option>
+                                        <option value="cash" {{ old('payment_method') == 'cash' ? 'selected' : '' }}>Cash</option>
+                                        <option value="check" {{ old('payment_method') == 'check' ? 'selected' : '' }}>Check</option>
+                                        <option value="paypal" {{ old('payment_method') == 'paypal' ? 'selected' : '' }}>PayPal</option>
+                                        <option value="stripe" {{ old('payment_method') == 'stripe' ? 'selected' : '' }}>Stripe</option>
+                                        <option value="bank_transfer" {{ old('payment_method') == 'bank_transfer' ? 'selected' : '' }}>Bank Transfer</option>
                                         </select>
                                         @error('payment_method')
                                             <span class="form-group_error">{{ $message }}</span>

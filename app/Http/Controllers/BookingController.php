@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\BookingConfirmed;
 use App\Models\Booking;
 use App\Models\Room;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -109,83 +111,79 @@ class BookingController extends Controller
         ]);
     }
 
-    public function checkout_(Request $request)
-    {
-        // dd($request);
-        // Sample booking data
-        $booking = (object) [
-            'id' => 'BK' . strtoupper(uniqid()),
-            'room_id' => $request->get('room_id', 1),
-            'check_in_date' => Carbon::parse($request->get('check_in', now()->addDays(1))),
-            'check_out_date' => Carbon::parse($request->get('check_out', now()->addDays(3))),
-            'guests' => $request->get('guests', 1),
-            'nights' => Carbon::parse($request->get('check_out', now()->addDays(3)))->diffInDays(Carbon::parse($request->get('check_in', now()->addDays(1)))),
-            'first_name' => '',
-            'last_name' => '',
-            'email' => '',
-            'phone' => '',
-            'address' => '',
-            'special_requests' => '',
-            'booking_reference' => '',
-            'security_deposit' => 33,
-        ];
-
-        // Sample room data
-        $room = (object) [
-            'id' => $booking->room_id,
-            'name' => 'Superior Double Bed Private Ensuite',
-            'description' => 'Desc',
-            'type' => 'type',
-            'price' => 89,
-            'image' => 'img/hero.webp',
-            'price_per_month' => 100,
-        ];
-
-        // Sample student data
-        $student = (object) [
-            'id' => $booking->room_id,
-            'name' => 'julia',
-            'passport' => '0000',
-            'email' => 'julia@gmail.com',
-            'phone' => '000089',
-            'date_of_birth' => '2025-01-01',
-            'address' => 'test',
-            'special_requests' => 'test',
-            'image' => 'img/hero.webp',
-        ];
-
-        // Calculate totals
-        $booking->subtotal = $room->price * $booking->nights;
-        $booking->tax = $booking->subtotal * config('hostel.booking.tax_rate', 0.08);
-        $booking->service_fee = $booking->subtotal * config('hostel.booking.service_fee_rate', 0.05);
-        $booking->total = $booking->subtotal + $booking->tax + $booking->service_fee;
-        $total_amount = $booking->total;
-
-        return view('booking.checkout', compact('booking', 'room', 'student', 'total_amount'));
-    }
-
     public function process(Request $request)
     {
         // Handle payment processing
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email',
             'phone' => 'required|string|max:20',
-            'card_number' => 'required|string|min:13|max:19',
-            'expiry_date' => 'required|string',
-            'cvv' => 'required|string|min:3|max:4',
-            'card_holder' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'payment_method' => 'required|in:debit_card,credit_card,cash,paypal,bank_transfer',
+            // Card fields (only checked if payment is card-based)
+            'card_number' => [
+                'nullable',  // Allows empty values
+                'required_if:payment_method,debit_card,credit_card',  // Required only for cards
+                'string',
+                'min:13',
+                'max:19',
+                function ($attribute, $value, $fail) use ($request) {
+                    if (in_array($request->payment_method, ['debit_card', 'credit_card']) && !preg_match('/^[0-9]{13,19}$/', $value)) {
+                        $fail('Invalid card number. Must be 13-19 digits.');
+                    }
+                },
+            ],
+            'expiry_date' => [
+                'nullable',
+                'required_if:payment_method,debit_card,credit_card',
+                'string',
+                function ($attribute, $value, $fail) use ($request) {
+                    if (in_array($request->payment_method, ['debit_card', 'credit_card']) && !preg_match('/^(0[1-9]|1[0-2])\/?([0-9]{2})$/', $value)) {
+                        $fail('Expiry date must be in MM/YY format.');
+                    }
+                },
+            ],
+            'cvv' => [
+                'nullable',
+                'required_if:payment_method,debit_card,credit_card',
+                'string',
+                'min:3',
+                'max:4',
+                function ($attribute, $value, $fail) use ($request) {
+                    if (in_array($request->payment_method, ['debit_card', 'credit_card']) && !preg_match('/^[0-9]{3,4}$/', $value)) {
+                        $fail('CVV must be 3 or 4 digits.');
+                    }
+                },
+            ],
+            'card_holder' => [
+                'nullable',
+                'required_if:payment_method,debit_card,credit_card',
+                'string',
+                'max:255',
+            ],
+            // Other payment methods (example)
+            'paypal_email' => 'nullable|required_if:payment_method,paypal|email',
+            'bank_account' => 'nullable|required_if:payment_method,bank_transfer|string',
+            // Misc
             'terms' => 'required|accepted',
-            'date_of_birth' => 'required|date',
+            'date_of_birth' => 'required|date|before:-18 years',
         ]);
+
+        // Remove card data if payment is not card-based
+        if (!in_array($validated['payment_method'], ['debit_card', 'credit_card'])) {
+            $validated = array_diff_key($validated, array_flip([
+                'card_number', 'expiry_date', 'cvv', 'card_holder'
+            ]));
+        }
 
         $booking = session()->get('booking');
 
         // create student data
+        $generatedPassword = Str::random(8) . str_pad(random_int(1, 100), 2, '0', STR_PAD_LEFT);
         $student = new User([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt('password'),
+            'password' => bcrypt($generatedPassword),
             'phone' => $request->phone,
             'user_type' => 'student',
             'profile_image' => null,
@@ -195,13 +193,13 @@ class BookingController extends Controller
             'emergency_contact_name' => null,
             'emergency_contact_phone' => null,
             'is_active' => false,
-            'password' => ucwords(Str::random(8)) . str_pad(random_int(1, 100), 2, '0', STR_PAD_LEFT),
         ]);
 
         $booking->setRelation('student', $student);
 
         // Store booking in session for confirmation page
         session(['booking_confirmation' => $booking]);
+        Mail::to($booking->student->email)->send(new BookingConfirmed($booking, $generatedPassword));
 
         return redirect()->route('booking.confirmation');
     }
