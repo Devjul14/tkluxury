@@ -5,22 +5,24 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\BookingResource\Pages;
 use App\Filament\Resources\BookingResource\RelationManagers;
 use App\Models\Booking;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Forms;
+use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class BookingResource extends Resource
 {
     protected static ?string $model = Booking::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
-    
+
     protected static ?string $navigationGroup = 'Student Management';
-    
+
     protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
@@ -50,8 +52,8 @@ class BookingResource extends Resource
                                 'cancelled' => 'Cancelled',
                             ])
                             ->required(),
-                    ])->columns(2),
-                
+                    ])
+                    ->columns(2),
                 Forms\Components\Section::make('Dates')
                     ->schema([
                         Forms\Components\DatePicker::make('check_in_date')
@@ -66,8 +68,8 @@ class BookingResource extends Resource
                         Forms\Components\DatePicker::make('booking_date')
                             ->required(),
                         Forms\Components\DatePicker::make('key_handover_date'),
-                    ])->columns(2),
-                
+                    ])
+                    ->columns(2),
                 Forms\Components\Section::make('Financial Information')
                     ->schema([
                         Forms\Components\TextInput::make('monthly_rent')
@@ -82,8 +84,8 @@ class BookingResource extends Resource
                             ->required()
                             ->numeric()
                             ->prefix('$'),
-                    ])->columns(3),
-                
+                    ])
+                    ->columns(3),
                 Forms\Components\Section::make('Additional Information')
                     ->schema([
                         Forms\Components\TextInput::make('assigned_room_number')
@@ -97,8 +99,28 @@ class BookingResource extends Resource
                         Forms\Components\Textarea::make('check_out_notes')
                             ->maxLength(65535)
                             ->columnSpanFull(),
-                    ])->columns(2),
+                    ])
+                    ->columns(2),
             ]);
+    }
+
+    public static function builder(Builder $builder): Builder
+    {
+        $user = Auth::user();
+        $query = $builder->query();
+
+        if (in_array(Auth::user()->user_type, ['admin', 'staff'])) {
+            $query->where('student_id', $user->id);
+        }
+
+        $query->orderBy('created_at', 'desc');
+        return $query;
+    }
+
+    // can edit
+    public static function canEdit(Model $record): bool
+    {
+        return in_array(Auth::user()->user_type, ['admin', 'staff']);
     }
 
     public static function table(Table $table): Table
@@ -132,7 +154,7 @@ class BookingResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'pending' => 'warning',
                         'confirmed' => 'info',
                         'active' => 'success',
@@ -160,6 +182,17 @@ class BookingResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('Approve')
+                    ->label('Approve')
+                    ->icon('heroicon-o-check-circle')
+                    ->color('success')
+                    ->visible(fn(Model $record): bool => $record->status === 'confirmed')
+                    ->requiresConfirmation()
+                    ->action(function (Model $record) {
+                        $record->update([
+                            'status' => 'active',
+                        ]);
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

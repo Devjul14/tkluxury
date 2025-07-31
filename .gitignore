@@ -16,6 +16,7 @@ vendor
 # Log files
 *.log
 .env
+.env.local
 
 # Package files
 *.jar
