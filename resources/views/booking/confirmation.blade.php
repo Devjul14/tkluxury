@@ -11,200 +11,320 @@
 @push('styles')
     <link rel="stylesheet" href="{{ asset('asset/css/room.min.css') }}">
     <style>
-    /* General Reset & Base */
-    a {
-        text-decoration: none;
-        color: inherit;
+    :root {
+        --primary-color: #4a6bff;
+        --success-color: #28a745;
+        --text-color: #333;
+        --text-light: #666;
+        --border-color: #e0e0e0;
+        --bg-light: #f9fafb;
+        --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+        --shadow-md: 0 4px 6px rgba(0,0,0,0.05);
+        --radius-md: 8px;
+        --radius-sm: 4px;
+        --transition: all 0.2s ease;
     }
-    img {
-        max-width: 100%;
-        height: auto;
-        display: block;
+
+    /* Base Styles */
+    .page_header {
+        padding: 3rem 0;
+        background-color: var(--bg-light);
+        margin-bottom: 2rem;
+    }
+    
+    .page_header-icon {
+        font-size: 3.5rem;
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+    }
+    
+    .page_header-title {
+        font-size: 2.25rem;
+        font-weight: 700;
+        color: var(--text-color);
+        text-align: center;
+        margin-bottom: 0.75rem;
+    }
+    
+    .page_header-text {
+        font-size: 1.1rem;
+        color: var(--text-light);
+        max-width: 600px;
+        height: 12rem;
+        margin: 0 auto;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
-    /* Container */
-    /* .container {
-        width: 100%;
-        max-width: 1200px;
-        margin: auto;
-        padding: 2rem 1rem;
-    } */
-
-    /* Section Layout */
-
-
-    /* Headings */
-
-    /* Booking Summary */
-    .confirmation_main-content_summary_booking {
-        background-color: #fff;
-        border-radius: 8px;
-        padding: 1.5rem;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        margin-top: 1rem;
+    /* Main Layout */
+    .confirmation_main {
+        display: grid;
+        grid-template-columns: 1fr 350px;
+        gap: 2rem;
+        margin-bottom: 3rem;
     }
-    .confirmation_main-content_summary_booking_header {
+    
+    .confirmation_main-content {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+    
+    .confirmation_main-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        position: sticky;
+        top: 1rem;
+        height: fit-content;
+    }
+
+    /* Section Headings */
+    .section-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--text-color);
+        margin-bottom: 1rem;
+        position: relative;
+        padding-bottom: 0.5rem;
+    }
+    
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background: var(--primary-color);
+        border-radius: 3px;
+    }
+
+    /* Cards */
+    .card {
+        background: #fff;
+        border-radius: var(--radius-md);
+        padding: 1.75rem;
+        box-shadow: var(--shadow-md);
+        transition: var(--transition);
+    }
+    
+    .card:hover {
+        box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+    }
+
+    /* Status Badge */
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.35rem 0.75rem;
+        border-radius: 20px;
+        font-weight: 500;
+        font-size: 0.85rem;
+    }
+    
+    .status-success {
+        background-color: rgba(40, 167, 69, 0.15);
+        color: var(--success-color);
+    }
+
+    /* Booking Header */
+    .booking-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 1rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border-color);
     }
-    .status-success {
-        color: #28a745;
+    
+    .booking-number {
         font-weight: 600;
-        background-color: #d4edda;
-        padding: 0.25rem 0.5rem;
-        border-radius: 4px;
-        font-size: 0.9rem;
+        font-size: 1.1rem;
+        color: var(--text-color);
     }
 
     /* Room Info */
-    .confirmation_main-content_summary_booking_room {
+    .room-card {
+        display: flex;
+        gap: 1.25rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .room-media {
+        flex-shrink: 0;
+        width: 120px;
+        height: 90px;
+        border-radius: var(--radius-sm);
+        overflow: hidden;
+    }
+    
+    .room-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .room-title {
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-bottom: 0.25rem;
+    }
+    
+    .room-type {
+        font-size: 0.9rem;
+        color: var(--text-light);
+    }
+
+    /* Detail Items */
+    .detail-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    .detail-item:last-child {
+        border-bottom: none;
+    }
+    
+    .detail-label {
+        font-weight: 500;
+        color: var(--text-light);
+    }
+    
+    .detail-value {
+        font-weight: 500;
+        color: var(--text-color);
+    }
+    
+    .detail-total {
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: var(--text-color);
+    }
+
+    /* Info List */
+    .info-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+    }
+    
+    .info-item {
         display: flex;
         gap: 1rem;
-        margin-bottom: 1rem;
     }
-    .confirmation_main-content_summary_booking_room-media {
+    
+    .info-icon {
+        color: var(--primary-color);
+        font-size: 1.25rem;
+        margin-top: 0.25rem;
         flex-shrink: 0;
-        width: 100px;
-        height: 75px;
-        overflow: hidden;
-        border-radius: 4px;
     }
-    .confirmation_main-content_summary_booking_room-content_title {
+    
+    .info-title {
         font-weight: 600;
         font-size: 1rem;
+        margin-bottom: 0.25rem;
     }
-    .confirmation_main-content_summary_booking_room-content_text {
-        font-size: 0.9rem;
-        color: #666;
-    }
-
-    /* Booking Details & Pricing */
-    .confirmation_main-content_summary_booking_details,
-    .confirmation_main-content_summary_booking_pricing {
-        margin-top: 1rem;
-    }
-    .confirmation_main-content_summary_booking_details_item,
-    .confirmation_main-content_summary_booking_pricing_item {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 0.5rem;
-    }
-    .label {
-        font-weight: 500;
-    }
-    .value {
-        font-weight: 400;
-        color: #333;
-    }
-    .confirmation_main-content_summary_booking_pricing_item--total .value {
-        font-weight: 700;
-        color: #111;
+    
+    .info-text {
+        color: var(--text-light);
+        font-size: 0.95rem;
+        line-height: 1.5;
     }
 
-    /* Guest Info */
-    .confirmation_main-content_guest_details_item {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 0.5rem;
-    }
-
-    /* Special Requests */
-    .confirmation_main-content_requests-text {
-        background: #fff;
-        padding: 1rem;
-        border-radius: 6px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        margin-top: 0.5rem;
-    }
-
-    /* Action Buttons */
-    .confirmation_main-content_actions_buttons {
+    /* Buttons */
+    .action-buttons {
         display: flex;
         gap: 1rem;
         margin-top: 2rem;
     }
+    
     .btn {
         display: inline-flex;
         align-items: center;
+        justify-content: center;
         gap: 0.5rem;
-        padding: 0.75rem 1.25rem;
-        border-radius: 6px;
+        padding: 0.85rem 1.5rem;
+        border-radius: var(--radius-sm);
         font-weight: 500;
         font-size: 0.95rem;
-        transition: background-color 0.2s ease;
+        transition: var(--transition);
+        cursor: pointer;
+        text-decoration: none;
     }
-    .btn--primary {
-        background-color: #007bff;
+    
+    .btn-primary {
+        background-color: var(--primary-color);
         color: #fff;
     }
-    .btn--primary:hover {
-        background-color: #0069d9;
+    
+    .btn-primary:hover {
+        background-color: #3a5bef;
+        transform: translateY(-1px);
     }
-    .btn--secondary {
-        background-color: #6c757d;
-        color: #fff;
+    
+    .btn-outline {
+        background-color: transparent;
+        color: var(--primary-color);
+        border: 1px solid var(--primary-color);
     }
-    .btn--secondary:hover {
-        background-color: #5a6268;
+    
+    .btn-outline:hover {
+        background-color: rgba(74, 107, 255, 0.05);
     }
 
-    /* Sidebar Info */
-    .confirmation_main-sidebar_info,
-    .confirmation_main-sidebar_contact {
+    /* Special Requests */
+    .special-requests {
         background: #fff;
-        border-radius: 8px;
-        padding: 1.5rem;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        margin-bottom: 1.5rem;
+        padding: 1.25rem;
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-md);
+        border-left: 3px solid var(--primary-color);
     }
-    .confirmation_main-sidebar_info_list-item,
-    .confirmation_main-sidebar_contact_details_item {
-        display: flex;
-        gap: 1rem;
-        margin-bottom: 1rem;
-    }
-    .confirmation_main-sidebar_info_list-item .icon,
-    .confirmation_main-sidebar_contact_details_item .icon {
-        color: #007bff;
-        font-size: 1.25rem;
-        flex-shrink: 0;
-    }
-    .confirmation_main-sidebar_info_list-item h4,
-    .confirmation_main-sidebar_contact_details_item h4 {
-        margin-bottom: 0.25rem;
-        font-size: 1rem;
+    
+    .special-requests p {
+        color: var(--text-light);
+        line-height: 1.6;
     }
 
     /* Responsive */
-    @media (max-width: 768px) {
+    @media (max-width: 992px) {
         .confirmation_main {
+            grid-template-columns: 1fr;
+        }
+        
+        .confirmation_main-sidebar {
+            position: static;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .action-buttons {
             flex-direction: column;
         }
-
-        .confirmation_main-content_actions_buttons {
+        
+        .room-card {
             flex-direction: column;
-            gap: 0.75rem;
         }
-
-        .confirmation_main-content_summary_booking_room {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .confirmation_main-content_summary_booking_room-media {
+        
+        .room-media {
             width: 100%;
-            height: auto;
+            height: 180px;
         }
     }
     </style>
 @endpush
 
 @section('content')
-    <header class="page">
+    <header class="page_header">
         <div class="container">
-            <div class="page_header text-center">
+            <div class="text-center">
                 <div class="page_header-icon" data-aos="fade-up">
                     <i class="icon-check-circle"></i>
                 </div>
@@ -216,179 +336,187 @@
         </div>
     </header>
 
-    <section class="confirmation section">
+    <section class="section">
         <div class="container">
             <div class="confirmation_main">
                 <div class="confirmation_main-content">
-                    <div class="confirmation_main-content_summary" data-aos="fade-up">
-                        <h3 class="confirmation_main-content_summary-title">Booking Summary</h3>
+                    <!-- Booking Summary -->
+                    <div class="card" data-aos="fade-up">
+                        <h3 class="section-title">Booking Summary</h3>
                         
-                        <div class="confirmation_main-content_summary_booking">
-                            <div class="confirmation_main-content_summary_booking_header">
-                                <h4 class="confirmation_main-content_summary_booking_header-title">Booking #{{ $booking->booking_number }}</h4>
-                                <span class="confirmation_main-content_summary_booking_header_status status-success">Confirmed</span>
+                        <div class="booking-header">
+                            <span class="booking-number">#{{ $booking->booking_reference }}</span>
+                            <span class="status-badge status-success">
+                                <i class="icon-check"></i>
+                                Confirmed
+                            </span>
+                        </div>
+                        
+                        <div class="room-card">
+                            <div class="room-media">
+                                <img src="{{ $booking->room->image ? asset($booking->room->image) : asset('img/hero.webp') }}" alt="{{ $booking->room->name }}" />
                             </div>
-                            
-                            <div class="confirmation_main-content_summary_booking_room">
-                                <div class="confirmation_main-content_summary_booking_room-media">
-                                    <img class="confirmation_main-content_summary_booking_room-media_img" src="{{ asset($booking->room->image) }}" alt="{{ $booking->room->name }}" />
-                                </div>
-                                <div class="confirmation_main-content_summary_booking_room-content">
-                                    <h5 class="confirmation_main-content_summary_booking_room-content_title">{{ $booking->room->name }}</h5>
-                                    <p class="confirmation_main-content_summary_booking_room-content_text">{{ $booking->room->type }}</p>
-                                </div>
+                            <div>
+                                <h5 class="room-title">{{ $booking->room->name }}</h5>
+                                <p class="room-type">{{ $booking->room->type }}</p>
                             </div>
+                        </div>
 
-                            <div class="confirmation_main-content_summary_booking_details">
-                                <div class="confirmation_main-content_summary_booking_details_item">
-                                    <span class="label">Check-in:</span>
-                                    <span class="value">{{ Carbon::parse($booking->check_in)->format('l, M d, Y') }}</span>
-                                </div>
-                                <div class="confirmation_main-content_summary_booking_details_item">
-                                    <span class="label">Check-out:</span>
-                                    <span class="value">{{ Carbon::parse($booking->check_out)->format('l, M d, Y') }}</span>
-                                </div>
-                                <div class="confirmation_main-content_summary_booking_details_item">
-                                    <span class="label">Guests:</span>
-                                    <span class="value">{{ $booking->guests }} {{ Str::plural('person', $booking->guests) }}</span>
-                                </div>
-                                <div class="confirmation_main-content_summary_booking_details_item">
-                                    <span class="label">Nights:</span>
-                                    <span class="value">{{ $booking->nights }}</span>
-                                </div>
+                        <div class="mb-3">
+                            <div class="detail-item">
+                                <span class="detail-label">Check-in:</span>
+                                <span class="detail-value">{{ Carbon::parse($booking->check_in_date)->format('l, M d, Y') }}</span>
                             </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Check-out:</span>
+                                <span class="detail-value">{{ Carbon::parse($booking->check_out_date)->format('l, M d, Y') }}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Guests:</span>
+                                <span class="detail-value">{{ $booking->room->capacity }} {{ Str::plural('person', $booking->room->capacity) }}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Nights:</span>
+                                <span class="detail-value">{{ Carbon::parse($booking->check_in_date)->diffInDays(Carbon::parse($booking->check_out_date)) }}</span>
+                            </div>
+                        </div>
 
-                            <div class="confirmation_main-content_summary_booking_pricing">
-                                <div class="confirmation_main-content_summary_booking_pricing_item">
-                                    <span class="label">Price per night:</span>
-                                    <span class="value">${{ $booking->room->price }}</span>
-                                </div>
-                                <div class="confirmation_main-content_summary_booking_pricing_item">
-                                    <span class="label">Subtotal:</span>
-                                    <span class="value">${{ $booking->subtotal }}</span>
-                                </div>
-                                @if($booking->tax > 0)
-                                <div class="confirmation_main-content_summary_booking_pricing_item">
-                                    <span class="label">Tax:</span>
-                                    <span class="value">${{ $booking->tax }}</span>
-                                </div>
-                                @endif
-                                @if($booking->service_fee > 0)
-                                <div class="confirmation_main-content_summary_booking_pricing_item">
-                                    <span class="label">Service Fee:</span>
-                                    <span class="value">${{ $booking->service_fee }}</span>
-                                </div>
-                                @endif
-                                <div class="confirmation_main-content_summary_booking_pricing_item confirmation_main-content_summary_booking_pricing_item--total">
-                                    <span class="label">Total Paid:</span>
-                                    <span class="value">${{ $booking->total }}</span>
-                                </div>
+                        <div>
+                            <div class="detail-item">
+                                <span class="detail-label">Price per night:</span>
+                                <span class="detail-value">${{ number_format($booking->room->price, 2) }}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Subtotal:</span>
+                                <span class="detail-value">${{ number_format($booking->subtotal, 2) }}</span>
+                            </div>
+                            @if($booking->tax > 0)
+                            <div class="detail-item">
+                                <span class="detail-label">Tax:</span>
+                                <span class="detail-value">${{ number_format($booking->tax, 2) }}</span>
+                            </div>
+                            @endif
+                            @if($booking->service_fee > 0)
+                            <div class="detail-item">
+                                <span class="detail-label">Service Fee:</span>
+                                <span class="detail-value">${{ number_format($booking->service_fee, 2) }}</span>
+                            </div>
+                            @endif
+                            <div class="detail-item">
+                                <span class="detail-label">Total:</span>
+                                <span class="detail-value detail-total">${{ number_format($booking->total_amount, 2) }}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Down Payment:</span>
+                                <span class="detail-value detail-total">${{ number_format($booking->down_payment_amount, 2) }}</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="confirmation_main-content_guest" data-aos="fade-up">
-                        <h3 class="confirmation_main-content_guest-title">Guest Information</h3>
-                        <div class="confirmation_main-content_guest_details">
-                            <div class="confirmation_main-content_guest_details_item">
-                                <span class="label">Name:</span>
-                                <span class="value">{{ $booking->first_name }} {{ $booking->last_name }}</span>
+                    <!-- Guest Information -->
+                    <div class="card" data-aos="fade-up">
+                        <h3 class="section-title">Guest Information</h3>
+                        <div>
+                            <div class="detail-item">
+                                <span class="detail-label">Name:</span>
+                                <span class="detail-value">{{ $booking->student->name }}</span>
                             </div>
-                            <div class="confirmation_main-content_guest_details_item">
-                                <span class="label">Email:</span>
-                                <span class="value">{{ $booking->email }}</span>
+                            <div class="detail-item">
+                                <span class="detail-label">Email:</span>
+                                <span class="detail-value">{{ $booking->student->email }}</span>
                             </div>
-                            <div class="confirmation_main-content_guest_details_item">
-                                <span class="label">Phone:</span>
-                                <span class="value">{{ $booking->phone }}</span>
+                            <div class="detail-item">
+                                <span class="detail-label">Phone:</span>
+                                <span class="detail-value">{{ $booking->student->phone }}</span>
                             </div>
-                            @if($booking->address)
-                            <div class="confirmation_main-content_guest_details_item">
-                                <span class="label">Address:</span>
-                                <span class="value">{{ $booking->address }}</span>
+                            @if($booking->student->address)
+                            <div class="detail-item">
+                                <span class="detail-label">Address:</span>
+                                <span class="detail-value">{{ $booking->student->address }}</span>
                             </div>
                             @endif
                         </div>
                     </div>
 
+                    <!-- Special Requests -->
                     @if($booking->special_requests)
-                    <div class="confirmation_main-content_requests" data-aos="fade-up">
-                        <h3 class="confirmation_main-content_requests-title">Special Requests</h3>
-                        <p class="confirmation_main-content_requests-text">{{ $booking->special_requests }}</p>
+                    <div class="special-requests" data-aos="fade-up">
+                        <h3 class="section-title">Special Requests</h3>
+                        <p>{{ $booking->special_requests }}</p>
                     </div>
                     @endif
 
-                    <div class="confirmation_main-content_actions" data-aos="fade-up">
-                        <div class="confirmation_main-content_actions_buttons">
-                            <a class="btn btn--primary" href="{{ route('home') }}">
-                                <i class="icon-home icon"></i>
-                                <span>Back to Home</span>
-                            </a>
-                            <a class="btn btn--secondary" href="{{ route('booking.download', $booking->booking_reference) }}" target="_blank">
-                                <i class="icon-download icon"></i>
-                                <span>Download Receipt</span>
-                            </a>
-                        </div>
+                    <!-- Action Buttons -->
+                    <div class="action-buttons" data-aos="fade-up">
+                        <a class="btn btn-primary" href="{{ route('home') }}">
+                            <i class="icon-home"></i>
+                            Back to Home
+                        </a>
+                        <a class="btn btn-outline" href="{{ route('booking.download', $booking->booking_reference) }}" target="_blank">
+                            <i class="icon-download"></i>
+                            Download Receipt
+                        </a>
                     </div>
                 </div>
 
+                <!-- Sidebar -->
                 <div class="confirmation_main-sidebar">
-                    <div class="confirmation_main-sidebar_info" data-aos="fade-left">
-                        <h3 class="confirmation_main-sidebar_info-title">What's Next?</h3>
-                        <ul class="confirmation_main-sidebar_info_list">
-                            <li class="confirmation_main-sidebar_info_list-item">
-                                <i class="icon-email icon"></i>
-                                <div class="content">
-                                    <h4>Confirmation Email</h4>
-                                    <p>We've sent a detailed confirmation email to {{ $booking->email }}</p>
+                    <div class="card" data-aos="fade-left">
+                        <h3 class="section-title">What's Next?</h3>
+                        <div class="info-list">
+                            <div class="info-item">
+                                <i class="icon-email info-icon"></i>
+                                <div>
+                                    <h4 class="info-title">Confirmation Email</h4>
+                                    <p class="info-text">We've sent a detailed confirmation email to {{ $booking->student->email }}</p>
                                 </div>
-                            </li>
-                            <li class="confirmation_main-sidebar_info_list-item">
-                                <i class="icon-clock icon"></i>
-                                <div class="content">
-                                    <h4>Check-in Time</h4>
-                                    <p>Check-in is available from 2:00 PM on your arrival date</p>
+                            </div>
+                            <div class="info-item">
+                                <i class="icon-clock info-icon"></i>
+                                <div>
+                                    <h4 class="info-title">Check-in Time</h4>
+                                    <p class="info-text">Check-in is available from 2:00 PM on your arrival date</p>
                                 </div>
-                            </li>
-                            <li class="confirmation_main-sidebar_info_list-item">
-                                <i class="icon-location icon"></i>
-                                <div class="content">
-                                    <h4>Location</h4>
-                                    <p>{{ config('contact.address.line1') }}, {{ config('contact.address.line2') }}</p>
+                            </div>
+                            <div class="info-item">
+                                <i class="icon-location info-icon"></i>
+                                <div>
+                                    <h4 class="info-title">Location</h4>
+                                    <p class="info-text">{{ config('contact.address.line1') }}, {{ config('contact.address.line2') }}</p>
                                 </div>
-                            </li>
-                            <li class="confirmation_main-sidebar_info_list-item">
-                                <i class="icon-call icon"></i>
-                                <div class="content">
-                                    <h4>Need Help?</h4>
-                                    <p>Contact us at {{ config('contact.phone.primary') }} for any questions</p>
+                            </div>
+                            <div class="info-item">
+                                <i class="icon-call info-icon"></i>
+                                <div>
+                                    <h4 class="info-title">Need Help?</h4>
+                                    <p class="info-text">Contact us at {{ config('contact.phone.primary') }} for any questions</p>
                                 </div>
-                            </li>
-                        </ul>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="confirmation_main-sidebar_contact" data-aos="fade-left" data-aos-delay="100">
-                        <h3 class="confirmation_main-sidebar_contact-title">Contact Information</h3>
-                        <div class="confirmation_main-sidebar_contact_details">
-                            <div class="confirmation_main-sidebar_contact_details_item">
-                                <i class="icon-call icon"></i>
-                                <div class="content">
-                                    <h4>Phone</h4>
-                                    <a href="tel:{{ config('contact.phone.primary') }}">{{ config('contact.phone.primary') }}</a>
+                    <div class="card" data-aos="fade-left" data-aos-delay="100">
+                        <h3 class="section-title">Contact Information</h3>
+                        <div class="info-list">
+                            <div class="info-item">
+                                <i class="icon-phone info-icon"></i>
+                                <div>
+                                    <h4 class="info-title">Phone</h4>
+                                    <a href="tel:{{ config('contact.phone.primary') }}" class="info-text">{{ config('contact.phone.primary') }}</a>
                                 </div>
                             </div>
-                            <div class="confirmation_main-sidebar_contact_details_item">
-                                <i class="icon-email icon"></i>
-                                <div class="content">
-                                    <h4>Email</h4>
-                                    <a href="mailto:{{ config('contact.email.primary') }}">{{ config('contact.email.primary') }}</a>
+                            <div class="info-item">
+                                <i class="icon-email info-icon"></i>
+                                <div>
+                                    <h4 class="info-title">Email</h4>
+                                    <a href="mailto:{{ config('contact.email.primary') }}" class="info-text">{{ config('contact.email.primary') }}</a>
                                 </div>
                             </div>
-                            <div class="confirmation_main-sidebar_contact_details_item">
-                                <i class="icon-location icon"></i>
-                                <div class="content">
-                                    <h4>Address</h4>
-                                    <p>{{ config('contact.address.line1') }}<br>{{ config('contact.address.line2') }}</p>
+                            <div class="info-item">
+                                <i class="icon-location info-icon"></i>
+                                <div>
+                                    <h4 class="info-title">Address</h4>
+                                    <p class="info-text">{{ config('contact.address.line1') }}<br>{{ config('contact.address.line2') }}</p>
                                 </div>
                             </div>
                         </div>
@@ -401,9 +529,14 @@
 
 @push('scripts')
     <script>
-        // Auto-print functionality (optional)
-        // window.onload = function() {
-        //     window.print();
-        // }
+        // Optional: Add any interactive elements here
+        document.addEventListener('DOMContentLoaded', function() {
+            // Example: Print button functionality
+            // const printButton = document.createElement('button');
+            // printButton.className = 'btn btn-outline';
+            // printButton.innerHTML = '<i class="icon-printer"></i> Print Confirmation';
+            // printButton.addEventListener('click', () => window.print());
+            // document.querySelector('.action-buttons').appendChild(printButton);
+        });
     </script>
-@endpush 
+@endpush
