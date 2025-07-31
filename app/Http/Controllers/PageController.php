@@ -125,13 +125,18 @@ class PageController extends Controller
         return view('404');
     }
 
-    public function terms()
+    public function privacy_policy()
     {
-        return view('terms');
+        return view('policy.privacy');
     }
 
-    public function privacy()
+    public function refund_policy()
     {
-        return view('privacy');
+        return view('policy.refund');
     }
-} 
+
+    public function term()
+    {
+        return view('policy.term');
+    }
+}

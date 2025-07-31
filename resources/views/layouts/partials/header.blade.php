@@ -1,7 +1,7 @@
 <header class="header d-flex align-items-center" data-page="{{ $page ?? 'home' }}">
     <div class="container position-relative d-flex justify-content-between align-items-center">
         <a class="brand d-flex align-items-center" href="{{ route('home') }}">
-            <img src="{{ asset('img/brand.jpg') }}" width="50" height="55" alt="Brand Logo" />
+            <img src="{{ asset('storage/' . (setting('brand') ?? 'img/brand.jpg')) }}" width="50" height="55" alt="Brand Logo" />
         </a>
 
 
@@ -79,6 +79,15 @@
                                 </li>
                                 <li class="list-item">
                                     <a class="dropdown-item nav-item" data-page="faq01" href="{{ route('faq') }}">FAQ</a>
+                                </li>
+                                <li class="list-item">
+                                    <a class="dropdown-item nav-item" data-page="privacy" href="{{ route('privacy_policy') }}">Privacy Policy</a>
+                                </li>
+                                <li class="list-item">
+                                    <a class="dropdown-item nav-item" data-page="refund" href="{{ route('refund_policy') }}">Refund Policy</a>
+                                </li>
+                                <li class="list-item">
+                                    <a class="dropdown-item nav-item" data-page="term" href="{{ route('term') }}">Terms and Condition</a>
                                 </li>
                                 <!-- <li class="list-item">
                                     <a class="dropdown-item nav-item" data-page="faq02" href="{{ route('faq2') }}">FAQ V2</a>

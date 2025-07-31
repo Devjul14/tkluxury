@@ -23,6 +23,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // About page
 Route::get('/about', [PageController::class, 'about'])->name('about');
+Route::get('/privacyPolicy', [PageController::class, 'privacy_policy'])->name('privacy_policy');
+Route::get('/refund', [PageController::class, 'refund_policy'])->name('refund_policy');
+Route::get('/term', [PageController::class, 'term'])->name('term');
 
 // Rooms routes
 Route::get('/rooms', [RoomController::class, 'index'])->name('rooms.index');
