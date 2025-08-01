@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             FeatureSeeder::class,
             PropertySeeder::class,
             RoomSeeder::class,
+            SettingSeeder::class,
         ]);
     }
 }

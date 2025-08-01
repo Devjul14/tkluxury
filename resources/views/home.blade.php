@@ -11,12 +11,11 @@ $page = 'index';
 <section class="hero section">
     <div class="container container--hero d-lg-flex align-items-center justify-content-between">
         <div class="hero_main">
-            <h1 class="hero_main-title" data-aos="fade-up">{{ setting('hero_main_text', 'Hosteller — amazing hostel for the free spirited traveler') }}</h1>
+            <h1 class="hero_main-title" data-aos="fade-up">{{ setting('hero_main_text', 'Lorem - ipsum dolor sit amet') }}</h1>
             <div class="hero_main-content d-flex">
                 <span class="line" data-aos="fade-up" data-aos-delay="50"></span>
                 <p class="text" data-aos="fade-up" data-aos-delay="100">
-                    Egestas pretium aenean pharetra magna ac. Et tortor consequat id porta nibh venenatis cras sed. Vel turpis
-                    nunc eget lorem dolor sed
+                    {{ setting('hero_sub_text', 'Lorem - ipsum dolor sit amet') }}
                 </p>
             </div>
             <form class="booking" action="{{ route('booking.search') ?? '#' }}" method="post" autocomplete="off" data-type="booking" data-aos="fade-up">
@@ -924,7 +923,7 @@ $page = 'index';
             <div class="contacts_info-header">
                 <h2 class="contacts_info-header_title" data-aos="fade-down">Contacts</h2>
                 <p class="contacts_info-header_text" data-aos="fade-up">
-                    Egestas pretium aenean pharetra magna ac. Et tortor consequat id porta nibh venenatis cras sed
+                    {{ setting('contact_text','Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni quo quos quis perferendis aperiam nulla voluptatum consequatur ab id saepe?')}}
                 </p>
             </div>
             <ul class="contacts_info-list col-xl-7 d-md-flex flex-wrap">
@@ -938,8 +937,8 @@ $page = 'index';
                     </span>
                     <div class="main d-flex flex-column">
                         <h4 class="main_title">Phone</h4>
-                        <a class="link" href="tel:{{ config('contact.phone.primary', '+1234567890') }}">{{ config('contact.phone.primary', '(329) 580-7077') }}</a>
-                        <a class="link" href="tel:{{ config('contact.phone.secondary', '+1234567890') }}">{{ config('contact.phone.secondary', '(650) 382-5020') }}</a>
+                        <a class="link" href="tel:{{ setting('phone_primary', '+1234567890') }}">{{ setting('phone_primary', '(329) 580-7077') }}</a>
+                        <!-- <a class="link" href="tel:{{ setting('phone_secondary', '+1234567890') }}">{{ setting('phone_secondary', '(650) 382-5020') }}</a> -->
                     </div>
                 </li>
                 <li class="contacts_info-list_item col-md-6 d-flex align-items-center" data-order="2" data-aos="fade-up">
@@ -948,8 +947,8 @@ $page = 'index';
                     </span>
                     <div class="main d-flex flex-column">
                         <h4 class="main_title">Email</h4>
-                        <a class="link" href="mailto:{{ config('contact.email.primary', 'contact@example.com') }}">{{ config('contact.email.primary', 'contact@example.com') }}</a>
-                        <a class="link" href="mailto:{{ config('contact.email.secondary', 'contact@example.com') }}">{{ config('contact.email.secondary', 'contact@example.com') }}</a>
+                        <a class="link" href="mailto:{{ setting('email', 'contact@example.com') }}">{{ setting('contact.email.primary', 'contact@example.com') }}</a>
+                        <!-- <a class="link" href="mailto:{{ setting('contact.email.secondary', 'contact@example.com') }}">{{ setting('contact.email.secondary', 'contact@example.com') }}</a> -->
                     </div>
                 </li>
                 <li class="contacts_info-list_item col-md-6 d-flex align-items-center" data-order="3" data-aos="fade-up">
@@ -958,8 +957,8 @@ $page = 'index';
                     </span>
                     <div class="main d-flex flex-column">
                         <h4 class="main_title">Location</h4>
-                        <span>{{ config('contact.address.line1', '54826 Fadel Circles') }}</span>
-                        <span>{{ config('contact.address.line2', 'Darrylstad, AZ 90995') }}</span>
+                        <span>{{ setting('address_line1', '54826 Fadel Circles') }}</span>
+                        <span>{{ setting('address_line2', 'Darrylstad, AZ 90995') }}</span>
                     </div>
                 </li>
                 <li class="contacts_info-list_item col-md-6 d-flex align-items-center" data-order="4" data-aos="fade-up">
@@ -968,8 +967,8 @@ $page = 'index';
                     </span>
                     <div class="main d-flex flex-column">
                         <h4 class="main_title">Working Time</h4>
-                        <span>{{ config('contact.hours.days', 'Everyday') }}</span>
-                        <span>{{ config('contact.hours.time', '10 am — 20 pm') }}</span>
+                        <span>{{ setting('hours_days', 'Everyday') }}</span>
+                        <span>{{ setting('hours_time', '10 am — 20 pm') }}</span>
                     </div>
                 </li>
             </ul>

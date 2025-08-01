@@ -15,9 +15,15 @@ class SettingSeeder extends Seeder
         $settings = [
             [
                 'group' => 'branding',
-                'key' => 'logo',
+                'key' => 'name',
+                'type' => 'text',
+                'value' => 'Luxury',
+            ],
+            [
+                'group' => 'branding',
+                'key' => 'brand_logo',
                 'type' => 'image',
-                'value' => 'settings/brand.jpg', // upload manual dulu ke storage/app/public/settings/
+                'value' => 'settings/brand.jpg', //manually upload
             ],
             [
                 'group' => 'homepage',
@@ -51,9 +57,75 @@ class SettingSeeder extends Seeder
             ],
             [
                 'group' => 'contact',
-                'key' => 'contact_email',
+                'key' => 'email',
                 'type' => 'text',
                 'value' => 'support@studenthousing.com',
+            ],
+            [
+                'group' => 'contact',
+                'key' => 'address_line1',
+                'type' => 'text',
+                'value' => 'St Test 54739',
+            ],
+            [
+                'group' => 'contact',
+                'key' => 'address_line2',
+                'type' => 'text',
+                'value' => 'Kuala Lumpur, Malaysia',
+            ],
+            [
+                'group' => 'contact',
+                'key' => 'hours_days',
+                'type' => 'text',
+                'value' => 'Everyday',
+            ],
+            [
+                'group' => 'contact',
+                'key' => 'hours_time',
+                'type' => 'text',
+                'value' => '10 am — 20 pm',
+            ],
+            [
+                'group' => 'socialmedia',
+                'key' => 'facebook',
+                'type' => 'text',
+                'value' => 'facebook.com',
+            ],
+            [
+                'group' => 'socialmedia',
+                'key' => 'instagram',
+                'type' => 'text',
+                'value' => 'instagram.com',
+            ],
+            [
+                'group' => 'socialmedia',
+                'key' => 'twitter',
+                'type' => 'text',
+                'value' => 'twitter.com',
+            ],
+            [
+                'group' => 'socialmedia',
+                'key' => 'twitter',
+                'type' => 'text',
+                'value' => 'twitter.com',
+            ],
+            [
+                'group' => 'socialmedia',
+                'key' => 'whatsapp',
+                'type' => 'text',
+                'value' => '+608389222',
+            ],
+            [
+                'group' => 'socialmedia',
+                'key' => 'description',
+                'type' => 'text',
+                'value' => 'Lorem ipsum dolor sit ament amnesinia daritullarua',
+            ],
+            [
+                'group' => 'payment',
+                'key' => 'currency',
+                'type' => 'text',
+                'value' => 'RM',
             ],
         ];
 

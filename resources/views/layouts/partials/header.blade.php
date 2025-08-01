@@ -1,7 +1,7 @@
 <header class="header d-flex align-items-center" data-page="{{ $page ?? 'home' }}">
     <div class="container position-relative d-flex justify-content-between align-items-center">
         <a class="brand d-flex align-items-center" href="{{ route('home') }}">
-            <img src="{{ asset('storage/' . (setting('brand') ?? 'img/brand.jpg')) }}" width="50" height="55" alt="Brand Logo" />
+            <img src="{{ asset('storage/' . (setting('brand_logo') ?? 'img/brand.jpg')) }}" width="50" height="55" alt="Brand Logo" />
         </a>
 
 
@@ -23,7 +23,7 @@
                                 fill="currentColor" />
                         </svg>
                     </span>
-                    <span class="brand_name">{{ config('app.name', 'Hosteller') }}</span>
+                    <span class="brand_name">{{ setting('name', 'Lorem') }}</span>
                 </a>
                 <button class="close" type="button" data-bs-dismiss="offcanvas">
                     <i class="icon-close--entypo"></i>
