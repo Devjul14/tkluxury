@@ -675,6 +675,15 @@ function calculateNightsBetweenDates($checkInDate, $checkOutDate)
                                 </div>
                             </div>
 
+                            <div class="checkout_main-sidebar_summary_details">
+                                @foreach ($booking->services as $service)
+                                    <div class="checkout_main-sidebar_summary_details_item">
+                                        <span class="label">{{ $service->title }}:</span>
+                                        <span class="value">{{ $service->price }}</span>
+                                    </div>
+                                @endforeach
+                            </div>
+
                             <div class="checkout_main-sidebar_summary_pricing">
                                 <div class="checkout_main-sidebar_summary_pricing_item">
                                     <span class="label">Price per month:</span>

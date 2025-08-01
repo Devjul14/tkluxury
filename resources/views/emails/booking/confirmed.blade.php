@@ -133,6 +133,19 @@
                     </div>
                 </div>
             </div>
+
+            <div class="next-steps">
+                <h3 class="section-title">Services</h3>
+                
+                @foreach ($booking->services as $service)
+                <div class="step">
+                    <div class="step-content">
+                        <h4>{{ $service->title }}</h4>
+                        <p>{{ $service->price }}</p>
+                    </div>
+                </div>
+                @endforeach
+            </div>
         </div>
         
         <!-- Footer -->

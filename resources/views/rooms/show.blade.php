@@ -30,7 +30,8 @@ $page = 'room';
 <!-- single room content start -->
 <main>
     <!-- room section start -->
-    <div class="room section">
+    <form class="room section" action="{{ route('booking.store') }}" method="POST">
+        @csrf
         <div class="container">
             <div class="room_main d-lg-flex flex-wrap align-items-start">
                 <div class="room_main-slider col-12 d-lg-flex">
@@ -299,6 +300,20 @@ $page = 'room';
                             </div>
                         </div>
                     </section>
+
+                    <section class="facilities">
+                    <h4 class="facilities_header">Services</h4>
+                        <div class="facilities_list d-sm-flex flex-wrap">
+                           @foreach($services as $service)
+                           <label for="service-{{ $service->id }}" class="mx-2 facilities_list-block_item d-flex align-items-center">
+                                <span class="icon">
+                                    <input type="checkbox" id="service-{{ $service->id }}" name="services[]" value="{{ $service->id }}" class="checkbox_input">
+                                </span>
+                                {{ $service->title }}
+                            </label>
+                           @endforeach
+                        </div>
+                    </section>
                     <!-- <section class="rules">
                         <h4 class="rules_header">Hostel rules</h4>
                         <div class="rules_list d-md-flex flex-lg-wrap">
@@ -360,9 +375,7 @@ $page = 'room';
                             <span class="pricing_price h2">$59</span>
                             / 1 night
                         </span>
-                        <form class="booking" action="{{ route('booking.store') }}" method="POST" autocomplete="off" data-type="booking">
-                            @csrf
-
+                        <div class="booking" autocomplete="off" data-type="booking">
                             <input type="hidden" name="room_id" value="{{ $room->id }}">
 
                             <div class="booking_group d-flex flex-column">
@@ -400,7 +413,7 @@ $page = 'room';
                             </div>
 
                             <button class="booking_btn btn theme-element theme-element--accent" type="submit">Book now</button>
-                        </form>
+                        </div>
 
                     </div>
                     <div class="room_main-cards_card accent">
@@ -505,7 +518,7 @@ $page = 'room';
                 </form>
             </section>
         </div>
-    </div>
+    </form>
     <!-- room section start -->
     <!-- recommendation section start -->
     <section class="recommendation section">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\BookingConfirmed;
 use App\Models\Booking;
 use App\Models\Room;
+use App\Models\Service;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -39,6 +40,8 @@ class BookingController extends Controller
             'room_id' => 'required|integer',
             'check_in' => 'required|date_format:m.d.Y|after:today',
             'check_out' => 'required|date_format:m.d.Y|after:check_in',
+            'services' => 'array',
+            'services.*' => 'exists:services,id',
         ], [], [
             'room_id' => 'room',
             'check_in' => 'check-in',
@@ -65,6 +68,9 @@ class BookingController extends Controller
         $totalRentAmount = $room->price_per_month * $durationMonths;
         $totalAmount = $totalRentAmount + (($totalRentAmount) * config('hostel.booking.tax_rate', 0.08)) + (($totalRentAmount) * config('hostel.booking.service_fee_rate', 0.05));
 
+        $services = Service::whereIn('id', $data['services'])->get();
+        $serviceFees = $services->sum('price');
+
         $booking = new Booking([
             'property_id' => $room->property_id,
             'room_id' => $room->id,
@@ -79,15 +85,15 @@ class BookingController extends Controller
             'subtotal' => $totalRentAmount,
             'down_payment_amount' => $totalRentAmount * config('hostel.booking.down_payment_rate', 0.1),
             'tax' => ($totalRentAmount) * config('hostel.booking.tax_rate', 0.08),
-            'service_fee' => ($totalRentAmount) * config('hostel.booking.service_fee_rate', 0.05),
+            'service_fee' => (($totalRentAmount) * config('hostel.booking.service_fee_rate', 0.05)) + $serviceFees,
             'total_amount' => $totalAmount,
         ]);
 
         $booking->setRelation('room', $room);
+        $booking->setRelation('services', $services);
 
         // dd($booking->toArray());
         session()->put('booking', $booking);
-
 
         // For now, redirect to checkout
         return redirect()->route('booking.checkout', [
@@ -198,7 +204,7 @@ class BookingController extends Controller
 
         // Store booking in session for confirmation page
         session(['booking_confirmation' => $booking]);
-        Mail::to($booking->student->email)->send(new BookingConfirmed($booking, $generatedPassword));
+        Mail::to($booking->student->email)->send(new BookingConfirmed($booking, $generatedPassword, $booking->services));
 
         return redirect()->route('booking.confirmation');
     }
