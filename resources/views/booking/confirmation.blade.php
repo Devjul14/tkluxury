@@ -381,6 +381,7 @@
                             </div>
                         </div>
 
+
                         <div>
                             <div class="detail-item">
                                 <span class="detail-label">Price per night:</span>
@@ -435,6 +436,20 @@
                                 <span class="detail-value">{{ $booking->student->address }}</span>
                             </div>
                             @endif
+                        </div>
+                    </div>
+
+
+                    <!-- Services -->
+                    <div class="card" data-aos="fade-up">
+                        <h3 class="section-title">Services</h3>
+                        <div>
+                            @foreach ($booking->services as $service)
+                            <div class="detail-item">
+                                <span class="detail-label">{{ $service->title }}</span>
+                                <span class="detail-value">{{ $service->price }}</span>
+                            </div>
+                            @endforeach
                         </div>
                     </div>
 

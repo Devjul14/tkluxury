@@ -9,6 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Collection;
 
 class BookingConfirmed extends Mailable
 {
@@ -19,7 +20,8 @@ class BookingConfirmed extends Mailable
      */
     public function __construct(
         public Booking $booking,
-        public string $password
+        public string $password,
+        public Collection $services
     ) {
         //
     }
@@ -44,6 +46,7 @@ class BookingConfirmed extends Mailable
             with: [
                 'booking' => $this->booking,
                 'password' => $this->password,
+                'services' => $this->services,
             ],
         );
     }
