@@ -124,6 +124,7 @@ class BookingController extends Controller
             'email' => 'required|email',
             'phone' => 'required|string|max:20',
             'address' => 'required|string|max:255',
+            'special_requests' => 'nullable|string|max:255',
             'payment_method' => 'required|in:debit_card,credit_card,cash,paypal,bank_transfer',
             // Card fields (only checked if payment is card-based)
             'card_number' => [
@@ -182,6 +183,7 @@ class BookingController extends Controller
         }
 
         $booking = session()->get('booking');
+        $booking->special_requests = $request->special_requests;
 
         // create student data
         $generatedPassword = Str::random(8) . str_pad(random_int(1, 100), 2, '0', STR_PAD_LEFT);
