@@ -18,8 +18,7 @@ $page = 'index';
                     {{ setting('hero_sub_text', 'Lorem - ipsum dolor sit amet') }}
                 </p>
             </div>
-            <form class="booking" action="{{ route('booking.search') ?? '#' }}" method="post" autocomplete="off" data-type="booking" data-aos="fade-up">
-                @csrf
+            <form class="booking" action="{{ route('home') }}" method="get" autocomplete="off" data-type="booking" data-aos="fade-up">
                 <div class="item-wrapper d-sm-flex flex-wrap flex-lg-nowrap align-items-lg-center">
                     <div class="booking_group d-flex flex-column">
                         <label class="booking_group-label h5" for="checkIn">Check-in</label>
@@ -32,7 +31,7 @@ $page = 'index';
                                 type="text"
                                 id="checkIn"
                                 name="check_in"
-                                value="Add date"
+                                value="{{ old('check_in', request('check_in')) }}"
                                 readonly />
                             <i class="icon-chevron_down icon"></i>
                         </div>
@@ -48,7 +47,7 @@ $page = 'index';
                                 type="text"
                                 id="checkOut"
                                 name="check_out"
-                                value="Add date"
+                                value="{{ old('check_out', request('check_out')) }}"
                                 readonly />
                             <i class="icon-chevron_down icon"></i>
                         </div>
@@ -69,7 +68,7 @@ $page = 'index';
                                         <label class="label h5" for="adults">Adults</label>
                                         <div class="main d-flex align-items-center justify-content-between">
                                             <a class="qty_minus qty-changer d-flex align-items-center justify-content-center" href="#" data-disabled="true"></a>
-                                            <input class="field required" id="adults" name="adults" type="text" value="1" />
+                                            <input class="field required" id="adults" name="adults" type="text" value="{{ old('adults', request('adults')) }}" />
                                             <a class="qty_plus qty-changer d-flex align-items-center justify-content-center" href="#" data-disabled="">+</a>
                                         </div>
                                     </div>
@@ -77,7 +76,7 @@ $page = 'index';
                                         <label class="label h5" for="children">Children</label>
                                         <div class="main d-flex align-items-center justify-content-between">
                                             <a class="qty_minus qty-changer d-flex align-items-center justify-content-center" href="#" data-disabled=""></a>
-                                            <input class="field required" id="children" name="children" type="text" value="0" />
+                                            <input class="field required" id="children" name="children" type="text" value="{{ old('children', request('children')) }}" />
                                             <a class="qty_plus qty-changer d-flex align-items-center justify-content-center" href="#" data-disabled="">+</a>
                                         </div>
                                     </div>
@@ -85,7 +84,7 @@ $page = 'index';
                             </div>
                         </div>
                     </div>
-                    <button class="booking_btn btn theme-element theme-element--accent" type="submit">Search</button>
+                    <button id="filterSubmit" class="booking_btn btn theme-element theme-element--accent" type="submit">Search</button>
                 </div>
             </form>
         </div>
@@ -119,7 +118,7 @@ $page = 'index';
                             <img class="lazy" data-src="{{ asset('img/hero.webp') }}" src="{{ asset('img/hero.webp') }}" alt="media" />
                         </picture>
                         <span class="media_label media_label--pricing">
-                            <span class="price h4">${{ $room->price ?? '18' }}</span>
+                            <span class="price h4">${{ ceil($room->price_per_month / 30) ?? '18' }}</span>
                             / 1 night
                         </span>
                     </div>
@@ -128,14 +127,14 @@ $page = 'index';
                         <div class="main_amenities">
                             <span class="main_amenities-item d-inline-flex align-items-center">
                                 <i class="icon-user icon"></i>
-                                {{ $room->capacity ?? '2' }} Sleeps
+                                {{ $room->capacity }} Sleeps
                             </span>
                             <span class="main_amenities-item d-inline-flex align-items-center">
                                 <i class="icon-bunk_bed icon"></i>
-                                {{ $room->bed_type ?? '1 bunk bed' }}
+                                {{ $room->room_type }}
                             </span>
                         </div>
-                        <a class="link link--arrow d-inline-flex align-items-center" href="#">
+                        <a class="link link--arrow d-inline-flex align-items-center" href="{{ route('rooms.show', $room->id) }}">
                             See availability
                             <i class="icon-arrow_right icon"></i>
                         </a>
@@ -157,7 +156,7 @@ $page = 'index';
                         </span>
                     </div>
                     <div class="main d-md-flex flex-column justify-content-between flex-grow-1">
-                        <a class="main_title h4" href="room.html" data-shave="true">Bed in 6-Bed Room with Shared Bathroom</a>
+                        <a class="main_title h4" href="{{ route('rooms.show', 1) }}" data-shave="true">Bed in 6-Bed Room with Shared Bathroom</a>
                         <div class="main_amenities">
                             <span class="main_amenities-item d-inline-flex align-items-center">
                                 <i class="icon-user icon"></i>
@@ -168,7 +167,7 @@ $page = 'index';
                                 1 bunk bed
                             </span>
                         </div>
-                        <a class="link link--arrow d-inline-flex align-items-center" href="#">
+                        <a class="link link--arrow d-inline-flex align-items-center" href="{{ route('rooms.show', 1) }}">
                             See availability
                             <i class="icon-arrow_right icon"></i>
                         </a>
@@ -207,17 +206,6 @@ $page = 'index';
                 </div>
             </li>
             @endforelse
-            <!-- <li class="rooms_list-item col-md-6 col-xl-4" data-order="3" data-aos="fade-up" data-aos-delay="100">
-                    <div class="card accent">
-                        <h3 class="title">Stay Longer, Save More</h3>
-                        <p class="text">It's simple: the longer you stay, the more you save!</p>
-                        <div class="content">
-                            <p class="text">Save up to <b>30%</b> on daily rate for stays longer than 14 nights</p>
-                            <p class="text">Save up to <b>20%</b> off the nightly rate on stays between 7-14 nights</p>
-                        </div>
-                        <a class="btn theme-element theme-element--light" href="{{ route('rooms.index') ?? 'rooms.html' }}">Choose room</a>
-                    </div>
-                </li> -->
         </ul>
     </div>
 </section>
@@ -606,14 +594,14 @@ $page = 'index';
 <!-- reviews section end -->
 
 <!-- promo section start -->
+@if($roomPromo)
 <section class="promo section">
     <div class="container">
         <div class="container d-xl-flex align-items-center justify-content-between">
             <div class="promo_info">
                 <h2 class="info_header" data-aos="fade-up">Find suitable budget accommodation</h2>
                 <p class="info_text" data-aos="fade-up" data-aos-delay="50">
-                    Condimentum id venenatis a condimentum vitae sapien pellentesque habitant. At augue eget arcu dictum varius
-                    duis at consectetur
+                   {{ $roomPromo->description }}
                 </p>
                 <ul class="info_list">
                     <li class="list-item d-flex align-items-sm-center" data-aos="fade-up">
@@ -681,12 +669,13 @@ $page = 'index';
                 <div class="media_card media_card--bottom" data-aos="fade-right">
                     <h4 class="media_card-text">Family Room with Private Bathroom</h4>
                     <div class="media_card-pricing"><span class="h2">$149</span> / 1 night</div>
-                    <a class="media_card-btn btn theme-element theme-element--light" href="#">See availability</a>
+                    <a class="media_card-btn btn theme-element theme-element--light" href="{{ route('rooms.show', [$room->id]) }}">See availability</a>
                 </div>
             </div>
         </div>
     </div>
 </section>
+@endif
 <!-- promo section end -->
 
 <!-- gallery section start -->
@@ -701,10 +690,10 @@ $page = 'index';
         <div class="gallery_grid d-grid">
             @forelse($galleryImages ?? [] as $index => $image)
             <div class="gallery_grid-item {{ $index === 0 ? 'gallery_grid-item--left' : ($index === 2 ? 'gallery_grid-item--right' : '') }}" data-aos="zoom-in">
-                <a href="{{ asset($image->url ?? 'img/placeholder.jpg') }}" data-caption="{{ $image->caption ?? 'Image caption' }}" data-role="gallery-link">
+                <a href="{{ asset($image->url ?? asset('img/hero.webp')) }}" data-caption="{{ $image->caption ?? 'Image caption' }}" data-role="gallery-link">
                     <picture>
-                        <source data-srcset="{{ asset($image->url ?? 'img/placeholder.jpg') }}" srcset="{{ asset($image->url ?? 'img/placeholder.jpg') }}" />
-                        <img class="gallery_grid-item_img lazy" data-src="{{ asset($image->url ?? 'img/placeholder.jpg') }}" src="{{ asset($image->url ?? 'img/placeholder.jpg') }}" alt="media" />
+                        <source data-srcset="{{ asset($image->url ?? asset('img/hero.webp')) }}" srcset="{{ asset($image->url ?? asset('img/hero.webp')) }}" />
+                        <img class="gallery_grid-item_img lazy" data-src="{{ asset($image->url ?? asset('img/hero.webp')) }}" src="{{ asset($image->url ?? asset('img/hero.webp')) }}" alt="media" />
                     </picture>
                     <div class="overlay d-flex align-items-center justify-content-center">
                         <div class="overlay_focus">
@@ -992,6 +981,20 @@ $page = 'index';
 @endsection
 
 @push('scripts')
-<script src="{{ asset('asset/js/index.min.js') }}"></script>
+<!-- <script src="{{ asset('asset/js/index.min.js') }}"></script> -->
 <script src="{{ asset('asset/js/gallery.min.js') }}"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        flatpickr(".flatpickr", {
+            dateFormat: "Y-m-d",
+        });
+
+        document.querySelector('#filterSubmit').addEventListener('click', function(e) {
+            e.target.closest('form').submit();
+        });
+    });
+</script>
 @endpush
