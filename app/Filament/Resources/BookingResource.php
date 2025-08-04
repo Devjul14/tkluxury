@@ -11,9 +11,13 @@ use Filament\Tables\Table;
 use Filament\Forms;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
+use Filament\Tables\Actions\Action;
+use Illuminate\Database\Eloquent\Model;
 
 class BookingResource extends Resource
 {
@@ -182,17 +186,35 @@ class BookingResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\Action::make('Approve')
+
+
+                Action::make('Approve')
                     ->label('Approve')
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
                     ->visible(fn(Model $record): bool => $record->status === 'confirmed')
                     ->requiresConfirmation()
-                    ->action(function (Model $record) {
+                    ->form([
+                        DatePicker::make('key_handover_date')
+                            ->label('Key Handover Date')
+                            ->required(),
+                        TextInput::make('assigned_room_number')
+                            ->label('Assigned Room Number')
+                            ->required(),
+                        Textarea::make('check_in_notes')
+                            ->label('Check-in Notes')
+                            ->rows(3)
+                            ->maxLength(500),
+                    ])
+                    ->action(function (array $data, Model $record) {
                         $record->update([
                             'status' => 'active',
+                            'key_handover_date' => $data['key_handover_date'],
+                            'assigned_room_number' => $data['assigned_room_number'],
+                            'check_in_notes' => $data['check_in_notes'],
                         ]);
                     }),
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
