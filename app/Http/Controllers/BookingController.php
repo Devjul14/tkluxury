@@ -68,7 +68,7 @@ class BookingController extends Controller
         $totalRentAmount = $room->price_per_month * $durationMonths;
         $totalAmount = $totalRentAmount + (($totalRentAmount) * config('hostel.booking.tax_rate', 0.08)) + (($totalRentAmount) * config('hostel.booking.service_fee_rate', 0.05));
 
-        $services = Service::whereIn('id', $data['services'])->get();
+        $services = Service::whereIn('id', $data['services'] ?? [])->get();
         $serviceFees = $services->sum('price');
 
         $booking = new Booking([

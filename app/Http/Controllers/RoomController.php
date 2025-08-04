@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Room;
 use App\Models\Service;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Number;
@@ -35,9 +36,14 @@ class RoomController extends Controller
 
         // Filter by check-in and check-out dates
         if ($request->filled('check_in') && $request->filled('check_out')) {
-            $checkIn = $request->check_in;
-            $checkOut = $request->check_out;
-            $rooms = $rooms->where('check_in', '>=', $checkIn)->where('check_out', '<=', $checkOut);
+            $checkInCarbon = Carbon::parse($request->check_in);
+            $checkOutCarbon = Carbon::parse($request->check_out);
+
+            $rooms = $rooms->whereHas('bookings', function ($query) use ($checkInCarbon, $checkOutCarbon) {
+                $query
+                    ->whereNot('check_in_date', '>=', $checkInCarbon)
+                    ->whereNot('check_out_date', '<=', $checkOutCarbon);
+            });
         }
 
         if ($request->filled('guests')) {
