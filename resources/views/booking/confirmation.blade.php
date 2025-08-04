@@ -430,6 +430,12 @@ $page = 'confirmation';
                             <span class="detail-label">Phone:</span>
                             <span class="detail-value">{{ $booking->student->phone }}</span>
                         </div>
+                        @if($booking->special_requests)
+                        <div class="detail-item">
+                            <span class="detail-label">Special Requests:</span>
+                            <span class="detail-value">{{ $booking->special_requests }}</span>
+                        </div>
+                        @endif
                         @if($booking->student->address)
                         <div class="detail-item">
                             <span class="detail-label">Address:</span>
@@ -467,10 +473,10 @@ $page = 'confirmation';
                         <i class="icon-home"></i>
                         Back to Home
                     </a>
-                    <!-- <a class="btn btn-outline" href="{{ route('booking.download', $booking->booking_reference) }}" target="_blank">
-                            <i class="icon-download"></i>
-                            Download Receipt
-                        </a> -->
+                    <a class="btn btn-outline" href="{{ route('booking.download', $booking->booking_reference) }}" target="_blank">
+                        <i class="icon-download"></i>
+                        Download Receipt
+                    </a>
                 </div>
             </div>
 
