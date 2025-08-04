@@ -177,7 +177,10 @@ class BookingController extends Controller
         // Remove card data if payment is not card-based
         if (!in_array($validated['payment_method'], ['debit_card', 'credit_card'])) {
             $validated = array_diff_key($validated, array_flip([
-                'card_number', 'expiry_date', 'cvv', 'card_holder'
+                'card_number',
+                'expiry_date',
+                'cvv',
+                'card_holder'
             ]));
         }
 

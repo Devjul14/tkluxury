@@ -7,6 +7,7 @@ use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
 use Filament\Infolists;
 use Filament\Infolists\Infolist;
+use Filament\Infolists\Components\ImageEntry;
 
 class ViewContract extends ViewRecord
 {
@@ -36,7 +37,7 @@ class ViewContract extends ViewRecord
                         Infolists\Components\TextEntry::make('status')
                             ->label('Status')
                             ->badge()
-                            ->color(fn (string $state): string => match ($state) {
+                            ->color(fn(string $state): string => match ($state) {
                                 'draft' => 'gray',
                                 'pending_signature' => 'warning',
                                 'active' => 'success',
@@ -87,9 +88,9 @@ class ViewContract extends ViewRecord
                         Infolists\Components\TextEntry::make('witness_signed_date')
                             ->label('Witness Signed')
                             ->date(),
-                        Infolists\Components\FileEntry::make('student_signature')
+                        Infolists\Components\ImageEntry::make('student_signature')
                             ->label('Student Signature'),
-                        Infolists\Components\FileEntry::make('landlord_signature')
+                        Infolists\Components\ImageEntry::make('landlord_signature')
                             ->label('Landlord Signature'),
                     ])->columns(2),
 
@@ -99,10 +100,10 @@ class ViewContract extends ViewRecord
                             ->label('Notes')
                             ->markdown()
                             ->columnSpanFull(),
-                        Infolists\Components\FileEntry::make('attachments')
+                        Infolists\Components\ImageEntry::make('attachments')
                             ->label('Attachments')
                             ->columnSpanFull(),
                     ])->columns(1),
             ]);
     }
-} 
+}

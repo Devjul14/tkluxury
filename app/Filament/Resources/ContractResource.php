@@ -12,15 +12,20 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Actions\Action;
+use App\Mail\ContractSent;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ContractResource extends Resource
 {
     protected static ?string $model = Contract::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
-    
+
     protected static ?string $navigationGroup = 'Financial Management';
-    
+
     protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
@@ -51,7 +56,7 @@ class ContractResource extends Resource
                             ])
                             ->required(),
                     ])->columns(2),
-                
+
                 Forms\Components\Section::make('Contract Details')
                     ->schema([
                         Forms\Components\DatePicker::make('start_date')
@@ -72,7 +77,7 @@ class ContractResource extends Resource
                             ->numeric()
                             ->prefix('$'),
                     ])->columns(2),
-                
+
                 Forms\Components\Section::make('Terms and Conditions')
                     ->schema([
                         Forms\Components\RichEditor::make('terms_and_conditions')
@@ -82,7 +87,7 @@ class ContractResource extends Resource
                             ->maxLength(65535)
                             ->columnSpanFull(),
                     ])->columns(1),
-                
+
                 Forms\Components\Section::make('Signatures')
                     ->schema([
                         Forms\Components\DatePicker::make('student_signed_date'),
@@ -93,7 +98,7 @@ class ContractResource extends Resource
                         Forms\Components\FileUpload::make('landlord_signature')
                             ->directory('contracts/signatures'),
                     ])->columns(2),
-                
+
                 Forms\Components\Section::make('Additional Information')
                     ->schema([
                         Forms\Components\Textarea::make('notes')
@@ -138,8 +143,9 @@ class ContractResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'draft' => 'gray',
+                        'sent' => 'info',
                         'pending_signature' => 'warning',
                         'active' => 'success',
                         'expired' => 'danger',
@@ -169,17 +175,62 @@ class ContractResource extends Resource
                         return $query
                             ->when(
                                 $data['start_date_from'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('start_date', '>=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('start_date', '>=', $date),
                             )
                             ->when(
                                 $data['start_date_until'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('start_date', '<=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('start_date', '<=', $date),
                             );
                     }),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Action::make('Send')
+                    ->label('Send Contract')
+                    ->icon('heroicon-o-paper-airplane')
+                    ->color('primary')
+                    ->visible(fn($record) => $record->status === 'draft')
+                    ->requiresConfirmation()
+                    ->action(function ($record) {
+                        $booking = $record->booking;
+                        $student = $booking->student;
+                        $property = $booking->property;
+                        $template = $record->contractTemplate;
+
+                        if (!$student || !$property || !$template) {
+                            throw new \Exception('Missing related data to generate the contract.');
+                        }
+
+                        // 1. Generate PDF content via Blade view
+                        $htmlContent = view('contracts.pdf', [
+                            'contract' => $record,
+                            'booking' => $booking,
+                            'student' => $student,
+                            'property' => $property,
+                        ])->render();
+
+                        // 2. Generate and store PDF
+                        $pdf = Pdf::loadHTML($htmlContent);
+                        $filename = 'contracts/contract_' . $record->id . '_' . now()->format('Ymd_His') . '.pdf';
+                        Storage::disk('public')->put($filename, $pdf->output());
+
+                        // 3. Update contract
+                        $record->update([
+                            'generated_content' => json_encode([
+                                'student' => $student->name,
+                                'property' => $property->name,
+                                'check_in' => $booking->check_in_date,
+                                'check_out' => $booking->check_out_date,
+                                'duration' => $booking->duration_months,
+                            ]),
+                            'file_path' => $filename,
+                            'status' => 'sent',
+                        ]);
+
+                        // 4. Send email to student
+                        Mail::to($student->email)->send(new ContractSent($record));
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
