@@ -2,87 +2,38 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Room;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         // Sample featured rooms data
-        $featuredRooms = [
-            [
-                'id' => 1,
-                'name' => 'Superior Double Bed Private Ensuite',
-                'description' => 'Comfortable double room with private bathroom, perfect for couples or solo travelers.',
-                'price' => 89,
-                'image' => 'img/room-1.jpg',
-                'type' => 'Private Room',
-                'capacity' => 2,
-                'rating' => 4.8,
-                'is_featured' => true,
-            ],
-            [
-                'id' => 2,
-                'name' => 'Deluxe Single Room',
-                'description' => 'Cozy single room with modern amenities and city view.',
-                'price' => 65,
-                'image' => 'img/room-2.jpg',
-                'type' => 'Single Room',
-                'capacity' => 1,
-                'rating' => 4.6,
-                'is_featured' => true,
-            ],
-            [
-                'id' => 3,
-                'name' => 'Mixed Dormitory 6-Bed',
-                'description' => 'Spacious dormitory with 6 comfortable beds and shared facilities.',
-                'price' => 25,
-                'image' => 'img/room-3.jpg',
-                'type' => 'Dormitory',
-                'capacity' => 6,
-                'rating' => 4.4,
-                'is_featured' => true,
-            ],
-            [
-                'id' => 4,
-                'name' => 'Female Dormitory 4-Bed',
-                'description' => 'Exclusive female dormitory with 4 beds and enhanced security.',
-                'price' => 28,
-                'image' => 'img/room-4.jpg',
-                'type' => 'Dormitory',
-                'capacity' => 4,
-                'rating' => 4.7,
-                'is_featured' => true,
-            ],
-            [
-                'id' => 5,
-                'name' => 'Premium Twin Room',
-                'description' => 'Luxury twin room with two single beds and premium amenities.',
-                'price' => 95,
-                'image' => 'img/room-5.jpg',
-                'type' => 'Twin Room',
-                'capacity' => 2,
-                'rating' => 4.9,
-                'is_featured' => true,
-            ],
-            [
-                'id' => 6,
-                'name' => 'Budget Single Room',
-                'description' => 'Affordable single room with all essential amenities.',
-                'price' => 45,
-                'image' => 'img/room-6.jpg',
-                'type' => 'Single Room',
-                'capacity' => 1,
-                'rating' => 4.3,
-                'is_featured' => true,
-            ],
-        ];
 
-        // Convert to objects for easier use in Blade templates
-        $featuredRooms = collect($featuredRooms)->map(function ($room) {
-            return (object) $room;
-        });
+        $featuredRooms = Room::where('is_available', true);
 
-        return view('home', compact('featuredRooms'));
+        if ($request->filled('check_in') && $request->filled('check_out')) {
+            $checkInCarbon = Carbon::createFromFormat('m.d.Y', $request->check_in);
+            $checkOutCarbon = Carbon::createFromFormat('m.d.Y', $request->check_out);
+
+            $featuredRooms = $featuredRooms->whereHas('bookings', function ($query) use ($checkInCarbon, $checkOutCarbon) {
+                $query
+                    ->whereNot('check_in_date', '>=', $checkInCarbon)
+                    ->whereNot('check_out_date', '<=', $checkOutCarbon);
+            });
+        }
+
+        if ($request->filled('adults')) {
+            $guests = $request->adults;
+            $featuredRooms = $featuredRooms->where('capacity', '>=', $guests);
+        }
+
+        $featuredRooms = $featuredRooms->get();
+        $roomPromo = $featuredRooms->count() > 0 ? $featuredRooms->random() : null;
+        $galleryImages = Room::all()->pluck('images')->flatten()->take(4);
+
+        return view('home', compact('featuredRooms', 'roomPromo', 'galleryImages'));
     }
-} 
+}
