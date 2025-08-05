@@ -17,7 +17,7 @@ class OccupancyRateWidget extends ChartWidget
 
     public static function canView(): bool
     {
-        return in_array(auth()->user()->role, ['admin', 'staff']);
+        return in_array(auth()->user()->user_type, ['admin', 'staff']);
     }
 
     public function setFilter(string $filter): void
