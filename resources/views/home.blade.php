@@ -963,9 +963,9 @@ $page = 'index';
                 </li>
             </ul>
         </div>
-        <!-- <div class="contacts_map">
+        <div class="contacts_map">
             <div id="map"></div>
-        </div> -->
+        </div>
     </div>
 </section>
 <!-- contacts section end -->
@@ -986,6 +986,7 @@ $page = 'index';
 <script src="{{ asset('asset/js/gallery.min.js') }}"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAFmDPs9yBFzKNC6o0ozgOP5c_Rmrz7F1k&libraries=places&callback=initMap"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -995,6 +996,11 @@ $page = 'index';
 
         document.querySelector('#filterSubmit').addEventListener('click', function(e) {
             e.target.closest('form').submit();
+        });
+
+        new google.maps.Map(document.getElementById("map"), {
+            center: { lat: 3.139003, lng: 101.686855 }, // Kuala Lumpur
+            zoom: 10,
         });
     });
 </script>
