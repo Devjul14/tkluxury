@@ -18,6 +18,13 @@ use Illuminate\Support\Facades\Route;
  * |
  */
 
+Route::get('/test-view-any', function () {
+    $user = \App\Models\User::first();  // pastikan user_type-nya admin/staff
+    auth()->login($user);
+
+    return Gate::forUser($user)->check('viewAny', User::class) ? 'allowed' : 'denied';
+});
+
 // Home page
 Route::get('/', [HomeController::class, 'index'])->name('home');
 

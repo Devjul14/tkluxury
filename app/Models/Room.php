@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Room extends Model
@@ -66,7 +66,7 @@ class Room extends Model
 
     public function inspections(): HasMany
     {
-        return $this->hasMany(PropertyInspection::class);
+        return $this->property->inspections();
     }
 
     // Scopes
@@ -123,7 +123,8 @@ class Room extends Model
 
     public function getCurrentBookingAttribute()
     {
-        return $this->bookings()
+        return $this
+            ->bookings()
             ->where('status', 'active')
             ->first();
     }
@@ -161,19 +162,25 @@ class Room extends Model
     public function getAmenitiesListAttribute(): array
     {
         $amenities = [];
-        
-        if ($this->is_furnished) $amenities[] = 'Furnished';
-        if ($this->has_private_bathroom) $amenities[] = 'Private Bathroom';
-        if ($this->has_balcony) $amenities[] = 'Balcony';
-        if ($this->has_air_conditioning) $amenities[] = 'Air Conditioning';
-        if ($this->has_heating) $amenities[] = 'Heating';
-        
+
+        if ($this->is_furnished)
+            $amenities[] = 'Furnished';
+        if ($this->has_private_bathroom)
+            $amenities[] = 'Private Bathroom';
+        if ($this->has_balcony)
+            $amenities[] = 'Balcony';
+        if ($this->has_air_conditioning)
+            $amenities[] = 'Air Conditioning';
+        if ($this->has_heating)
+            $amenities[] = 'Heating';
+
         return array_merge($amenities, $this->amenities ?? []);
     }
 
     public function isCurrentlyOccupied(): bool
     {
-        return $this->bookings()
+        return $this
+            ->bookings()
             ->where('status', 'active')
             ->where('check_in_date', '<=', now())
             ->where('check_out_date', '>=', now())
@@ -182,7 +189,8 @@ class Room extends Model
 
     public function getDaysUntilAvailableAttribute(): ?int
     {
-        $currentBooking = $this->bookings()
+        $currentBooking = $this
+            ->bookings()
             ->where('status', 'active')
             ->where('check_out_date', '>', now())
             ->first();
@@ -192,7 +200,8 @@ class Room extends Model
 
     public function getMonthlyRevenueAttribute(): float
     {
-        return $this->bookings()
+        return $this
+            ->bookings()
             ->where('status', 'active')
             ->sum('monthly_rent');
     }
@@ -200,7 +209,8 @@ class Room extends Model
     public function getOccupancyRateAttribute(): float
     {
         $totalDays = now()->diffInDays($this->created_at) ?: 1;
-        $occupiedDays = $this->bookings()
+        $occupiedDays = $this
+            ->bookings()
             ->where('status', 'active')
             ->get()
             ->sum(function ($booking) {

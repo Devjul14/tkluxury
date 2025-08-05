@@ -14,7 +14,7 @@ class RoomController extends Controller
     public function index(Request $request)
     {
         // Apply filters
-        $rooms = Room::query();
+        $rooms = Room::query()->where('is_available', true);
 
         // Filter by price range
         if ($request->filled('price_range')) {

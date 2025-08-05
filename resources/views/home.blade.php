@@ -68,7 +68,7 @@ $page = 'index';
                                         <label class="label h5" for="adults">Adults</label>
                                         <div class="main d-flex align-items-center justify-content-between">
                                             <a class="qty_minus qty-changer d-flex align-items-center justify-content-center" href="#" data-disabled="true"></a>
-                                            <input class="field required" id="adults" name="adults" type="text" value="{{ old('adults', request('adults')) }}" />
+                                            <input class="field required" id="adults" name="adults" type="text" value="{{ old('adults', request('adults') ?? 1) }}" />
                                             <a class="qty_plus qty-changer d-flex align-items-center justify-content-center" href="#" data-disabled="">+</a>
                                         </div>
                                     </div>
@@ -76,7 +76,7 @@ $page = 'index';
                                         <label class="label h5" for="children">Children</label>
                                         <div class="main d-flex align-items-center justify-content-between">
                                             <a class="qty_minus qty-changer d-flex align-items-center justify-content-center" href="#" data-disabled=""></a>
-                                            <input class="field required" id="children" name="children" type="text" value="{{ old('children', request('children')) }}" />
+                                            <input class="field required" id="children" name="children" type="text" value="{{ old('children', request('children') ?? 0) }}" />
                                             <a class="qty_plus qty-changer d-flex align-items-center justify-content-center" href="#" data-disabled="">+</a>
                                         </div>
                                     </div>
@@ -290,10 +290,10 @@ $page = 'index';
             <li class="rating_list-item col-12 col-sm-6 col-xl-3" data-order="1" data-aos="zoom-in">
                 <div class="main d-flex flex-column">
                     <span class="main_rating">
-                        <span class="level h2">8.3</span>
+                        <span class="level h2">{{ $averageRatings['average_overall_rating'] }}</span>
                         <sup class="h4">/10</sup>
                     </span>
-                    <span class="main_reviews">1398 comments</span>
+                    <span class="main_reviews">{{ $averageRatings['average_overall_rating'] }} ratings</span>
                 </div>
                 <div class="media">
                     <svg width="193" height="32" viewBox="0 0 193 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -306,10 +306,10 @@ $page = 'index';
             <li class="rating_list-item col-12 col-sm-6 col-xl-3" data-order="2" data-aos="zoom-in">
                 <div class="main d-flex flex-column">
                     <span class="main_rating">
-                        <span class="level h2">4.6</span>
-                        <sup class="h4">/5</sup>
+                        <span class="level h2">{{ $averageRatings['total_comments'] }}</span>
+                        <sup class="h4">+</sup>
                     </span>
-                    <span class="main_reviews">460 notes</span>
+                    <span class="main_reviews">comments</span>
                 </div>
                 <div class="media">
                     <svg width="214" height="30" viewBox="0 0 214 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -321,10 +321,10 @@ $page = 'index';
             <li class="rating_list-item col-12 col-sm-6 col-xl-3" data-order="3" data-aos="zoom-in">
                 <div class="main d-flex flex-column">
                     <span class="main_rating">
-                        <span class="level h2">4.9</span>
-                        <sup class="h4">/5</sup>
+                        <span class="level h2">{{ $averageRatings['percentage_admin_response'] }}</span>
+                        <sup class="h4">%</sup>
                     </span>
-                    <span class="main_reviews">2389 notes</span>
+                    <span class="main_reviews">{{ $averageRatings['total_admin_response'] }} responses</span>
                 </div>
                 <div class="media">
                     <svg width="98" height="32" viewBox="0 0 98 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -336,9 +336,10 @@ $page = 'index';
             <li class="rating_list-item col-12 col-sm-6 col-xl-3" data-order="4" data-aos="zoom-in">
                 <div class="main d-flex flex-column">
                     <span class="main_rating">
-                        <span class="level h2">98%</span>
+                        <span class="level h2">{{ $averageRatings['percentage_featured'] }}</span>
+                        <sup class="h4">%</sup>
                     </span>
-                    <span class="main_reviews">2389 recommendations</span>
+                    <span class="main_reviews">{{ $averageRatings['total_comments'] }} recommendations</span>
                 </div>
                 <div class="media">
                     <svg width="242" height="47" viewBox="0 0 242 47" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -907,7 +908,7 @@ $page = 'index';
 
 <!-- contacts section start -->
 <section class="contacts section">
-    <div class="container container--contacts d-xl-flex align-items-center">
+    <div class="container container--contacts d-xl-flex align-items-center p-4">
         <div class="contacts_info">
             <div class="contacts_info-header">
                 <h2 class="contacts_info-header_title" data-aos="fade-down">Contacts</h2>
@@ -962,9 +963,9 @@ $page = 'index';
                 </li>
             </ul>
         </div>
-        <div class="contacts_map">
+        <!-- <div class="contacts_map">
             <div id="map"></div>
-        </div>
+        </div> -->
     </div>
 </section>
 <!-- contacts section end -->
