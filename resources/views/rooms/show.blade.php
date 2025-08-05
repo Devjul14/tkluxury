@@ -8,6 +8,116 @@
 $page = 'room';
 @endphp
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('asset/css/room.min.css') }}">
+<style>
+    .review {
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+}
+
+.review_header {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 0.5rem;
+}
+
+.review_form {
+    gap: 1rem;
+}
+
+.review_rating {
+    width: 100%;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.review_rating-block {
+    flex: 1 1 45%;
+    background: #f9f9f9;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+}
+
+.review_rating-block label {
+    flex: 1;
+    margin-right: 1rem;
+    font-weight: 500;
+}
+
+.star-rating {
+    flex: 1;
+    padding: 0.4rem 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fff;
+    font-size: 0.9rem;
+    appearance: none;
+}
+
+.field-wrapper {
+    position: relative;
+    width: 48%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    padding: 0 0.75rem;
+}
+
+.field-wrapper .label {
+    color: #999;
+    font-size: 1rem;
+}
+
+.field-wrapper .icon {
+    margin-right: 0.5rem;
+}
+
+.field {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: none !important;
+    outline: none !important;
+    background-color: transparent;
+}
+
+.textarea {
+    width: 100%;
+    height: 12rem !important;
+    resize: vertical;
+    padding: 0.75rem !important;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+}
+
+.btn.theme-element {
+    padding: 0.75rem 1.5rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn.theme-element:hover {
+    background-color: #0056b3;
+}
+
+</style>
+@endpush
+
 @section('content')
 
 <header class="page">
@@ -416,42 +526,64 @@ $page = 'room';
                         </div>
 
                     </div>
-                    <div class="room_main-cards_card accent">
-                        <h3 class="title">Stay Longer, Save More</h3>
-                        <p class="text">It's simple: the longer you stay, the more you save!</p>
-                        <div class="content">
-                            <p class="text">Save up to <b>20%</b> off the nightly rate on stays between 7-14 nights</p>
-                            <p class="text">Save up to <b>30%</b> off the nightly rate on stays between 14-29 nights</p>
-                        </div>
+
+                    <div class="room_main-cards_card" style="padding: 0; height: 18rem;">
+                        <iframe
+                            width="100%"
+                            height="100%"
+                            style="border:0"
+                            loading="lazy"
+                            allowfullscreen
+                            referrerpolicy="no-referrer-when-downgrade"
+                            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAFmDPs9yBFzKNC6o0ozgOP5c_Rmrz7F1k&q={{ $room->property->latitude && $room->property->longitude ? $room->property->latitude . ',' . $room->property->longitude : setting('map', '3.139003,101.686855') }}&zoom=8&maptype=roadmap">
+                        </iframe>
                     </div>
+
+                 
                 </div>
             </div>
-            <section class="room_comments col-lg-8">
-                <h3 class="room_comments-header">Post comments</h3>
-                <ul class="room_comments-list">
-                    <li class="list-item d-flex flex-column flex-sm-row align-items-start">
-                        <div class="media">
-                            <picture>
-                                <source data-srcset="img/hero.webp" srcset="img/hero.webp" />
-                                <img class="lazy" data-src="img/hero.webp" src="img/hero.webp" alt="media" />
-                            </picture>
-                        </div>
-                        <div class="main">
-                            <div class="main_info d-flex flex-column">
-                                <span class="name h4">Gloria Ellis</span>
-                                <span class="date">June 16, 2021</span>
+
+            <div class="row">
+                <section class="room_comments col-md-6">
+                    <h3 class="room_comments-header">Post comments</h3>
+                    <ul class="room_comments-list">
+                        <li class="list-item d-flex flex-column flex-sm-row align-items-start">
+                            <div class="media">
+                                <picture>
+                                    <source data-srcset="img/hero.webp" srcset="img/hero.webp" />
+                                    <img class="lazy" data-src="img/hero.webp" src="img/hero.webp" alt="media" />
+                                </picture>
                             </div>
-                            <p class="text">
-                                Ac placerat vestibulum lectus mauris ultrices. Velit scelerisque in dictum non consectetur a. Eget
-                                nunc lobortis mattis aliquam faucibus purus in. Ultricies leo integer malesuada nunc.
-                            </p>
-                        </div>
-                        <a class="replyTrigger" href="#">
-                            <span class="icon-reply"></span>
-                        </a>
-                    </li>
-                </ul>
-            </section>
+                            <div class="main">
+                                <div class="main_info d-flex flex-column">
+                                    <span class="name h4">Gloria Ellis</span>
+                                    <span class="date">June 16, 2021</span>
+                                </div>
+                                <p class="text">
+                                    Ac placerat vestibulum lectus mauris ultrices. Velit scelerisque in dictum non consectetur a. Eget
+                                    nunc lobortis mattis aliquam faucibus purus in. Ultricies leo integer malesuada nunc.
+                                </p>
+                            </div>
+                            <a class="replyTrigger" href="#">
+                                <span class="icon-reply"></span>
+                            </a>
+                        </li>
+                    </ul>
+                    
+                </section>
+                <div class="col-md-6">
+                <div class="room_main-cards_card  accent">
+                    <h3 class="title">Stay Longer, Save More</h3>
+                    <p class="text">It's simple: the longer you stay, the more you save!</p>
+                    <div class="content">
+                        <p class="text">Save up to <b>20%</b> off the nightly rate on stays between 7-14 nights</p>
+                        <p class="text">Save up to <b>30%</b> off the nightly rate on stays between 14-29 nights</p>
+                    </div>
+                </div>
+                </div>
+
+            </div>
+
             <section class="review col-lg-8">
                 <h3 class="review_header">Leave comment</h3>
                 <form
