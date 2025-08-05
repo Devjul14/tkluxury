@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\DB;
 class OccupancyRateWidget extends ChartWidget
 {
     protected static ?string $heading = 'Occupancy Rate';
-    protected static ?int $duration = 1;
     protected static ?int $sort = 3;
 
     public ?string $filter = 'yearly';
