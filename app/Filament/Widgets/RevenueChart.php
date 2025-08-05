@@ -22,6 +22,11 @@ class RevenueChart extends LineChartWidget
         ];
     }
 
+    public static function canView(): bool
+    {
+        return in_array(auth()->user()->role, ['admin', 'staff']);
+    }
+
     protected function getData(): array
     {
         $query = Booking::query()->where('status', 'completed');

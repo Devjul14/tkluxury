@@ -11,6 +11,11 @@ class BookingPipelineWidget extends BaseWidget
 {
     protected static ?int $sort = 1;
 
+    public static function canView(): bool
+    {
+        return in_array(auth()->user()->role, ['admin', 'staff']);
+    }
+
     protected function getStats(): array
     {
         $statuses = [

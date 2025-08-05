@@ -15,6 +15,11 @@ class OccupancyRateWidget extends ChartWidget
 
     public ?string $filter = 'yearly';
 
+    public static function canView(): bool
+    {
+        return in_array(auth()->user()->role, ['admin', 'staff']);
+    }
+
     public function setFilter(string $filter): void
     {
         $this->filter = $filter;
