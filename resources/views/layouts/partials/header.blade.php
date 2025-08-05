@@ -47,13 +47,13 @@
                             aria-expanded="false"
                             aria-controls="roomMenu"
                             data-page="rooms">
-                            Rooms
+                            Properties
                             <i class="icon-chevron_down--entypo icon"></i>
                         </a>
                         <div class="dropdown-menu collapse" id="roomMenu">
                             <ul class="dropdown-list">
                                 <li class="list-item" data-main="true">
-                                    <a class="dropdown-item nav-item" data-page="rooms" href="{{ route('rooms.index') }}">Rooms</a>
+                                    <a class="dropdown-item nav-item" data-page="rooms" href="{{ route('rooms.index') }}">Properties</a>
                                 </li>
                                 <li class="list-item">
                                     <a class="dropdown-item nav-item" data-page="room" href="{{ route('rooms.show', 1) }}">Single room</a>
