@@ -58,23 +58,8 @@ class DatabaseSeeder extends Seeder
             PropertySeeder::class,
             RoomSeeder::class,
             SettingSeeder::class,
+            ReviewSeeder::class,
+            BookingSeeder::class,
         ]);
     }
 }
-
-// $table->id();
-// $table->string('name');
-// $table->string('email')->unique();
-// $table->timestamp('email_verified_at')->nullable();
-// $table->string('password');
-// $table->string('phone')->nullable();
-// $table->enum('user_type', ['student', 'admin', 'staff'])->default('student');
-// $table->string('profile_image')->nullable();
-// $table->date('date_of_birth')->nullable();
-// $table->enum('gender', ['male', 'female', 'other'])->nullable();
-// $table->string('nationality')->nullable();
-// $table->string('emergency_contact_name')->nullable();
-// $table->string('emergency_contact_phone')->nullable();
-// $table->boolean('is_active')->default(true);
-// $table->rememberToken();
-// $table->timestamps();
