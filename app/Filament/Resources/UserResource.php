@@ -5,11 +5,11 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Forms;
+use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -18,10 +18,15 @@ class UserResource extends Resource
     protected static ?string $model = User::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
-    
+
     protected static ?string $navigationGroup = 'Student Management';
-    
+
     protected static ?int $navigationSort = 1;
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->check() && in_array(auth()->user()->user_type, ['admin', 'staff']);
+    }
 
     public static function form(Form $form): Form
     {
@@ -50,8 +55,8 @@ class UserResource extends Resource
                         Forms\Components\FileUpload::make('profile_image')
                             ->image()
                             ->directory('users/profiles'),
-                    ])->columns(2),
-                
+                    ])
+                    ->columns(2),
                 Forms\Components\Section::make('Personal Information')
                     ->schema([
                         Forms\Components\DatePicker::make('date_of_birth'),
@@ -63,8 +68,8 @@ class UserResource extends Resource
                             ]),
                         Forms\Components\TextInput::make('nationality')
                             ->maxLength(255),
-                    ])->columns(3),
-                
+                    ])
+                    ->columns(3),
                 Forms\Components\Section::make('Emergency Contact')
                     ->schema([
                         Forms\Components\TextInput::make('emergency_contact_name')
@@ -72,17 +77,18 @@ class UserResource extends Resource
                         Forms\Components\TextInput::make('emergency_contact_phone')
                             ->tel()
                             ->maxLength(255),
-                    ])->columns(2),
-                
+                    ])
+                    ->columns(2),
                 Forms\Components\Section::make('Account Settings')
                     ->schema([
                         Forms\Components\TextInput::make('password')
                             ->password()
-                            ->dehydrated(fn ($state) => filled($state))
-                            ->required(fn (string $context): bool => $context === 'create'),
+                            ->dehydrated(fn($state) => filled($state))
+                            ->required(fn(string $context): bool => $context === 'create'),
                         Forms\Components\Toggle::make('is_active')
                             ->required(),
-                    ])->columns(2),
+                    ])
+                    ->columns(2),
             ]);
     }
 
@@ -103,7 +109,7 @@ class UserResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('user_type')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'admin' => 'primary',
                         'student' => 'success',
                         'staff' => 'warning',
