@@ -5,12 +5,15 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\PropertyResource\Pages;
 use App\Filament\Resources\PropertyResource\RelationManagers;
 use App\Models\Property;
-use Filament\Forms;
+use Dotswan\MapPicker\Fields\Map;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Forms;
+use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PropertyResource extends Resource
@@ -18,9 +21,9 @@ class PropertyResource extends Resource
     protected static ?string $model = Property::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-home-modern';
-    
+
     protected static ?string $navigationGroup = 'Property Management';
-    
+
     protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
@@ -53,8 +56,8 @@ class PropertyResource extends Resource
                                 'dormitory' => 'Dormitory',
                             ])
                             ->required(),
-                    ])->columns(2),
-                
+                    ])
+                    ->columns(2),
                 Forms\Components\Section::make('Address')
                     ->schema([
                         Forms\Components\Textarea::make('address')
@@ -79,8 +82,61 @@ class PropertyResource extends Resource
                             ->numeric()
                             ->step(0.001)
                             ->suffix('km'),
-                    ])->columns(2),
-                
+                        Map::make('map')
+                            ->label('Location')
+                            ->columnSpanFull()
+                            ->defaultLocation(latitude: 3.139003, longitude: 101.686855)
+                            ->draggable(true)
+                            ->clickable(true)
+                            ->zoom(8)
+                            ->minZoom(0)
+                            ->maxZoom(28)
+                            ->tilesUrl('https://tile.openstreetmap.de/{z}/{x}/{y}.png')
+                            ->detectRetina(true)
+                            // Marker Configuration
+                            ->showMarker(true)
+                            ->markerColor('#3b82f6')
+                            ->markerIconSize([36, 36])
+                            ->markerIconAnchor([18, 36])
+                            // Controls
+                            ->showFullscreenControl(true)
+                            ->showZoomControl(true)
+                            // Location Features
+                            ->rangeSelectField('distance')
+                            // GeoMan Integration
+                            ->geoManPosition('topleft')
+                            ->drawCircleMarker(true)
+                            ->dragMode(true)
+                            ->cutPolygon(true)
+                            ->editPolygon(true)
+                            ->deleteLayer(true)
+                            ->setColor('#3388ff')
+                            ->setFilledColor('#cad9ec')
+                            ->snappable(true, 20)
+                            ->extraControl(['customControl' => true])
+                            ->extraTileControl(['customTileOption' => 'value'])
+                            ->afterStateHydrated(function ($state, ?Model $record, callable $set) {
+                                if (!$record) {
+                                    return;
+                                }
+
+                                if ($record->latitude && $record->longitude) {
+                                    $set('map', [
+                                        'lat' => (float) number_format((float) $record->latitude, 5, '.', ''),
+                                        'lng' => (float) number_format((float) $record->longitude, 5, '.', ''),
+                                    ]);
+                                    $set('latitude', (float) number_format((float) $record->latitude, 5, '.', ''));
+                                    $set('longitude', (float) number_format((float) $record->longitude, 5, '.', ''));
+                                }
+                            })
+                            ->afterStateUpdated(function ($state, Set $set) {
+                                if (is_array($state) && isset($state['lat'], $state['lng'])) {
+                                    $set('latitude', (float) number_format((float) $state['lat'], 5, '.', ''));
+                                    $set('longitude', (float) number_format((float) $state['lng'], 5, '.', ''));
+                                }
+                            })
+                    ])
+                    ->columns(2),
                 Forms\Components\Section::make('Room Information')
                     ->schema([
                         Forms\Components\TextInput::make('total_rooms')
@@ -101,8 +157,8 @@ class PropertyResource extends Resource
                             ->numeric()
                             ->minValue(1)
                             ->suffix('months'),
-                    ])->columns(2),
-                
+                    ])
+                    ->columns(2),
                 Forms\Components\Section::make('Pricing')
                     ->schema([
                         Forms\Components\TextInput::make('price_per_month')
@@ -117,15 +173,15 @@ class PropertyResource extends Resource
                             ->numeric()
                             ->prefix('$')
                             ->default(0),
-                    ])->columns(3),
-                
+                    ])
+                    ->columns(3),
                 Forms\Components\Section::make('Availability')
                     ->schema([
                         Forms\Components\DatePicker::make('available_from')
                             ->required(),
                         Forms\Components\DatePicker::make('available_until'),
-                    ])->columns(2),
-                
+                    ])
+                    ->columns(2),
                 Forms\Components\Section::make('Features')
                     ->schema([
                         Forms\Components\Toggle::make('utility_costs_included')
@@ -140,8 +196,8 @@ class PropertyResource extends Resource
                                 'under_maintenance' => 'Under Maintenance',
                             ])
                             ->required(),
-                    ])->columns(3),
-                
+                    ])
+                    ->columns(3),
                 Forms\Components\Section::make('Settings')
                     ->schema([
                         Forms\Components\Toggle::make('is_active')
@@ -150,7 +206,8 @@ class PropertyResource extends Resource
                             ->maxLength(65535)
                             ->columnSpanFull(),
                         Forms\Components\DatePicker::make('acquisition_date'),
-                    ])->columns(2),
+                    ])
+                    ->columns(2),
             ]);
     }
 
@@ -189,7 +246,7 @@ class PropertyResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('maintenance_status')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'excellent' => 'success',
                         'good' => 'info',
                         'fair' => 'warning',

@@ -965,7 +965,7 @@ $page = 'index';
         </div>
         <div class="contacts_map">
             <div style="width: 100%; height: 100%;">
-            <iframe
+                <iframe
                     width="100%"
                     height="100%"
                     style="border:0"
