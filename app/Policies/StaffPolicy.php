@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\StaffPolicy;
+use App\Models\Staff;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
@@ -13,15 +13,15 @@ class StaffPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return in_array($user->user_type, ['admin']);
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, StaffPolicy $staffPolicy): bool
+    public function view(User $user, Staff $staff): bool
     {
-        return false;
+        return in_array($user->user_type, ['admin']);
     }
 
     /**
@@ -29,38 +29,38 @@ class StaffPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return in_array($user->user_type, ['admin']);
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, StaffPolicy $staffPolicy): bool
+    public function update(User $user, Staff $staff): bool
     {
-        return false;
+        return in_array($user->user_type, ['admin']);
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, StaffPolicy $staffPolicy): bool
+    public function delete(User $user, Staff $staff): bool
     {
-        return false;
+        return in_array($user->user_type, ['admin']);
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, StaffPolicy $staffPolicy): bool
+    public function restore(User $user, Staff $staff): bool
     {
-        return false;
+        return in_array($user->user_type, ['admin']);
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, StaffPolicy $staffPolicy): bool
+    public function forceDelete(User $user, Staff $staff): bool
     {
-        return false;
+        return in_array($user->user_type, ['admin']);
     }
 }

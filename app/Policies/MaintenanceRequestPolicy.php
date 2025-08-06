@@ -13,7 +13,7 @@ class MaintenanceRequestPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return auth()->check();
     }
 
     /**
@@ -21,7 +21,7 @@ class MaintenanceRequestPolicy
      */
     public function view(User $user, MaintenanceRequest $maintenanceRequest): bool
     {
-        return false;
+        return auth()->check();
     }
 
     /**
@@ -29,7 +29,7 @@ class MaintenanceRequestPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return auth()->check();
     }
 
     /**
@@ -37,7 +37,7 @@ class MaintenanceRequestPolicy
      */
     public function update(User $user, MaintenanceRequest $maintenanceRequest): bool
     {
-        return false;
+        return in_array($user->user_type, ['staff', 'admin']);
     }
 
     /**
@@ -45,7 +45,7 @@ class MaintenanceRequestPolicy
      */
     public function delete(User $user, MaintenanceRequest $maintenanceRequest): bool
     {
-        return false;
+        return in_array($user->user_type, ['staff', 'admin']);
     }
 
     /**
@@ -53,7 +53,7 @@ class MaintenanceRequestPolicy
      */
     public function restore(User $user, MaintenanceRequest $maintenanceRequest): bool
     {
-        return false;
+        return in_array($user->user_type, ['staff', 'admin']);
     }
 
     /**
@@ -61,6 +61,6 @@ class MaintenanceRequestPolicy
      */
     public function forceDelete(User $user, MaintenanceRequest $maintenanceRequest): bool
     {
-        return false;
+        return in_array($user->user_type, ['staff', 'admin']);
     }
 }

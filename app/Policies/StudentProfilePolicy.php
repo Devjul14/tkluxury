@@ -13,7 +13,7 @@ class StudentProfilePolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return in_array($user->user_type, ['staff', 'admin']);
     }
 
     /**
@@ -21,7 +21,7 @@ class StudentProfilePolicy
      */
     public function view(User $user, StudentProfile $studentProfile): bool
     {
-        return false;
+        return in_array($user->user_type, ['staff', 'admin']);
     }
 
     /**
@@ -29,7 +29,7 @@ class StudentProfilePolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return in_array($user->user_type, ['staff', 'admin']);
     }
 
     /**
@@ -37,7 +37,7 @@ class StudentProfilePolicy
      */
     public function update(User $user, StudentProfile $studentProfile): bool
     {
-        return false;
+        return in_array($user->user_type, ['staff', 'admin']);
     }
 
     /**
@@ -45,7 +45,7 @@ class StudentProfilePolicy
      */
     public function delete(User $user, StudentProfile $studentProfile): bool
     {
-        return false;
+        return in_array($user->user_type, ['staff', 'admin']);
     }
 
     /**
@@ -53,7 +53,7 @@ class StudentProfilePolicy
      */
     public function restore(User $user, StudentProfile $studentProfile): bool
     {
-        return false;
+        return in_array($user->user_type, ['staff', 'admin']);
     }
 
     /**
@@ -61,6 +61,6 @@ class StudentProfilePolicy
      */
     public function forceDelete(User $user, StudentProfile $studentProfile): bool
     {
-        return false;
+        return in_array($user->user_type, ['staff', 'admin']);
     }
 }
