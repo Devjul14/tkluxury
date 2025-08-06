@@ -38,6 +38,12 @@ class SettingSeeder extends Seeder
                 'value' => 'Hero sub text aenean pharetra magna ac. Et tortor consequat id porta nibh venenatis cras sed. Vel turpis nunc eget lorem dolor sed',
             ],
             [
+                'group' => 'homepage',
+                'key' => 'map',
+                'type' => 'text',
+                'value' => '-35.23729851439285, 139.5592634004934',
+            ],
+            [
                 'group' => 'contact',
                 'key' => 'contact_text',
                 'type' => 'text',
