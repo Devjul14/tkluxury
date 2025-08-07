@@ -60,6 +60,7 @@ class DatabaseSeeder extends Seeder
             SettingSeeder::class,
             ReviewSeeder::class,
             BookingSeeder::class,
+            ServiceSeeder::class
         ]);
     }
 }

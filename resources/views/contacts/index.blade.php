@@ -19,12 +19,12 @@ $page = 'contacts';
 </header>
 
 <section class="contacts section">
-    <div class="container container--contacts d-xl-flex align-items-center">
+    <div class="container container--contacts d-xl-flex align-items-center p-4">
         <div class="contacts_info">
             <div class="contacts_info-header">
-                <h2 class="contacts_info-header_title" data-aos="fade-down">Get In Touch</h2>
+                <h2 class="contacts_info-header_title" data-aos="fade-down">Contacts</h2>
                 <p class="contacts_info-header_text" data-aos="fade-up">
-                    We're here to help and answer any questions you might have. We look forward to hearing from you.
+                    {{ setting('contact_text','Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni quo quos quis perferendis aperiam nulla voluptatum consequatur ab id saepe?')}}
                 </p>
             </div>
             <ul class="contacts_info-list col-xl-7 d-md-flex flex-wrap">
@@ -32,16 +32,14 @@ $page = 'contacts';
                     <span class="theme-element theme-element--light media">
                         <span class="icon-call icon">
                             <svg width="28" height="29" viewBox="0 0 28 29" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M26.9609 19.75L21 17.1797C20.7812 17.125 20.5625 17.0703 20.3438 17.0703C19.7969 17.0703 19.3047 17.2891 19.0312 17.6719L16.625 20.625C12.7969 18.7656 9.73438 15.7031 7.875 11.875L10.8281 9.46875C11.2109 9.19531 11.4297 8.70312 11.4297 8.15625C11.4297 7.9375 11.375 7.71875 11.3203 7.5L8.75 1.53906C8.47656 0.9375 7.875 0.5 7.21875 0.5C7.05469 0.5 6.94531 0.554688 6.83594 0.554688L1.3125 1.86719C0.546875 2.03125 0 2.6875 0 3.50781C0 17.3438 11.2109 28.5 24.9922 28.5C25.8125 28.5 26.4688 27.9531 26.6875 27.1875L27.9453 21.6641C27.9453 21.5547 27.9453 21.4453 27.9453 21.2812C27.9453 20.625 27.5625 20.0234 26.9609 19.75ZM24.9375 26.75C12.1406 26.75 1.75 16.3594 1.75 3.5625L7.16406 2.30469L9.67969 8.15625L5.6875 11.4375C8.36719 17.0703 11.4297 20.1328 17.1172 22.8125L20.3438 18.8203L26.1953 21.3359L24.9375 26.75Z"
-                                    fill="currentColor" />
+                                <path d="M26.9609 19.75L21 17.1797C20.7812 17.125 20.5625 17.0703 20.3438 17.0703C19.7969 17.0703 19.3047 17.2891 19.0312 17.6719L16.625 20.625C12.7969 18.7656 9.73438 15.7031 7.875 11.875L10.8281 9.46875C11.2109 9.19531 11.4297 8.70312 11.4297 8.15625C11.4297 7.9375 11.375 7.71875 11.3203 7.5L8.75 1.53906C8.47656 0.9375 7.875 0.5 7.21875 0.5C7.05469 0.5 6.94531 0.554688 6.83594 0.554688L1.3125 1.86719C0.546875 2.03125 0 2.6875 0 3.50781C0 17.3438 11.2109 28.5 24.9922 28.5C25.8125 28.5 26.4688 27.9531 26.6875 27.1875L27.9453 21.6641C27.9453 21.5547 27.9453 21.4453 27.9453 21.2812C27.9453 20.625 27.5625 20.0234 26.9609 19.75ZM24.9375 26.75C12.1406 26.75 1.75 16.3594 1.75 3.5625L7.16406 2.30469L9.67969 8.15625L5.6875 11.4375C8.36719 17.0703 11.4297 20.1328 17.1172 22.8125L20.3438 18.8203L26.1953 21.3359L24.9375 26.75Z" fill="currentColor" />
                             </svg>
                         </span>
                     </span>
                     <div class="main d-flex flex-column">
                         <h4 class="main_title">Phone</h4>
-                        <a class="link" href="tel:{{ config('contact.phone.primary', '+1234567890') }}">{{ config('contact.phone.primary', '(329) 580-7077') }}</a>
-                        <a class="link" href="tel:{{ config('contact.phone.secondary', '+1234567890') }}">{{ config('contact.phone.secondary', '(650) 382-5020') }}</a>
+                        <a class="link" href="tel:{{ setting('phone_primary', '+1234567890') }}">{{ setting('phone_primary', '(329) 580-7077') }}</a>
+                        <!-- <a class="link" href="tel:{{ setting('phone_secondary', '+1234567890') }}">{{ setting('phone_secondary', '(650) 382-5020') }}</a> -->
                     </div>
                 </li>
                 <li class="contacts_info-list_item col-md-6 d-flex align-items-center" data-order="2" data-aos="fade-up">
@@ -50,8 +48,8 @@ $page = 'contacts';
                     </span>
                     <div class="main d-flex flex-column">
                         <h4 class="main_title">Email</h4>
-                        <a class="link" href="mailto:{{ config('contact.email.primary', 'contact@example.com') }}">{{ config('contact.email.primary', 'contact@example.com') }}</a>
-                        <a class="link" href="mailto:{{ config('contact.email.secondary', 'support@example.com') }}">{{ config('contact.email.secondary', 'support@example.com') }}</a>
+                        <a class="link" href="mailto:{{ setting('email', 'contact@example.com') }}">{{ setting('contact.email.primary', 'contact@example.com') }}</a>
+                        <!-- <a class="link" href="mailto:{{ setting('contact.email.secondary', 'contact@example.com') }}">{{ setting('contact.email.secondary', 'contact@example.com') }}</a> -->
                     </div>
                 </li>
                 <li class="contacts_info-list_item col-md-6 d-flex align-items-center" data-order="3" data-aos="fade-up">
@@ -60,8 +58,8 @@ $page = 'contacts';
                     </span>
                     <div class="main d-flex flex-column">
                         <h4 class="main_title">Location</h4>
-                        <span>{{ config('contact.address.line1', '54826 Fadel Circles') }}</span>
-                        <span>{{ config('contact.address.line2', 'Darrylstad, AZ 90995') }}</span>
+                        <span>{{ setting('address_line1', '54826 Fadel Circles') }}</span>
+                        <span>{{ setting('address_line2', 'Darrylstad, AZ 90995') }}</span>
                     </div>
                 </li>
                 <li class="contacts_info-list_item col-md-6 d-flex align-items-center" data-order="4" data-aos="fade-up">
@@ -70,14 +68,24 @@ $page = 'contacts';
                     </span>
                     <div class="main d-flex flex-column">
                         <h4 class="main_title">Working Time</h4>
-                        <span>{{ config('contact.hours.days', 'Everyday') }}</span>
-                        <span>{{ config('contact.hours.time', '10 am — 20 pm') }}</span>
+                        <span>{{ setting('hours_days', 'Everyday') }}</span>
+                        <span>{{ setting('hours_time', '10 am — 20 pm') }}</span>
                     </div>
                 </li>
             </ul>
         </div>
         <div class="contacts_map">
-            <div id="map"></div>
+            <div style="width: 100%; height: 100%;">
+                <iframe
+                    width="100%"
+                    height="100%"
+                    style="border:0"
+                    loading="lazy"
+                    allowfullscreen
+                    referrerpolicy="no-referrer-when-downgrade"
+                    src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAFmDPs9yBFzKNC6o0ozgOP5c_Rmrz7F1k&q={{ setting('map', '3.139003,101.686855') }}&zoom=12&maptype=roadmap">
+                </iframe>
+            </div>
         </div>
     </div>
 </section>

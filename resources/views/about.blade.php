@@ -15,7 +15,7 @@ $page = 'about';
             </li>
 
             <li class="list-item">
-                <a class="link" href="#">About Hosteller</a>
+                <a class="link" href="#">About Luxury</a>
             </li>
         </ul> -->
         <h1 class="page_title">About</h1>
@@ -34,7 +34,7 @@ $page = 'about';
             </div>
             <div class="text-center mb-4">
                 <p class="about_main-content_text" data-aos="fade-up" data-aos-delay="50">
-                    Founded in 2010, Hosteller has been providing exceptional accommodation experiences for travelers from around the world.
+                    Founded in 2010, Luxury has been providing exceptional accommodation experiences for travelers from around the world.
                     What started as a small hostel has grown into a beloved destination for backpackers, students, and budget-conscious travelers.
                 </p>
                 <p class="about_main-content_text" data-aos="fade-up" data-aos-delay="100">
@@ -73,7 +73,7 @@ $page = 'about';
     <section class="about_benefits section">
         <div class="container d-xl-flex align-items-center">
             <div class="about_stages-main col-xl-6">
-                <h2 class="about_benefits-header">Why Choose Hosteller?</h2>
+                <h2 class="about_benefits-header">Why Choose Luxury?</h2>
                 <!-- <p class="benefits_header-text" data-aos="fade-up" data-aos-delay="50">
                     We offer everything you need for a comfortable and memorable stay
                 </p> -->
