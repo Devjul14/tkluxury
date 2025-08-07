@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Property;
+use App\Models\Room;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Room;
-use App\Models\Property;
 
 class RoomSeeder extends Seeder
 {
@@ -29,7 +29,7 @@ class RoomSeeder extends Seeder
 
                 Room::create([
                     'property_id' => $property->id,
-                    'room_number' => $i,
+                    'room_number' => sprintf('%s-%s', preg_replace('/\d/', '', $property->property_code), str_pad($i, 2, '0', STR_PAD_LEFT)),
                     'room_type' => $roomType,
                     'floor_number' => rand(1, 3),
                     'size_sqm' => rand(15, 35),
@@ -51,4 +51,4 @@ class RoomSeeder extends Seeder
             }
         }
     }
-} 
+}
