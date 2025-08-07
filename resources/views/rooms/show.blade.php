@@ -12,109 +12,108 @@ $page = 'room';
 <link rel="stylesheet" href="{{ asset('asset/css/room.min.css') }}">
 <style>
     .review {
-    padding: 2rem;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-    margin-bottom: 2rem;
-}
+        padding: 2rem;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        margin-bottom: 2rem;
+    }
 
-.review_header {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 1.5rem;
-    border-bottom: 2px solid #e0e0e0;
-    padding-bottom: 0.5rem;
-}
+    .review_header {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        border-bottom: 2px solid #e0e0e0;
+        padding-bottom: 0.5rem;
+    }
 
-.review_form {
-    gap: 1rem;
-}
+    .review_form {
+        gap: 1rem;
+    }
 
-.review_rating {
-    width: 100%;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-}
+    .review_rating {
+        width: 100%;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
 
-.review_rating-block {
-    flex: 1 1 45%;
-    background: #f9f9f9;
-    padding: 0.75rem 1rem;
-    border-radius: 6px;
-    margin-bottom: 1rem;
-}
+    .review_rating-block {
+        flex: 1 1 45%;
+        background: #f9f9f9;
+        padding: 0.75rem 1rem;
+        border-radius: 6px;
+        margin-bottom: 1rem;
+    }
 
-.review_rating-block label {
-    flex: 1;
-    margin-right: 1rem;
-    font-weight: 500;
-}
+    .review_rating-block label {
+        flex: 1;
+        margin-right: 1rem;
+        font-weight: 500;
+    }
 
-.star-rating {
-    flex: 1;
-    padding: 0.4rem 0.6rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background: #fff;
-    font-size: 0.9rem;
-    appearance: none;
-}
+    .star-rating {
+        flex: 1;
+        padding: 0.4rem 0.6rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background: #fff;
+        font-size: 0.9rem;
+        appearance: none;
+    }
 
-.field-wrapper {
-    position: relative;
-    width: 48%;
-    display: flex;
-    align-items: center;
-    margin-bottom: 1rem;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    padding: 0 0.75rem;
-}
+    .field-wrapper {
+        position: relative;
+        width: 48%;
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        padding: 0 0.75rem;
+    }
 
-.field-wrapper .label {
-    color: #999;
-    font-size: 1rem;
-}
+    .field-wrapper .label {
+        color: #999;
+        font-size: 1rem;
+    }
 
-.field-wrapper .icon {
-    margin-right: 0.5rem;
-}
+    .field-wrapper .icon {
+        margin-right: 0.5rem;
+    }
 
-.field {
-    width: 100%;
-    padding: 0.75rem;
-    font-size: 1rem;
-    border: none !important;
-    outline: none !important;
-    background-color: transparent;
-}
+    .field {
+        width: 100%;
+        padding: 0.75rem;
+        font-size: 1rem;
+        border: none !important;
+        outline: none !important;
+        background-color: transparent;
+    }
 
-.textarea {
-    width: 100%;
-    height: 12rem !important;
-    resize: vertical;
-    padding: 0.75rem !important;
-    margin-bottom: 1rem;
-    border: 1px solid #ccc !important;
-    border-radius: 4px !important;
-}
+    .textarea {
+        width: 100%;
+        height: 12rem !important;
+        resize: vertical;
+        padding: 0.75rem !important;
+        margin-bottom: 1rem;
+        border: 1px solid #ccc !important;
+        border-radius: 4px !important;
+    }
 
-.btn.theme-element {
-    padding: 0.75rem 1.5rem;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    font-weight: 600;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
+    .btn.theme-element {
+        padding: 0.75rem 1.5rem;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        font-weight: 600;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
 
-.btn.theme-element:hover {
-    background-color: #0056b3;
-}
-
+    .btn.theme-element:hover {
+        background-color: #0056b3;
+    }
 </style>
 @endpush
 
@@ -412,16 +411,16 @@ $page = 'room';
                     </section>
 
                     <section class="facilities">
-                    <h4 class="facilities_header">Services</h4>
+                        <h4 class="facilities_header">Services</h4>
                         <div class="facilities_list d-sm-flex flex-wrap">
-                           @foreach($services as $service)
-                           <label for="service-{{ $service->id }}" class="mx-2 facilities_list-block_item d-flex align-items-center">
+                            @foreach($services as $service)
+                            <label for="service-{{ $service->id }}" class="mx-2 facilities_list-block_item d-flex align-items-center">
                                 <span class="icon">
                                     <input type="checkbox" id="service-{{ $service->id }}" name="services[]" value="{{ $service->id }}" class="checkbox_input">
                                 </span>
                                 {{ $service->title }}
                             </label>
-                           @endforeach
+                            @endforeach
                         </div>
                     </section>
                     <!-- <section class="rules">
@@ -539,7 +538,7 @@ $page = 'room';
                         </iframe>
                     </div>
 
-                 
+
                 </div>
             </div>
 
@@ -569,17 +568,17 @@ $page = 'room';
                             </a>
                         </li>
                     </ul>
-                    
+
                 </section>
                 <div class="col-md-6">
-                <div class="room_main-cards_card  accent">
-                    <h3 class="title">Stay Longer, Save More</h3>
-                    <p class="text">It's simple: the longer you stay, the more you save!</p>
-                    <div class="content">
-                        <p class="text">Save up to <b>20%</b> off the nightly rate on stays between 7-14 nights</p>
-                        <p class="text">Save up to <b>30%</b> off the nightly rate on stays between 14-29 nights</p>
+                    <div class="room_main-cards_card  accent">
+                        <h3 class="title">Stay Longer, Save More</h3>
+                        <p class="text">It's simple: the longer you stay, the more you save!</p>
+                        <div class="content">
+                            <p class="text">Save up to <b>20%</b> off the nightly rate on stays between 7-14 nights</p>
+                            <p class="text">Save up to <b>30%</b> off the nightly rate on stays between 14-29 nights</p>
+                        </div>
                     </div>
-                </div>
                 </div>
 
             </div>
@@ -795,7 +794,7 @@ $page = 'room';
     </section>
     <!-- recommendation section end -->
     <!-- stages section start -->
-    <section class="about_stages section">
+    <!-- <section class="about_stages section">
         <div class="container d-xl-flex align-items-center">
             <div class="about_stages-main col-xl-6">
                 <h2 class="about_stages-main_header" data-aos="fade-right">Stages of booking a room</h2>
@@ -942,7 +941,7 @@ $page = 'room';
                 </picture>
             </div>
         </div>
-    </section>
+    </section> -->
     <!-- stages section end -->
     <!-- rooms section start -->
     <section class="rooms section--blockbg section">
@@ -1000,14 +999,14 @@ $page = 'room';
 <script src="{{ asset('asset/js/room.min.js') }}"></script>
 
 <script>
-        const bookings = document.querySelectorAll('button[type="submit"]');
+    const bookings = document.querySelectorAll('button[type="submit"]');
 
-        bookings.forEach((booking) => {
-            booking.addEventListener('click', function (e) {
-                e.preventDefault();
-                const form = this.closest('form');
-                form.submit();
-            });
+    bookings.forEach((booking) => {
+        booking.addEventListener('click', function(e) {
+            e.preventDefault();
+            const form = this.closest('form');
+            form.submit();
         });
-    </script>
+    });
+</script>
 @endpush
