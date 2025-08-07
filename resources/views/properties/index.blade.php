@@ -227,7 +227,7 @@ $page = 'properties';
                                     </div>
                                 </div>
                                 <div class="main_pricing d-flex flex-column align-items-md-end justify-content-md-between">
-                                    <a class="theme-element theme-element--accent btn" href="{{ route('properties.show', $property->property_code) }}">View Detail Property</a>
+                                    <a class="theme-element theme-element--accent btn" href="{{ route('properties.show', $property->property_code) }}">View Detail</a>
                                 </div>
                             </div>
                         </div>

@@ -9,7 +9,7 @@
 
                 </a>
                 <p class="footer_main-block_text">
-                    {{ config('app.description', 'Ut tellus elementum sagittis vitae et leo duis ut. Sit amet consectetur adipiscing elit duis. Ultrices gravida dictum fusce ut placer orci nulla pellentesque') }}
+                    {{ setting('hero_sub_text', 'Ut tellus elementum sagittis vitae et leo duis ut. Sit amet consectetur adipiscing elit duis. Ultrices gravida dictum fusce ut placer orci nulla pellentesque') }}
                 </p>
             </div>
 
@@ -23,7 +23,7 @@
                         <a class="link underlined underlined--white nav-item" data-page="about" href="{{ route('about') }}">About</a>
                     </li>
                     <li class="list-item">
-                        <a class="link underlined underlined--white nav-item" data-page="rooms" href="{{ route('rooms.index') }}">Rooms</a>
+                        <a class="link underlined underlined--white nav-item" data-page="rooms" href="{{ route('properties.index') }}">Properties</a>
                     </li>
                 </ul>
             </div>

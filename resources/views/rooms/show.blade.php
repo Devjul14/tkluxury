@@ -542,7 +542,7 @@ $page = 'room';
                 </div>
             </div>
 
-            <div class="row">
+            <!-- <div class="row">
                 <section class="room_comments col-md-6">
                     <h3 class="room_comments-header">Post comments</h3>
                     <ul class="room_comments-list">
@@ -647,7 +647,7 @@ $page = 'room';
                     <textarea class="field textarea required" id="reviewRoomMessage" placeholder="Message"></textarea>
                     <button class="btn theme-element theme-element--accent" type="submit">Submit</button>
                 </form>
-            </section>
+            </section> -->
         </div>
     </form>
     <!-- room section start -->
