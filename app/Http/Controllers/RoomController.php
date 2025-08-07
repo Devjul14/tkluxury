@@ -90,6 +90,7 @@ class RoomController extends Controller
             'pagedRooms' => $pagedRooms,
             'roomGuests' => Room::all()->pluck('capacity')->unique()->toArray(),
             'roomPrices' => $priceRanges,
+            'roomTypes' => Room::all()->pluck('room_type')->unique()->toArray(),
         ]);
     }
 

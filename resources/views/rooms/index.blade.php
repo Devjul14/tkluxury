@@ -9,7 +9,7 @@ $page = 'rooms';
 @endphp
 
 @push('styles')
-<style>
+<!-- <style>
     .field:not(.field.booking_group-field) {
         border: none !important;
     }
@@ -134,7 +134,187 @@ $page = 'rooms';
         z-index: 1;
         background: none;
     }
+</style> -->
+
+<style>
+  .filter-container {
+            background: white;
+            border-radius: 20px;
+            /* padding: 2rem; */
+            /* box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); */
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .rooms_main-filter_form {
+            width: 100%;
+        }
+        
+        .rooms_main-filter_form-wrapper {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 0;
+            align-items: end;
+            flex-wrap: wrap;
+        }
+        
+        .rooms_main-filter_form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .rooms_main-filter_form-group_label {
+            display: block;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .rooms_main-filter_form-group_wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            /* background: #f8f9fa; */
+            /* border: 2px solid #e9ecef; */
+            /* border-radius: 12px; */
+            /* padding: 0.75rem 1rem; */
+            transition: all 0.3s ease;
+        }
+        
+        .rooms_main-filter_form-group_wrapper:focus-within {
+            /* border-color: #667eea; */
+            /* box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25); */
+            background: white;
+        }
+        
+        .rooms_main-filter_form-group_wrapper .icon:first-child {
+            color: #6c757d;
+            margin-right: 0.75rem;
+            font-size: 1.1rem;
+        }
+        
+        .rooms_main-filter_form-group_field {
+            flex: 1;
+            border: none;
+            background: transparent;
+            color: #495057;
+            font-size: 1rem;
+            outline: none;
+            cursor: pointer;
+        }
+        
+        .rooms_main-filter_form-group_field input {
+            width: 100%;
+            border: none;
+            background: transparent;
+            outline: none;
+            color: #495057;
+            font-size: 1rem;
+        }
+        
+        .rooms_main-filter_form-group_field option {
+            padding: 0.5rem;
+        }
+        
+        .rooms_main-filter_form-group_wrapper .icon:last-child {
+            color: #6c757d;
+            margin-left: 0.5rem;
+            font-size: 0.8rem;
+            transition: transform 0.2s ease;
+        }
+        
+        .rooms_main-filter_form-group_wrapper:hover .icon:last-child {
+            transform: translateY(2px);
+        }
+        
+        .rooms_main-filter_form-submit {
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            height: 54px;
+            white-space: nowrap;
+            min-width: 120px;
+        }
+        
+        .rooms_main-filter_form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+        
+        .rooms_main-filter_form-submit:active {
+            transform: translateY(0);
+        }
+        
+        .rooms_main-filter_form-submit-text {
+            font-weight: 600;
+        }
+        
+        .form-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #2c3e50;
+            font-weight: 300;
+        }
+        
+        .form-subtitle {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #6c757d;
+            font-size: 1.1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .rooms_main-filter_form-wrapper {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .rooms_main-filter_form-group {
+                width: 100%;
+                min-width: unset;
+            }
+            
+            .filter-container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+        }
+        
+        /* Loading animation */
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+        
+        .loading .rooms_main-filter_form-submit {
+            background: #6c757d;
+        }
+        
+        .loading .rooms_main-filter_form-submit .icon {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
 </style>
+
 @endpush
 
 @section('content')
@@ -152,8 +332,8 @@ $page = 'rooms';
 <section class="rooms section">
     <div class="container">
         <div class="rooms_main">
-            <div class="rooms_main-filter">
-                <form id="filterForm" class="rooms_main-filter_form" action="{{ route('rooms.index') }}" method="GET">
+            <div class="rooms_main-filter mb-4">
+                <!-- <form id="filterForm" class="rooms_main-filter_form" action="{{ route('rooms.index') }}" method="GET">
                     <div class="rooms_main-filter_form-wrapper">
                         <div class="rooms_main-filter_form-group">
                             <label class="rooms_main-filter_form-group_label" for="checkIn">Check-in</label>
@@ -228,6 +408,88 @@ $page = 'rooms';
                         <span class="rooms_main-filter_form-submit-text">Search</span>
                         <i class="icon-search icon"></i>
                     </button>
+                </form> -->
+                <form id="filterForm" class="rooms_main-filter_form d-flex flex-column" action="/rooms" method="GET">
+                    <div class="rooms_main-filter_form-wrapper">
+                        <div class="rooms_main-filter_form-group">
+                            <label class="rooms_main-filter_form-group_label" for="checkIn">Check-in</label>
+                            <div class="rooms_main-filter_form-group_wrapper">
+                                <i class="fas fa-calendar icon"></i>
+                                <input
+                                    class="rooms_main-filter_form-group_field field"
+                                    type="date"
+                                    id="checkIn"
+                                    name="check_in"
+                                    value="{{ request('check_in', old('check_in')) }}"
+                                    placeholder="Add date" />
+                                <i class="fas fa-chevron-down icon"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="rooms_main-filter_form-group">
+                            <label class="rooms_main-filter_form-group_label" for="checkOut">Check-out</label>
+                            <div class="rooms_main-filter_form-group_wrapper">
+                                <i class="fas fa-calendar icon"></i>
+                                <input
+                                    class="rooms_main-filter_form-group_field field"
+                                    type="date"
+                                    id="checkOut"
+                                    value="{{ request('check_out', old('check_out')) }}"
+                                    placeholder="Add date"
+                                    name="check_out" />
+                                <i class="fas fa-chevron-down icon"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="rooms_main-filter_form-group">
+                            <label class="rooms_main-filter_form-group_label" for="guests">Guests</label>
+                            <div class="rooms_main-filter_form-group_wrapper">
+                                <i class="fas fa-user icon"></i>
+                                <select class="rooms_main-filter_form-group_field field" id="guest" name="guests">
+                                    <option value="">-- Guests --</option>
+                                    @foreach ($roomGuests as $guest)
+                                    <option value="{{ $guest }}" {{ request('guests') == $guest ? 'selected' : '' }}>{{ $guest }} Guests</option>
+                                    @endforeach
+                                </select>
+                                <i class="fas fa-chevron-down icon"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="rooms_main-filter_form-group">
+                            <label class="rooms_main-filter_form-group_label" for="price">Price Range</label>
+                            <div class="rooms_main-filter_form-group_wrapper">
+                                <i class="fas fa-dollar-sign icon"></i>
+                                <select class="rooms_main-filter_form-group_field field" id="price" name="price_range">
+                                    <option value="">All Prices</option>
+                                    @foreach ($roomPrices as $price)
+                                    <option value="{{ $price }}" {{ request('price_range') == $price ? 'selected' : '' }}>{{ $price }}</option>
+                                    @endforeach
+                                </select>
+                                <i class="fas fa-chevron-down icon"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="rooms_main-filter_form-group">
+                            <label class="rooms_main-filter_form-group_label" for="type">Room Type</label>
+                            <div class="rooms_main-filter_form-group_wrapper">
+                                <i class="fas fa-home icon"></i>
+                                <select class="rooms_main-filter_form-group_field field" id="type" name="room_type">
+                                    <option value="">All Types</option>
+                                    @foreach ($roomTypes as $type)
+                                    <option value="{{ $type }}" {{ request('room_type') == $type ? 'selected' : '' }}>{{ $type }}</option>
+                                    @endforeach
+                                </select>
+                                <i class="fas fa-chevron-down icon"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="rooms_main-filter_form-group">
+                            <button id="filterSubmit" class="rooms_main-filter_form-submit theme-element theme-element--accent btn" type="submit">
+                                <span class="rooms_main-filter_form-submit-text">Search</span>
+                                <i class="fas fa-search icon"></i>
+                            </button>
+                        </div>
+                    </div>
                 </form>
             </div>
             <div class="rooms_list">
