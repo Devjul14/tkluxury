@@ -53,7 +53,7 @@ $page = 'index';
                         </div>
                     </div>
                     <div class="booking_group d-flex flex-column">
-                        <span class="booking_group-label h5">Guests</span>
+                        <span class="booking_group-label h5">Student</span>
                         <div class="booking_group-wrapper booking_group-wrapper--guests">
                             <i class="icon-user icon"></i>
                             <div
@@ -105,7 +105,7 @@ $page = 'index';
         <div class="rooms_header d-sm-flex justify-content-between align-items-center">
             <h2 class="rooms_header-title" data-aos="fade-right">Properties</h2>
             <div class="wrapper" data-aos="fade-left">
-                <a class="btn theme-element theme-element--light" href="{{ route('rooms.index') ?? 'rooms.html' }}">View all rooms</a>
+                <a class="btn theme-element theme-element--light" href="{{ route('rooms.index') ?? 'rooms.html' }}">View all properties</a>
             </div>
         </div>
         <ul class="rooms_list d-md-flex flex-wrap">
@@ -140,7 +140,7 @@ $page = 'index';
                             </span>
                         </div>
                         <a class="link link--arrow d-inline-flex align-items-center" href="{{ route('rooms.show', $property->id) }}">
-                            See availability
+                            See more
                             <i class="icon-arrow_right icon"></i>
                         </a>
                     </div>
@@ -401,7 +401,7 @@ $page = 'index';
             </div>
         </div>
         <div class="main col-lg-6 d-lg-flex flex-column justify-content-between">
-            <h2 class="reviews_header" data-aos="fade-down">What our guests say</h2>
+            <h2 class="reviews_header" data-aos="fade-down">What our students say</h2>
             <div class="reviews_slider reviews_slider--main">
                 <div class="swiper-wrapper">
                     @forelse($reviews ?? [] as $review)
@@ -666,7 +666,7 @@ $page = 'index';
                     </div>
                 </div>
                 <div class="media_card media_card--bottom" data-aos="fade-right">
-                    <h4 class="media_card-text">Family Room with Private Bathroom</h4>
+                    <h4 class="media_card-text">Studio Room with Premium desk</h4>
                     <div class="media_card-pricing"><span class="h2">$149</span> / 1 night</div>
                     <a class="media_card-btn btn theme-element theme-element--light" href="{{ route('rooms.index') }}">See availability</a> //ini nanti ke detail property room
                 </div>
@@ -909,12 +909,12 @@ $page = 'index';
     <div class="container container--contacts d-xl-flex align-items-center p-4">
         <div class="contacts_info">
             <div class="contacts_info-header">
-                <h2 class="contacts_info-header_title" data-aos="fade-down">Contacts</h2>
+                <h2 class="contacts_info-header_title" data-aos="fade-down">Find properties near by institutes</h2>
                 <p class="contacts_info-header_text" data-aos="fade-up">
-                    {{ setting('contact_text','Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni quo quos quis perferendis aperiam nulla voluptatum consequatur ab id saepe?')}}
+                    {{ setting('nearby_text','Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni quo quos quis perferendis aperiam nulla voluptatum consequatur ab id saepe?')}}
                 </p>
             </div>
-            <ul class="contacts_info-list col-xl-7 d-md-flex flex-wrap">
+            <!-- <ul class="contacts_info-list col-xl-7 d-md-flex flex-wrap">
                 <li class="contacts_info-list_item col-md-6 d-flex align-items-center" data-order="1" data-aos="fade-up">
                     <span class="theme-element theme-element--light media">
                         <span class="icon-call icon">
@@ -926,7 +926,7 @@ $page = 'index';
                     <div class="main d-flex flex-column">
                         <h4 class="main_title">Phone</h4>
                         <a class="link" href="tel:{{ setting('phone_primary', '+1234567890') }}">{{ setting('phone_primary', '(329) 580-7077') }}</a>
-                        <!-- <a class="link" href="tel:{{ setting('phone_secondary', '+1234567890') }}">{{ setting('phone_secondary', '(650) 382-5020') }}</a> -->
+                        <a class="link" href="tel:{{ setting('phone_secondary', '+1234567890') }}">{{ setting('phone_secondary', '(650) 382-5020') }}</a>
                     </div>
                 </li>
                 <li class="contacts_info-list_item col-md-6 d-flex align-items-center" data-order="2" data-aos="fade-up">
@@ -936,7 +936,7 @@ $page = 'index';
                     <div class="main d-flex flex-column">
                         <h4 class="main_title">Email</h4>
                         <a class="link" href="mailto:{{ setting('email', 'contact@example.com') }}">{{ setting('contact.email.primary', 'contact@example.com') }}</a>
-                        <!-- <a class="link" href="mailto:{{ setting('contact.email.secondary', 'contact@example.com') }}">{{ setting('contact.email.secondary', 'contact@example.com') }}</a> -->
+                        <a class="link" href="mailto:{{ setting('contact.email.secondary', 'contact@example.com') }}">{{ setting('contact.email.secondary', 'contact@example.com') }}</a>
                     </div>
                 </li>
                 <li class="contacts_info-list_item col-md-6 d-flex align-items-center" data-order="3" data-aos="fade-up">
@@ -959,7 +959,7 @@ $page = 'index';
                         <span>{{ setting('hours_time', '10 am — 20 pm') }}</span>
                     </div>
                 </li>
-            </ul>
+            </ul> -->
         </div>
         <div class="contacts_map">
             <div style="width: 100%; height: 100%;">

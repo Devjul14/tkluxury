@@ -44,10 +44,10 @@ class SettingSeeder extends Seeder
                 'value' => '-35.23729851439285, 139.5592634004934',
             ],
             [
-                'group' => 'contact',
-                'key' => 'contact_text',
+                'group' => 'nearby',
+                'key' => 'nearby_text',
                 'type' => 'text',
-                'value' => 'Contact text pharetra magna ac. Et tortor consequat id porta nibh venenatis cras sed',
+                'value' => 'Discover student accommodations conveniently located near top universities, colleges, and learning centers. Save time on commuting and focus more on your studies and student life.',
             ],
             [
                 'group' => 'contact',
