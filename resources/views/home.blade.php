@@ -105,7 +105,7 @@ $page = 'index';
         <div class="rooms_header d-sm-flex justify-content-between align-items-center">
             <h2 class="rooms_header-title" data-aos="fade-right">Properties</h2>
             <div class="wrapper" data-aos="fade-left">
-                <a class="btn theme-element theme-element--light" href="{{ route('rooms.index') ?? 'rooms.html' }}">View all rooms</a>
+                <a class="btn theme-element theme-element--light" href="{{ route('rooms.index') ?? 'rooms.html' }}">View all properties</a>
             </div>
         </div>
         <ul class="rooms_list d-md-flex flex-wrap">
@@ -140,7 +140,7 @@ $page = 'index';
                             </span>
                         </div>
                         <a class="link link--arrow d-inline-flex align-items-center" href="{{ route('rooms.show', $property->id) }}">
-                            See availability
+                            See more
                             <i class="icon-arrow_right icon"></i>
                         </a>
                     </div>
