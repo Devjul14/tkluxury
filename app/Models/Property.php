@@ -54,6 +54,11 @@ class Property extends Model
         'acquisition_date' => 'date',
     ];
 
+    public function getRouteKeyName()
+    {
+        return 'property_code';
+    }
+
     // Relationships
     public function institute()
     {

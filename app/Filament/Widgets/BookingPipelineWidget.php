@@ -10,6 +10,7 @@ use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 class BookingPipelineWidget extends BaseWidget
 {
     protected static ?int $sort = 1;
+    protected ?string $heading = 'Booking Status Overview';
 
     public static function canView(): bool
     {

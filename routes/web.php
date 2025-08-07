@@ -4,6 +4,7 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +34,11 @@ Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/privacyPolicy', [PageController::class, 'privacy_policy'])->name('privacy_policy');
 Route::get('/refund', [PageController::class, 'refund_policy'])->name('refund_policy');
 Route::get('/term', [PageController::class, 'term'])->name('term');
+
+// properties routes
+Route::get('/properties', [PropertyController::class, 'index'])->name('properties.index');
+Route::get('/properties/{property}', [PropertyController::class, 'show'])->name('properties.show');
+Route::get('/properties/{property}/rooms', [PropertyController::class, 'rooms'])->name('properties.rooms');
 
 // Rooms routes
 Route::get('/rooms', [RoomController::class, 'index'])->name('rooms.index');

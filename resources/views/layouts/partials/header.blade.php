@@ -40,26 +40,16 @@
                     </li>
                     <li class="header_nav-list_item dropdown">
                         <a
-                            class="nav-link dropdown-toggle d-inline-flex align-items-center {{ request()->routeIs('rooms.*') ? 'active' : '' }}"
-                            href="{{ route('rooms.index') }}"
+                            class="nav-link dropdown-toggle d-inline-flex align-items-center {{ request()->routeIs('properties.*') ? 'active' : '' }}"
+                            href="{{ route('properties.index') }}"
                             data-bs-toggle="collapse"
-                            data-bs-target="#roomMenu"
+                            data-bs-target="#propertyMenu"
                             aria-expanded="false"
-                            aria-controls="roomMenu"
-                            data-page="rooms">
+                            aria-controls="propertyMenu"
+                            data-page="properties">
                             Properties
                             <i class="icon-chevron_down--entypo icon"></i>
                         </a>
-                        <div class="dropdown-menu collapse" id="roomMenu">
-                            <ul class="dropdown-list">
-                                <li class="list-item" data-main="true">
-                                    <a class="dropdown-item nav-item" data-page="rooms" href="{{ route('rooms.index') }}">Properties</a>
-                                </li>
-                                <li class="list-item">
-                                    <a class="dropdown-item nav-item" data-page="room" href="{{ route('rooms.show', 1) }}">Single room</a>
-                                </li>
-                            </ul>
-                        </div>
                     </li>
                     <li class="header_nav-list_item dropdown">
                         <a
