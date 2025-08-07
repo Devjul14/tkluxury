@@ -78,7 +78,17 @@ $page = 'contacts';
                 </div>
             </div>
             <div class="contacts_map">
-                <div id="map"></div>
+                <div style="width: 100%; height: 100%;">
+                    <iframe
+                        width="100%"
+                        height="100%"
+                        style="border:0"
+                        loading="lazy"
+                        allowfullscreen
+                        referrerpolicy="no-referrer-when-downgrade"
+                        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAFmDPs9yBFzKNC6o0ozgOP5c_Rmrz7F1k&q={{ setting('map', '3.139003,101.686855') }}&zoom=12&maptype=roadmap">
+                    </iframe>
+                </div>
             </div>
         </div>
     </section>

@@ -29,13 +29,13 @@ class SettingSeeder extends Seeder
                 'group' => 'homepage',
                 'key' => 'hero_main_text',
                 'type' => 'text',
-                'value' => 'Luxury — amazing hostel for the free spirited traveler',
+                'value' => 'Find Your Ideal Student Home — 3 to 12 Month Rentals',
             ],
             [
                 'group' => 'homepage',
                 'key' => 'hero_sub_text',
                 'type' => 'text',
-                'value' => 'Hero sub text aenean pharetra magna ac. Et tortor consequat id porta nibh venenatis cras sed. Vel turpis nunc eget lorem dolor sed',
+                'value' => 'Discover comfortable, fully-furnished student accommodations near top universities and vibrant city centers. Flexible stays. Hassle-free living.',
             ],
             [
                 'group' => 'homepage',
