@@ -38,17 +38,12 @@
                     <li class="header_nav-list_item">
                         <a class="nav-item {{ request()->routeIs('about') ? 'active' : '' }}" href="{{ route('about') }}" data-page="about">About</a>
                     </li>
-                    <li class="header_nav-list_item dropdown">
+                    <li class="header_nav-list_item">
                         <a
-                            class="nav-link dropdown-toggle d-inline-flex align-items-center {{ request()->routeIs('properties.*') ? 'active' : '' }}"
+                            class="nav-item {{ request()->routeIs('properties.*') ? 'active' : '' }}"
                             href="{{ route('properties.index') }}"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#propertyMenu"
-                            aria-expanded="false"
-                            aria-controls="propertyMenu"
                             data-page="properties">
                             Properties
-                            <i class="icon-chevron_down--entypo icon"></i>
                         </a>
                     </li>
                     <li class="header_nav-list_item dropdown">
