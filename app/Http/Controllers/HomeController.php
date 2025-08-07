@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Property;
 use App\Models\Review;
 use App\Models\Room;
 use Carbon\Carbon;
@@ -13,6 +14,7 @@ class HomeController extends Controller
     {
         // Sample featured rooms data
 
+        $properties = Property::all();
         $featuredRooms = Room::where('is_available', true);
 
         if ($request->filled('check_in') && $request->filled('check_out')) {
@@ -47,7 +49,8 @@ class HomeController extends Controller
             'average_value_rating' => round($allReviews->avg('value_rating'), 2),
             'average_management_rating' => round($allReviews->avg('management_rating'), 2),
         ];
+        // dd($properties);
 
-        return view('home', compact('featuredRooms', 'roomPromo', 'galleryImages', 'averageRatings'));
+        return view('home', compact('properties', 'featuredRooms', 'roomPromo', 'galleryImages', 'averageRatings'));
     }
 }
