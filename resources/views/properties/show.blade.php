@@ -664,32 +664,32 @@ $page = 'room';
                 </div>
             </div>
             <ul class="rooms_list d-md-flex flex-wrap">
-                @foreach ($relatedRooms as $property)
-                <li class="rooms_list-item col-md-6 m-2 col-xl-4" data-order="1" data-aos="fade-up">
+                @foreach ($relatedRooms as $room)
+                <li class="rooms_list-item col-md-6 mb-4 col-xl-4" data-order="1" data-aos="fade-up">
                     <div class="item-wrapper d-md-flex flex-column">
                         <div class="media">
                             <picture>
-                                <source data-srcset="{{ $property->image ? asset($property->image) : url('asset/img/hero.webp') }}" srcset="{{ $property->image ? asset($property->image) : url('asset/img/hero.webp') }}" />
-                                <img class="lazy" data-src="{{ $property->image ? asset($property->image) : url('asset/img/hero.webp') }}" src="{{ $property->image ? asset($property->image) : url('asset/img/hero.webp') }}" alt="media" />
+                                <source data-srcset="{{ $room->image ? asset($room->image) : url('asset/img/hero.webp') }}" srcset="{{ $room->image ? asset($room->image) : url('asset/img/hero.webp') }}" />
+                                <img class="lazy" data-src="{{ $room->image ? asset($room->image) : url('asset/img/hero.webp') }}" src="{{ $room->image ? asset($room->image) : url('asset/img/hero.webp') }}" alt="media" />
                             </picture>
                             <span class="media_label media_label--pricing">
-                                <span class="price h4">{{ Number::currency($property->price_per_month / 30, env('APP_DEFAULT_CURRENCY', 'IDR')) }}</span>
+                                <span class="price h4">{{ Number::currency($room->price_per_month / 30, env('APP_DEFAULT_CURRENCY', 'IDR')) }}</span>
                                 / 1 night
                             </span>
                         </div>
                         <div class="main d-md-flex flex-column justify-content-between flex-grow-1">
-                            <a class="main_title h4" href="{{ route('rooms.show', $property->id) }}" data-shave="true">{{ $property->name }}</a>
+                            <a class="main_title h4" href="{{ route('rooms.show', $room->id) }}" data-shave="true">#{{ $room->room_number }}</a>
                             <div class="main_amenities">
                                 <span class="main_amenities-item d-inline-flex align-items-center">
                                     <i class="icon-user icon"></i>
-                                    {{ $property->capacity }} Sleeps
+                                    {{ $room->capacity }} Sleeps
                                 </span>
                                 <span class="main_amenities-item d-inline-flex align-items-center">
                                     <i class="icon-bunk_bed icon"></i>
-                                    {{ $property->room_type_label }}
+                                    {{ $room->room_type_label }}
                                 </span>
                             </div>
-                            <a class="link link--arrow d-inline-flex align-items-center" href="{{ route('rooms.show', $property->id) }}">
+                            <a class="link link--arrow d-inline-flex align-items-center" href="{{ route('rooms.show', $room->id) }}">
                                 See availability
                                 <i class="icon-arrow_right icon"></i>
                             </a>
