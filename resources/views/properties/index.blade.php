@@ -27,19 +27,22 @@ $page = 'properties';
     .rooms_main-filter_form {
         width: 100%;
         display: flex;
-        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
     }
 
     .rooms_main-filter_form-wrapper {
         display: flex;
-        /* flex-wrap: wrap; */
+        align-items: center;
+        justify-content: center;
         gap: 1.5rem;
     }
 
     .rooms_main-filter_form-group {
         display: flex;
         flex-direction: column;
-        width: min(45%, 16rem);
+        width: min(45%, 12rem);
     }
 
     /* Tablet: ≤1024px */
@@ -71,7 +74,7 @@ $page = 'properties';
         /* background-color: #f9f9f9; */
         border: 1px solid #ccc;
         border-radius: 6px;
-        padding: 0.5rem 0.75rem;
+        padding: 0.1rem 0.3rem;
     }
 
     .rooms_main-filter_form-group_field {
@@ -80,7 +83,7 @@ $page = 'properties';
         border: none;
         outline: none;
         background: transparent;
-        font-size: 0.95rem;
+        font-size: 0.8rem;
         outline: none;
         appearance: none;
     }
@@ -98,25 +101,19 @@ $page = 'properties';
 
     .rooms_main-filter_form-submit {
         padding: 0.65rem 1.5rem;
-        background-color: #007bff;
         border: none;
         color: #fff;
         font-weight: 600;
+        align-self: center;
         border-radius: 6px;
         cursor: pointer;
-        align-self: end;
         gap: 0.5rem;
-        margin-top: 1.5rem;
         transition: background-color 0.2s ease;
     }
 
     .rooms_main-filter_form-submit i {
         font-size: 1rem;
         color: #fff;
-    }
-
-    .rooms_main-filter_form-submit:hover {
-        background-color: #0056b3;
     }
 
     .rooms_main-filter_form-submit-text {
@@ -171,7 +168,7 @@ $page = 'properties';
                                 <div class="rooms_main-filter_form-group_wrapper">
                                     <i class="icon-bunk_bed icon"></i>
                                     <select class="rooms_main-filter_form-group_field field" id="guest" name="room_count">
-                                        <option value="">-- Select Total Rooms --</option>
+                                        <option value="">Select Total Rooms</option>
                                         @foreach ($propertyRoomCounts as $roomCount)
                                         <option value="{{ $roomCount }}" {{ request('room_count') == $roomCount ? 'selected' : '' }}>{{ $roomCount }} Rooms</option>
                                         @endforeach
@@ -185,7 +182,7 @@ $page = 'properties';
                                 <div class="rooms_main-filter_form-group_wrapper">
                                     <i class="icon-location icon"></i>
                                     <select class="rooms_main-filter_form-group_field field" id="institute" name="institute">
-                                        <option value="">-- Select Institute --</option>
+                                        <option value="">Select Institute</option>
                                         @foreach ($institutes as $institute)
                                         <option value="{{ $institute->id }}" {{ request('institute') == $institute->id ? 'selected' : '' }}>{{ $institute->name }}</option>
                                         @endforeach
@@ -194,8 +191,8 @@ $page = 'properties';
                                 </div>
                             </div>
                         </div>
-
-                        <button id="filterSubmit" class="rooms_main-filter_form-submit" type="submit">
+                    
+                        <button id="filterSubmit" class="rooms_main-filter_form-submit theme-element theme-element--accent" type="submit">
                             <span class="rooms_main-filter_form-submit-text">Search</span>
                             <i class="icon-search icon"></i>
                         </button>
