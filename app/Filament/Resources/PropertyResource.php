@@ -290,6 +290,7 @@ class PropertyResource extends Resource
             \App\Filament\Resources\PropertyResource\RelationManagers\ReviewsRelationManager::class,
             \App\Filament\Resources\PropertyResource\RelationManagers\MaintenanceRequestsRelationManager::class,
             \App\Filament\Resources\PropertyResource\RelationManagers\InspectionsRelationManager::class,
+            \App\Filament\Resources\PropertyResource\RelationManagers\PropertyImageRelationManager::class,
         ];
     }
 
