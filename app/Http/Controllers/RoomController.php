@@ -84,7 +84,7 @@ class RoomController extends Controller
         $priceRanges = array_keys($ranges);
 
         return view('rooms.index', [
-            'rooms' => $roomCollection,
+            'rooms' => $pagedRooms,
             'pagedRooms' => $pagedRooms,
             'roomGuests' => Room::all()->pluck('capacity')->unique()->toArray(),
             'roomPrices' => $priceRanges,

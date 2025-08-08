@@ -33,6 +33,38 @@ $page = 'index';
     .flatpickr-calendar {
         margin-top: 2rem;
     }
+
+
+    .pagination {
+        margin-top: 40px
+    }
+
+    .pagination-page {
+        margin-right: 10px
+    }
+
+    .pagination-page:last-of-type {
+        margin-right: 0
+    }
+
+    .pagination-page_link {
+        width: 30px;
+        height: 30px;
+        border-radius: 4px
+    }
+
+    .pagination-page_link:focus,.pagination-page_link:hover,.pagination-page_link[data-current=true] {
+        font-weight: 600;
+        color: #fff;
+        background: #235784
+    }
+
+    @media screen and (min-width:991.98px) {
+        .pagination {
+            margin-top: 60px
+        }
+    }
+
 </style>
 @endpush
 
@@ -189,7 +221,7 @@ $page = 'index';
 <section class="hero section">
     <div class="container mb-8 container--hero d-lg-flex align-items-center justify-content-between">
         <div class="hero_main">
-            <form class="booking" action="{{ route('properties.index') }}" method="get" autocomplete="off" data-type="booking" data-aos="fade-up">
+            <form class="booking" action="{{ route('rooms.index') }}" method="get" autocomplete="off" data-type="booking" data-aos="fade-up">
                 <div class="item-wrapper d-sm-flex flex-wrap flex-lg-nowrap align-items-lg-center">
                     <div class="booking_group d-flex flex-column">
                         <label class="booking_group-label h5" for="checkIn">Check-in</label>
@@ -299,7 +331,7 @@ $page = 'index';
             </li>
             @endforeach
         </ul>
-
+        <x-pagination :paginator="$pagedRooms" />
 
     </div>
 </section>

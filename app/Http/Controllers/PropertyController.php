@@ -58,7 +58,7 @@ class PropertyController extends Controller
         });
 
         return view('properties.index', [
-            'properties' => $propertycollection,
+            'properties' => $pagedProperties,
             'institutes' => $institutes,
             'pagedProperties' => $pagedProperties,
             'propertyRoomCounts' => $propertyRoomCounts->unique(),

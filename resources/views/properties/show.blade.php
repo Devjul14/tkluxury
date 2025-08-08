@@ -146,14 +146,21 @@ $page = 'room';
                 <div class="room_main-slider col-12 d-lg-flex">
                     <div class="room_main-slider_view col-lg-8">
                         <div class="swiper-wrapper">
-                            @foreach ($property->images->where('is_primary', true) as $image)
+                            @forelse ($property->images->where('is_primary', true) as $image)
                             <div class="swiper-slide">
                                 <picture>
-                                    <source data-srcset="{{ $image ? asset('storage/' . $image->image_path) : url('asset/img/hero.webp') }}" srcset="{{ $image ? asset('storage/' . $image->image_path) : url('asset/img/hero.webp') }}" />
-                                    <img class="lazy" data-src="{{ $image ? asset('storage/' . $image->image_path) : url('asset/img/hero.webp') }}" src="{{ $image ? asset('storage/' . $image->image_path) : url('asset/img/hero.webp') }}" alt="media" />
+                                    <source data-srcset="{{ $image->image_path ? asset('storage/' . $image->image_path) : url('asset/img/hero.webp') }}" srcset="{{ $image->image_path ? asset('storage/' . $image->image_path) : url('asset/img/hero.webp') }}" />
+                                    <img class="lazy" data-src="{{ $image->image_path ? asset('storage/' . $image->image_path) : url('asset/img/hero.webp') }}" src="{{ $image->image_path ? asset('storage/' . $image->image_path) : url('asset/img/hero.webp') }}" alt="media" />
                                 </picture>
                             </div>
-                            @endforeach
+                            @empty
+                            <div class="swiper-slide">
+                                <picture>
+                                    <source data-srcset="{{ url('asset/img/hero.webp') }}" srcset="{{ url('asset/img/hero.webp') }}" />
+                                    <img class="lazy" data-src="{{ url('asset/img/hero.webp') }}" src="{{ url('asset/img/hero.webp') }}" alt="media" />
+                                </picture>
+                            </div>
+                            @endforelse
                         </div>
                         <div class="swiper-controls d-flex align-items-center justify-content-between">
                             <a class="swiper-button-prev d-inline-flex align-items-center justify-content-center" href="#">
@@ -166,14 +173,21 @@ $page = 'room';
                     </div>
                     <div class="room_main-slider_thumbs">
                         <div class="swiper-wrapper">
-                            @foreach ($property->images as $image)
+                            @forelse ($property->images as $image)
                             <div class="swiper-slide">
                                 <picture>
                                     <source data-srcset="{{ $image ? asset('storage/' . $image->image_path) : url('asset/img/hero.webp') }}" srcset="{{ $image ? asset('storage/' . $image->image_path) : url('asset/img/hero.webp') }}" />
                                     <img class="lazy" data-src="{{ $image ? asset('storage/' . $image->image_path) : url('asset/img/hero.webp') }}" src="{{ $image ? asset('storage/' . $image->image_path) : url('asset/img/hero.webp') }}" alt="media" />
                                 </picture>
                             </div>
-                            @endforeach
+                            @empty
+                            <div class="swiper-slide">
+                                <picture>
+                                    <source data-srcset="{{ url('asset/img/hero.webp') }}" srcset="{{ url('asset/img/hero.webp') }}" />
+                                    <img class="lazy" data-src="{{ url('asset/img/hero.webp') }}" src="{{ url('asset/img/hero.webp') }}" alt="media" />
+                                </picture>
+                            </div>
+                            @endforelse
                         </div>
                     </div>
                 </div>
@@ -268,8 +282,8 @@ $page = 'room';
                                 <div class="item-wrapper d-md-flex flex-column">
                                     <div class="media">
                                         <picture>
-                                            <source data-srcset="{{ $room->image ? asset($room->image) : url('asset/img/hero.webp') }}" srcset="{{ $room->image ? asset($room->image) : url('asset/img/hero.webp') }}" />
-                                            <img class="lazy" data-src="{{ $room->image ? asset($room->image) : url('asset/img/hero.webp') }}" src="{{ $room->image ? asset($room->image) : url('asset/img/hero.webp') }}" alt="media" />
+                                            <source data-srcset="{{ $room->getThumbnailAttribute() ? asset($room->getThumbnailAttribute()) : url('asset/img/hero.webp') }}" srcset="{{ $room->getThumbnailAttribute() ? asset($room->getThumbnailAttribute()) : url('asset/img/hero.webp') }}" />
+                                            <img class="lazy" data-src="{{ $room->getThumbnailAttribute() ? asset($room->getThumbnailAttribute()) : url('asset/img/hero.webp') }}" src="{{ $room->getThumbnailAttribute() ? asset($room->getThumbnailAttribute()) : url('asset/img/hero.webp') }}" alt="media" />
                                         </picture>
                                         <span class="media_label media_label--pricing">
                                             <span class="price h4">{{ Number::currency($room->price_per_month / 30, env('APP_DEFAULT_CURRENCY', 'IDR')) }}</span>

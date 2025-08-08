@@ -31,6 +31,37 @@ $page = 'index';
     .flatpickr-calendar {
         margin-top: 2rem;
     }
+
+    .pagination {
+        margin-top: 40px
+    }
+
+    .pagination-page {
+        margin-right: 10px
+    }
+
+    .pagination-page:last-of-type {
+        margin-right: 0
+    }
+
+    .pagination-page_link {
+        width: 30px;
+        height: 30px;
+        border-radius: 4px
+    }
+
+    .pagination-page_link:focus,.pagination-page_link:hover,.pagination-page_link[data-current=true] {
+        font-weight: 600;
+        color: #fff;
+        background: #235784
+    }
+
+    @media screen and (min-width:991.98px) {
+        .pagination {
+            margin-top: 60px
+        }
+    }
+
 </style>
 @endpush
 
@@ -153,7 +184,7 @@ $page = 'index';
             </li>
             @endforeach
         </ul>
-
+        <x-pagination :paginator="$pagedProperties" />
 
     </div>
 </section>
@@ -165,10 +196,6 @@ $page = 'index';
 
 </section>
 <!-- rooms section end -->
-
-
-
-
 @endsection
 
 @push('scripts')

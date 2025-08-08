@@ -20,12 +20,11 @@ class RoomSeeder extends Seeder
             // Create different types of rooms for each property
             $roomTypes = ['single', 'double', 'triple', 'studio'];
             $prices = [800, 1200, 1500, 2000];
-            $capacities = [1, 2, 3, 1];
 
-            for ($i = 1; $i <= 4; $i++) {
-                $roomType = $roomTypes[$i - 1];
-                $price = $prices[$i - 1];
-                $capacity = $capacities[$i - 1];
+            for ($i = 1; $i <= 30; $i++) {
+                $roomType = $roomTypes[rand(0, 3)];
+                $price = $prices[rand(0, 3)];
+                $capacity = rand(1, 4);
 
                 Room::create([
                     'property_id' => $property->id,
