@@ -191,7 +191,7 @@ $page = 'room';
                             {{ $room->description }}
                         </p>
                     </div>
-                    <section class="facilities">
+                    <!-- <section class="facilities">
                         <h4 class="facilities_header">Room facilities</h4>
                         <div class="facilities_list d-sm-flex flex-wrap">
                             <div class="facilities_list-block">
@@ -408,7 +408,7 @@ $page = 'room';
                                 </span>
                             </div>
                         </div>
-                    </section>
+                    </section> -->
 
                     <section class="facilities">
                         <h4 class="facilities_header">Services</h4>
