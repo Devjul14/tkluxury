@@ -59,6 +59,16 @@ class Room extends Model
         return $this->hasMany(Booking::class);
     }
 
+    public function images(): HasMany
+    {
+        return $this->hasMany(RoomImage::class);
+    }
+
+    public function getThumbnailAttribute(): ?string
+    {
+        return $this->images()->first()->image_path ?? null;
+    }
+
     public function maintenanceRequests(): HasMany
     {
         return $this->hasMany(MaintenanceRequest::class);

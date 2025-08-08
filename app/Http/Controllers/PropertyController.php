@@ -26,20 +26,14 @@ class PropertyController extends Controller
             $properties->has('rooms', '>=', (int) $request->room_count);
         }
 
-        if ($request->filled('check_in')) {
+        if ($request->filled('check_in') && $request->filled('check_out')) {
             $properties->whereHas('rooms', function ($query) use ($request) {
                 $query->whereDoesntHave('bookings', function ($query) use ($request) {
-                    $query
-                        ->whereBetween('check_in_date', [$request->check_in, $request->check_out]);
-                });
-            });
-        }
-
-        if ($request->filled('check_out')) {
-            $properties->whereHas('rooms', function ($query) use ($request) {
-                $query->whereDoesntHave('bookings', function ($query) use ($request) {
-                    $query
-                        ->whereBetween('check_out_date', [$request->check_in, $request->check_out]);
+                    $query->where(function ($q) use ($request) {
+                        $q
+                            ->where('check_in_date', '<', $request->check_out)
+                            ->where('check_out_date', '>', $request->check_in);
+                    });
                 });
             });
         }

@@ -179,6 +179,14 @@ $page = 'index';
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        const fields = document.querySelectorAll('form input, form select');
+        
+        fields.forEach((field) => {
+            field.addEventListener('change', function(e) {
+                e.target.closest('form').submit();
+            });
+        });
+
         flatpickr(".flatpickr", {
             dateFormat: "Y-m-d",
         });

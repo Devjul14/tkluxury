@@ -146,11 +146,11 @@ $page = 'room';
                 <div class="room_main-slider col-12 d-lg-flex">
                     <div class="room_main-slider_view col-lg-8">
                         <div class="swiper-wrapper">
-                            @foreach ($property->images as $image)
+                            @foreach ($property->images->where('is_primary', true) as $image)
                             <div class="swiper-slide">
                                 <picture>
-                                    <source data-srcset="{{ $image->image_path ? asset($image->image_path) : url('asset/img/hero.webp') }}" srcset="{{ $image->image_path ? asset($image->image_path) : url('asset/img/hero.webp') }}" />
-                                    <img class="lazy" data-src="{{ $image->image_path ? asset($image->image_path) : url('asset/img/hero.webp') }}" src="{{ $image->image_path ? asset($image->image_path) : url('asset/img/hero.webp') }}" alt="media" />
+                                    <source data-srcset="{{ $image ? asset('storage/' . $image->image_path) : url('asset/img/hero.webp') }}" srcset="{{ $image ? asset('storage/' . $image->image_path) : url('asset/img/hero.webp') }}" />
+                                    <img class="lazy" data-src="{{ $image ? asset('storage/' . $image->image_path) : url('asset/img/hero.webp') }}" src="{{ $image ? asset('storage/' . $image->image_path) : url('asset/img/hero.webp') }}" alt="media" />
                                 </picture>
                             </div>
                             @endforeach
@@ -169,8 +169,8 @@ $page = 'room';
                             @foreach ($property->images as $image)
                             <div class="swiper-slide">
                                 <picture>
-                                    <source data-srcset="{{ $image->image_path ? asset($image->image_path) : url('asset/img/hero.webp') }}" srcset="{{ $image->image_path ? asset($image->image_path) : url('asset/img/hero.webp') }}" />
-                                    <img class="lazy" data-src="{{ $image->image_path ? asset($image->image_path) : url('asset/img/hero.webp') }}" src="{{ $image->image_path ? asset($image->image_path) : url('asset/img/hero.webp') }}" alt="media" />
+                                    <source data-srcset="{{ $image ? asset('storage/' . $image->image_path) : url('asset/img/hero.webp') }}" srcset="{{ $image ? asset('storage/' . $image->image_path) : url('asset/img/hero.webp') }}" />
+                                    <img class="lazy" data-src="{{ $image ? asset('storage/' . $image->image_path) : url('asset/img/hero.webp') }}" src="{{ $image ? asset('storage/' . $image->image_path) : url('asset/img/hero.webp') }}" alt="media" />
                                 </picture>
                             </div>
                             @endforeach
