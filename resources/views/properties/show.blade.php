@@ -173,7 +173,7 @@ $page = 'room';
                     </div>
                     <div class="room_main-slider_thumbs">
                         <div class="swiper-wrapper">
-                            @forelse ($property->images as $image)
+                            @forelse ($property->images->where('is_primary', false) as $image)
                             <div class="swiper-slide">
                                 <picture>
                                     <source data-srcset="{{ $image ? asset('storage/' . $image->image_path) : url('asset/img/hero.webp') }}" srcset="{{ $image ? asset('storage/' . $image->image_path) : url('asset/img/hero.webp') }}" />
