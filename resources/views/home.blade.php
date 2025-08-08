@@ -117,8 +117,8 @@ $page = 'index';
                 <div class="item-wrapper d-md-flex flex-column">
                     <div class="media">
                         <picture>
-                            <source data-srcset="{{ asset('img/property.jpg') }}" srcset="{{ asset('img/property.jpg') }}" />
-                            <img class="lazy" data-src="{{ asset('img/property.jpg') }}" src="{{ asset('img/property.jpg') }}" alt="media" />
+                            <source data-srcset="{{ $property->getThumbnailAttribute() ? asset($property->getThumbnailAttribute()) : asset('img/property.jpg') }}" srcset="{{ $property->getThumbnailAttribute() ? asset($property->getThumbnailAttribute()) : asset('img/property.jpg') }}" />
+                            <img class="lazy" data-src="{{ $property->getThumbnailAttribute() ? asset($property->getThumbnailAttribute()) : asset('img/property.jpg') }}" src="{{ $property->getThumbnailAttribute() ? asset($property->getThumbnailAttribute()) : asset('img/property.jpg') }}" alt="media" />
                         </picture>
                         <span class="media_label media_label--pricing">
                             <span class="price h4">${{ $property->price_per_month }}</span>
