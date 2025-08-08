@@ -66,7 +66,8 @@ class Room extends Model
 
     public function getThumbnailAttribute(): ?string
     {
-        return $this->images()->first()->image_path ?? null;
+        $image = $this->images()->first()->image_path ?? null;
+        return $image ? asset('/storage/' . $image) : null;
     }
 
     public function maintenanceRequests(): HasMany
