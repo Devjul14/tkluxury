@@ -44,9 +44,9 @@ class PropertyController extends Controller
             });
         }
 
-        if ($request->filled('adults')) {
+        if ($request->filled('student')) {
             $properties->whereHas('rooms', function ($query) use ($request) {
-                $query->where('capacity', '>=', $request->adults);
+                $query->where('capacity', '>=', $request->student);
             });
         }
 

@@ -88,14 +88,14 @@ $page = 'index';
                             <div class="booking_group-dropdown collapse" id="bookingDropdown">
                                 <div class="content">
                                     <div class="booking_group-dropdown_wrapper d-flex align-items-center justify-content-between">
-                                        <label class="label h5" for="adults">Adults</label>
+                                        <label class="label h5" for="student">Student</label>
                                         <div class="main d-flex align-items-center justify-content-between">
                                             <a class="qty_minus qty-changer d-flex align-items-center justify-content-center" href="#" data-disabled="true"></a>
-                                            <input class="field required" id="adults" name="adults" type="text" value="{{ old('adults', request('adults') ?? 1) }}" />
+                                            <input class="field required" id="adults" name="student" type="text" value="{{ old('student', request('student') ?? 1) }}" />
                                             <a class="qty_plus qty-changer d-flex align-items-center justify-content-center" href="#" data-disabled="">+</a>
                                         </div>
                                     </div>
-                                    <div class="booking_group-dropdown_wrapper d-flex align-items-center justify-content-between">
+                                    <div class="booking_group-dropdown_wrapper d-flex align-items-center justify-content-between" style="display: none !important;">
                                         <label class="label h5" for="children">Children</label>
                                         <div class="main d-flex align-items-center justify-content-between">
                                             <a class="qty_minus qty-changer d-flex align-items-center justify-content-center" href="#" data-disabled=""></a>
@@ -122,8 +122,8 @@ $page = 'index';
                 <div class="item-wrapper d-md-flex flex-column">
                     <div class="media">
                         <picture>
-                            <source data-srcset="{{ asset('img/property.jpg') }}" srcset="{{ asset('img/property.jpg') }}" />
-                            <img class="lazy" data-src="{{ asset('img/property.jpg') }}" src="{{ asset('img/property.jpg') }}" alt="media" />
+                            <source data-srcset="{{ $property->getThumbnailAttribute() ? asset($property->getThumbnailAttribute()) : asset('img/property.jpg') }}" srcset="{{ $property->getThumbnailAttribute() ? asset($property->getThumbnailAttribute()) : asset('img/property.jpg') }}" />
+                            <img class="lazy" data-src="{{ $property->getThumbnailAttribute() ? asset($property->getThumbnailAttribute()) : asset('img/property.jpg') }}" src="{{ $property->getThumbnailAttribute() ? asset($property->getThumbnailAttribute()) : asset('img/property.jpg') }}" alt="media" />
                         </picture>
                         <span class="media_label media_label--pricing">
                             <span class="price h4">${{ $property->price_per_month }}</span>
@@ -131,7 +131,7 @@ $page = 'index';
                         </span>
                     </div>
                     <div class="main d-md-flex flex-column justify-content-between flex-grow-1">
-                        <a class="main_title h4" href="{{ route('rooms.show', $property->id) }}" data-shave="true">
+                        <a class="main_title h4" href="{{ route('properties.show', $property->property_code) }}" data-shave="true">
                             {{ $property->title ?? 'Lorem ipsum' }}
                         </a>
                         <div class="main_amenities">

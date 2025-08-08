@@ -105,6 +105,13 @@ class Property extends Model
         return $this->hasMany(PropertyInspection::class);
     }
 
+    public function getThumbnailAttribute()
+    {
+        $thumbnail = $this->images()->where('is_primary', true)->first()->image_path ?? null;
+
+        return $thumbnail ? asset("/storage/$thumbnail") : null;
+    }
+
     // Scopes
     public function scopeActive($query)
     {
