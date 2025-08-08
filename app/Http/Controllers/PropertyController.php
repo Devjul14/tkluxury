@@ -21,8 +21,33 @@ class PropertyController extends Controller
         if ($request->filled('institute')) {
             $properties->where('institute_id', $request->institute);
         }
+
         if ($request->filled('room_count')) {
             $properties->has('rooms', '>=', (int) $request->room_count);
+        }
+
+        if ($request->filled('check_in')) {
+            $properties->whereHas('rooms', function ($query) use ($request) {
+                $query->whereDoesntHave('bookings', function ($query) use ($request) {
+                    $query
+                        ->whereBetween('check_in_date', [$request->check_in, $request->check_out]);
+                });
+            });
+        }
+
+        if ($request->filled('check_out')) {
+            $properties->whereHas('rooms', function ($query) use ($request) {
+                $query->whereDoesntHave('bookings', function ($query) use ($request) {
+                    $query
+                        ->whereBetween('check_out_date', [$request->check_in, $request->check_out]);
+                });
+            });
+        }
+
+        if ($request->filled('adults')) {
+            $properties->whereHas('rooms', function ($query) use ($request) {
+                $query->where('capacity', '>=', $request->adults);
+            });
         }
 
         $propertycollection = $properties->get();
