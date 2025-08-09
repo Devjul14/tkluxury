@@ -36,19 +36,17 @@ class RoomController extends Controller
 
         // Filter by check-in and check-out dates
         if ($request->filled('check_in') && $request->filled('check_out')) {
-            $checkInCarbon = Carbon::parse($request->check_in);
-            $checkOutCarbon = Carbon::parse($request->check_out);
-
-            $rooms = $rooms->whereHas('bookings', function ($query) use ($checkInCarbon, $checkOutCarbon) {
-                $query
-                    ->whereNot('check_in_date', '>=', $checkInCarbon)
-                    ->whereNot('check_out_date', '<=', $checkOutCarbon);
+            $rooms->whereDoesntHave('bookings', function ($query) use ($request) {
+                $query->where(function ($q) use ($request) {
+                    $q
+                        ->where('check_in_date', '<', $request->check_out)
+                        ->where('check_out_date', '>', $request->check_in);
+                });
             });
         }
 
-        if ($request->filled('guests')) {
-            $guests = $request->guests;
-            $rooms = $rooms->where('capacity', '>=', $guests);
+        if ($request->filled('student')) {
+            $rooms->where('capacity', '>=', $request->student);
         }
 
         // Paginate results
@@ -86,7 +84,7 @@ class RoomController extends Controller
         $priceRanges = array_keys($ranges);
 
         return view('rooms.index', [
-            'rooms' => $roomCollection,
+            'rooms' => $pagedRooms,
             'pagedRooms' => $pagedRooms,
             'roomGuests' => Room::all()->pluck('capacity')->unique()->toArray(),
             'roomPrices' => $priceRanges,

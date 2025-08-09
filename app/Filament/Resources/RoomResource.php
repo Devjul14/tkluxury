@@ -4,11 +4,11 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\RoomResource\Pages;
 use App\Models\Room;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Forms;
+use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -34,12 +34,10 @@ class RoomResource extends Resource
                             ->preload()
                             ->required()
                             ->label('Property'),
-
                         Forms\Components\TextInput::make('room_number')
                             ->required()
                             ->maxLength(255)
                             ->label('Room Number'),
-
                         Forms\Components\Select::make('room_type')
                             ->options([
                                 'single' => 'Single Room',
@@ -52,23 +50,20 @@ class RoomResource extends Resource
                             ->required()
                             ->default('single')
                             ->label('Room Type'),
-
                         Forms\Components\TextInput::make('floor_number')
                             ->numeric()
                             ->default(1)
                             ->label('Floor Number'),
-
                         Forms\Components\TextInput::make('size_sqm')
                             ->numeric()
                             ->step(0.01)
                             ->label('Size (sqm)'),
-
                         Forms\Components\TextInput::make('capacity')
                             ->numeric()
                             ->default(1)
                             ->label('Capacity'),
-                    ])->columns(2),
-
+                    ])
+                    ->columns(2),
                 Forms\Components\Section::make('Pricing')
                     ->schema([
                         Forms\Components\TextInput::make('price_per_month')
@@ -76,20 +71,18 @@ class RoomResource extends Resource
                             ->numeric()
                             ->prefix('$')
                             ->label('Price per Month'),
-
                         Forms\Components\TextInput::make('security_deposit')
                             ->numeric()
                             ->prefix('$')
                             ->default(0)
                             ->label('Security Deposit'),
-                    ])->columns(2),
-
+                    ])
+                    ->columns(2),
                 Forms\Components\Section::make('Availability & Status')
                     ->schema([
                         Forms\Components\Toggle::make('is_available')
                             ->label('Available')
                             ->default(true),
-
                         Forms\Components\Select::make('maintenance_status')
                             ->options([
                                 'excellent' => 'Excellent',
@@ -99,40 +92,33 @@ class RoomResource extends Resource
                             ])
                             ->default('good')
                             ->label('Maintenance Status'),
-
                         Forms\Components\DatePicker::make('last_inspection_date')
                             ->label('Last Inspection Date'),
-                    ])->columns(3),
-
+                    ])
+                    ->columns(3),
                 Forms\Components\Section::make('Amenities')
                     ->schema([
                         Forms\Components\Toggle::make('is_furnished')
                             ->label('Furnished'),
-
                         Forms\Components\Toggle::make('has_private_bathroom')
                             ->label('Private Bathroom'),
-
                         Forms\Components\Toggle::make('has_balcony')
                             ->label('Balcony'),
-
                         Forms\Components\Toggle::make('has_air_conditioning')
                             ->label('Air Conditioning'),
-
                         Forms\Components\Toggle::make('has_heating')
                             ->label('Heating'),
-
                         Forms\Components\TagsInput::make('amenities')
                             ->label('Additional Amenities')
                             ->separator(','),
-                    ])->columns(2),
-
+                    ])
+                    ->columns(2),
                 Forms\Components\Section::make('Additional Information')
                     ->schema([
                         Forms\Components\Textarea::make('description')
                             ->maxLength(65535)
                             ->columnSpanFull()
                             ->label('Description'),
-
                         Forms\Components\Textarea::make('notes')
                             ->maxLength(65535)
                             ->columnSpanFull()
@@ -149,45 +135,37 @@ class RoomResource extends Resource
                     ->searchable()
                     ->sortable()
                     ->label('Property'),
-
                 Tables\Columns\TextColumn::make('full_room_number')
                     ->searchable()
                     ->sortable()
                     ->label('Room Number'),
-
                 Tables\Columns\TextColumn::make('room_type_label')
                     ->badge()
                     ->color('info')
                     ->label('Type'),
-
                 Tables\Columns\TextColumn::make('price_per_month')
                     ->money('USD')
                     ->sortable()
                     ->label('Price'),
-
                 Tables\Columns\IconColumn::make('is_available')
                     ->boolean()
                     ->label('Available'),
-
                 Tables\Columns\TextColumn::make('maintenance_status')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'excellent' => 'success',
                         'good' => 'info',
                         'fair' => 'warning',
                         'under_maintenance' => 'danger',
                     })
                     ->label('Status'),
-
                 Tables\Columns\TextColumn::make('capacity')
                     ->numeric()
                     ->sortable()
                     ->label('Capacity'),
-
                 Tables\Columns\TextColumn::make('current_student.name')
                     ->label('Current Student')
                     ->placeholder('Vacant'),
-
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -197,7 +175,6 @@ class RoomResource extends Resource
                 Tables\Filters\SelectFilter::make('property')
                     ->relationship('property', 'title')
                     ->label('Property'),
-
                 Tables\Filters\SelectFilter::make('room_type')
                     ->options([
                         'single' => 'Single Room',
@@ -208,10 +185,8 @@ class RoomResource extends Resource
                         'suite' => 'Suite',
                     ])
                     ->label('Room Type'),
-
                 Tables\Filters\TernaryFilter::make('is_available')
                     ->label('Availability'),
-
                 Tables\Filters\SelectFilter::make('maintenance_status')
                     ->options([
                         'excellent' => 'Excellent',
@@ -220,7 +195,6 @@ class RoomResource extends Resource
                         'under_maintenance' => 'Under Maintenance',
                     ])
                     ->label('Maintenance Status'),
-
                 Tables\Filters\Filter::make('price_range')
                     ->form([
                         Forms\Components\TextInput::make('min_price')
@@ -234,11 +208,11 @@ class RoomResource extends Resource
                         return $query
                             ->when(
                                 $data['min_price'],
-                                fn (Builder $query, $minPrice): Builder => $query->where('price_per_month', '>=', $minPrice),
+                                fn(Builder $query, $minPrice): Builder => $query->where('price_per_month', '>=', $minPrice),
                             )
                             ->when(
                                 $data['max_price'],
-                                fn (Builder $query, $maxPrice): Builder => $query->where('price_per_month', '<=', $maxPrice),
+                                fn(Builder $query, $maxPrice): Builder => $query->where('price_per_month', '<=', $maxPrice),
                             );
                     })
                     ->label('Price Range'),
@@ -260,6 +234,7 @@ class RoomResource extends Resource
             \App\Filament\Resources\RoomResource\RelationManagers\BookingsRelationManager::class,
             \App\Filament\Resources\RoomResource\RelationManagers\MaintenanceRequestsRelationManager::class,
             \App\Filament\Resources\RoomResource\RelationManagers\InspectionsRelationManager::class,
+            \App\Filament\Resources\RoomResource\RelationManagers\RoomImageRelationManager::class,
         ];
     }
 
