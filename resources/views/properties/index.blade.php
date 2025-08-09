@@ -15,10 +15,16 @@ $page = 'index';
     }
     .container--hero *,
     .booking_group-field,
-    .booking_group-field input {
+    .booking_group-field input,
+    /* */
+    .booking_group-field select {
         z-index: 999999999;
         position: relative;
+        -webkit-appearance: none; /* Removes default dropdown arrow */
+        -moz-appearance: none;
+        appearance: none;
     }
+    /* */
     .hero_main:before {
         background-color: transparent !important;
         display: none;
@@ -62,16 +68,21 @@ $page = 'index';
         }
     }
 
+    select.booking_group-field {
+        background: transparent;
+        outline: none;
+        width: 100%;
+        border: none;
+    }
 </style>
 @endpush
 
 @section('content')
-<!-- hero section start -->
 <section class="hero section">
     <div class="container mb-8 container--hero d-lg-flex align-items-center justify-content-between">
-        <div class="hero_main">
-            <form class="booking" action="{{ route('properties.index') }}" method="get" autocomplete="off" data-type="booking" data-aos="fade-up">
-                <div class="item-wrapper d-sm-flex flex-wrap flex-lg-nowrap align-items-lg-center">
+        <div class="hero_main" style="width: 100% !important">
+            <form class="booking" action="{{ route('properties.index') }}" method="get" autocomplete="off" data-type="booking" data-aos="fade-up" style="width: 100% !important">
+                <div class="item-wrapper d-sm-flex flex-wrap flex-lg-nowrap align-items-lg-center" style="width: 100% !important">
                     <div class="booking_group d-flex flex-column">
                         <label class="booking_group-label h5" for="checkIn">Check-in</label>
                         <div class="booking_group-wrapper">
@@ -106,6 +117,21 @@ $page = 'index';
                             <i class="icon-chevron_down icon"></i>
                         </div>
                     </div>
+                    
+                    <div class="booking_group d-flex flex-column">
+                        <label class="booking_group-label h5" for="institute">Institute</label>
+                        <div class="booking_group-wrapper">
+                            <i class="icon-location icon"></i>
+                            <select class="booking_group-field field" name="institute" id="institute">
+                                <option value="" selected>All Institutes</option>
+                                @foreach($institutes as $institute)
+                                  <option value="{{ $institute->id }}" {{ request('institute') == $institute->id ? 'selected' : '' }}>{{ $institute->name }}</option>
+                                @endforeach
+                            </select>
+                            <i class="icon-chevron_down icon"></i>
+                        </div>
+                    </div>  
+                    
                     <div class="booking_group d-flex flex-column">
                         <span class="booking_group-label h5">Student</span>
                         <div class="booking_group-wrapper booking_group-wrapper--guests">
@@ -188,18 +214,13 @@ $page = 'index';
 
     </div>
 </section>
-<!-- hero section end -->
-
-<!-- rooms section start -->
 <section class="rooms section--blockbg section--nopb">
     <div class="block"></div>
 
 </section>
-<!-- rooms section end -->
 @endsection
 
 @push('scripts')
-<!-- <script src="{{ asset('asset/js/index.min.js') }}"></script> -->
 <script src="{{ asset('asset/js/gallery.min.js') }}"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -210,7 +231,10 @@ $page = 'index';
         
         fields.forEach((field) => {
             field.addEventListener('change', function(e) {
-                e.target.closest('form').submit();
+                // Do not submit for student input, it requires dropdown interaction
+                if (e.target.name !== 'student') {
+                    e.target.closest('form').submit();
+                }
             });
         });
 
