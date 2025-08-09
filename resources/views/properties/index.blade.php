@@ -13,6 +13,7 @@ $page = 'index';
         z-index: 999999999;
         background-color: transparent;
     }
+
     .container--hero *,
     .booking_group-field,
     .booking_group-field input,
@@ -24,7 +25,7 @@ $page = 'index';
         -moz-appearance: none;
         appearance: none;
     }
-    /* */
+
     .hero_main:before {
         background-color: transparent !important;
         display: none;
