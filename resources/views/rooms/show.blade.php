@@ -102,17 +102,12 @@ $page = 'room';
 
     .btn.theme-element {
         padding: 0.75rem 1.5rem;
-        background-color: #007bff;
         color: white;
         border: none;
         font-weight: 600;
         border-radius: 4px;
         cursor: pointer;
         transition: background-color 0.2s ease;
-    }
-
-    .btn.theme-element:hover {
-        background-color: #0056b3;
     }
 </style>
 @endpush
