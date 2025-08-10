@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\PropertyImage;
 
 class PageController extends Controller
 {
@@ -13,57 +14,9 @@ class PageController extends Controller
 
     public function gallery()
     {
-        // Sample gallery data
-        $gallery = [
-            [
-                'id' => 1,
-                'title' => 'Lobby Area',
-                'description' => 'Our welcoming lobby with comfortable seating',
-                'image' => 'img/gallery/lobby.jpg',
-                'category' => 'common-areas',
-            ],
-            [
-                'id' => 2,
-                'title' => 'Kitchen',
-                'description' => 'Fully equipped shared kitchen',
-                'image' => 'img/gallery/kitchen.jpg',
-                'category' => 'common-areas',
-            ],
-            [
-                'id' => 3,
-                'title' => 'Garden',
-                'description' => 'Peaceful garden area for relaxation',
-                'image' => 'img/gallery/garden.jpg',
-                'category' => 'outdoor',
-            ],
-            [
-                'id' => 4,
-                'title' => 'Room Interior',
-                'description' => 'Comfortable and clean room interior',
-                'image' => 'img/gallery/room-interior.jpg',
-                'category' => 'rooms',
-            ],
-            [
-                'id' => 5,
-                'title' => 'Bathroom',
-                'description' => 'Modern and clean bathroom facilities',
-                'image' => 'img/gallery/bathroom.jpg',
-                'category' => 'facilities',
-            ],
-            [
-                'id' => 6,
-                'title' => 'Reception',
-                'description' => '24/7 reception desk',
-                'image' => 'img/gallery/reception.jpg',
-                'category' => 'common-areas',
-            ],
-        ];
+        $galleryImages = PropertyImage::all()->take(4);
 
-        $gallery = collect($gallery)->map(function ($item) {
-            return (object) $item;
-        });
-
-        return view('gallery', compact('gallery'));
+        return view('gallery', compact('galleryImages'));
     }
 
     public function faq()

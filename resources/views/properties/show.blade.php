@@ -263,7 +263,7 @@ $page = 'room';
                     </div>
                 </div>
 
-                
+
                 <div class="room_main-cards col-lg-4">
                     <div class="room_main-cards_card">
                         <span class="pricing">
@@ -330,7 +330,7 @@ $page = 'room';
 
             <div class="row">
                 <!-- rooms section start -->
-                <section class="rooms section--blockbg section">
+                <!-- <section class="rooms section--blockbg section">
                     <div class="block"></div>
                     <div class="container">
                         <div class="rooms_header d-sm-flex justify-content-between align-items-center">
@@ -375,7 +375,7 @@ $page = 'room';
                             @endforeach
                         </ul>
                     </div>
-                </section>
+                </section> -->
                 <!-- rooms section end -->
                 <!-- <section class="room_comments col-md-6">
                     <h3 class="room_comments-header">Post comments</h3>
