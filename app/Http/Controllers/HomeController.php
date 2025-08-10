@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Property;
+use App\Models\PropertyImage;
 use App\Models\Review;
 use App\Models\Room;
 use Carbon\Carbon;
@@ -35,8 +36,8 @@ class HomeController extends Controller
 
         $featuredRooms = $featuredRooms->get();
         $roomPromo = $featuredRooms->count() > 0 ? $featuredRooms->random() : null;
-        $galleryImages = Room::all()->pluck('images')->flatten()->take(4);
-
+        $galleryImages = PropertyImage::all()->take(4);
+        // dd($galleryImages);
         $allReviews = Review::all();
 
         $averageRatings = [
