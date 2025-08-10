@@ -133,22 +133,6 @@ class Property extends Model
         return $query->whereBetween('price_per_month', [$min, $max]);
     }
 
-    public function scopeNearbyInstitute($query, $instituteId, $radiusMeters = 5000)
-    {
-        $institute = Institute::findOrFail($instituteId);
-
-        return $query->selectRaw("
-        properties.*, 
-        ST_Distance_Sphere(
-            POINT(properties.longitude, properties.latitude), 
-            POINT(?, ?)
-        ) AS distance
-    ", [$institute->longitude, $institute->latitude])
-            ->having('distance', '<=', $radiusMeters)
-            ->orderBy('distance');
-    }
-
-
     // Accessors
     public function getFullAddressAttribute()
     {

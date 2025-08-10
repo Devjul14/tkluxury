@@ -6,7 +6,6 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\RoomController;
-use App\Http\Controllers\PropertySearchController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -51,8 +50,9 @@ Route::get('/properties', [PropertyController::class, 'index'])->name('propertie
 Route::get('/properties/{property}', [PropertyController::class, 'show'])->name('properties.show');
 Route::get('/properties/{property}/rooms', [PropertyController::class, 'rooms'])->name('properties.rooms');
 
-Route::get('/properties/search', [PropertySearchController::class, 'index'])->name('properties.search');
-Route::get('/properties/results', [PropertySearchController::class, 'results'])->name('properties.results');
+
+
+
 
 
 // Rooms routes

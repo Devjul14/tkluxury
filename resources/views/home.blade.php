@@ -158,7 +158,7 @@ $page = 'index';
     <div class="container">
         <div class="container d-xl-flex align-items-center justify-content-between">
             <div class="promo_info">
-                <h2 class="info_header" data-aos="fade-up">Stages of booking a room</h2>
+                <h2 class="info_header" data-aos="fade-up">Stages of booking a property</h2>
                 <p class="info_text" data-aos="fade-up" data-aos-delay="50">
 
                 </p>
@@ -416,7 +416,7 @@ $page = 'index';
                             {{ $review->date ?? 'July 2021' }}
                         </span>
                         <div class="reviews_slider-slide_main">
-                            <h4 class="title">{{ $review->title ?? 'Very cozy room close to everything' }}</h4>
+                            <h4 class="title">{{ $review->title ?? 'Very cozy property close to everything' }}</h4>
                             <p class="text">{{ $review->content ?? 'Consequat interdum varius sit amet mattis vulputate enim nulla. Posuere morbi leo urna molestie at elementum eu facilisis sed. Diam phasellus vestibulum lorem sed risus ultricies tristique.' }}</p>
                         </div>
                         <span class="reviews_slider-slide_guest d-flex align-items-center">
@@ -668,7 +668,7 @@ $page = 'index';
                 <div class="media_card media_card--bottom" data-aos="fade-right">
                     <h4 class="media_card-text">Studio Room with Premium desk</h4>
                     <div class="media_card-pricing"><span class="h2">$149</span> / 1 night</div>
-                    <a class="media_card-btn btn theme-element theme-element--light" href="{{ route('rooms.index') }}">See availability</a> //ini nanti ke detail property room
+                    <a class="media_card-btn btn theme-element theme-element--light" href="{{ route('rooms.index') }}">See availability</a>
                 </div>
             </div>
         </div>
@@ -681,7 +681,7 @@ $page = 'index';
 <section class="gallery section">
     <div class="container">
         <div class="gallery_header d-sm-flex justify-content-between align-items-center">
-            <h2 class="gallery_header-title">Photos of our rooms</h2>
+            <h2 class="gallery_header-title">Photos of our properties</h2>
             <div class="wrapper">
                 <a class="btn theme-element theme-element--light" href="{{ route('gallery') ?? 'gallery.html' }}">View all photos</a>
             </div>
