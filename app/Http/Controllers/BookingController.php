@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\BookingConfirmed;
 use App\Models\Booking;
+use App\Models\Property;
 use App\Models\Room;
 use App\Models\Service;
 use App\Models\User;
@@ -37,59 +38,86 @@ class BookingController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'room_id' => 'required|integer',
+            'room_id' => 'sometimes|integer|exists:rooms,id',
+            'property_id' => 'sometimes|integer|exists:properties,id',
             'check_in' => 'required|date_format:m.d.Y|after:today',
             'check_out' => 'required|date_format:m.d.Y|after:check_in',
             'services' => 'array',
             'services.*' => 'exists:services,id',
         ], [], [
             'room_id' => 'room',
+            'property_id' => 'property',
             'check_in' => 'check-in',
             'check_out' => 'check-out',
         ]);
 
+        $validator->after(function ($validator) {
+            $data = $validator->getData();
+            if (empty($data['room_id']) && empty($data['property_id'])) {
+                $validator->errors()->add('room_id', 'Either a room or a property must be selected for booking.');
+            }
+        });
+
         if ($validator->fails()) {
-            $errors = $validator->errors()->toArray();
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
         // If validation passes, continue with your logic
         $data = $validator->validated();
-        // dd($data);
         $user = Auth::user();
-
-        // Create booking logic here
-        $room = Room::with('property')->findOrFail($data['room_id']);
         $checkInCarbon = Carbon::createFromFormat('m.d.Y', $data['check_in']);
         $checkOutCarbon = Carbon::createFromFormat('m.d.Y', $data['check_out']);
 
-        $bookingReference = 'BOOK-' . $checkInCarbon->format('YmdHis') . '-' . str_pad($room->id, 5, '0', STR_PAD_LEFT);
-        $durationMonths = $checkInCarbon->diffInMonths($checkOutCarbon);
-        $totalRentAmount = $room->price_per_month * $durationMonths;
-        $totalAmount = $totalRentAmount + (($totalRentAmount) * config('hostel.booking.tax_rate', 0.08)) + (($totalRentAmount) * config('hostel.booking.service_fee_rate', 0.05));
-
-        $services = Service::whereIn('id', $data['services'] ?? [])->get();
-        $serviceFees = $services->sum('price');
-
         $booking = new Booking([
-            'property_id' => $room->property_id,
-            'room_id' => $room->id,
-            'duration_months' => $durationMonths,
+            'property_id' => $data['property_id'] ?? null,
+            'room_id' => $data['room_id'] ?? null,
             'booking_date' => now(),
             'check_in_date' => $checkInCarbon,
             'check_out_date' => $checkOutCarbon,
             'status' => 'pending',
-            'booking_reference' => $bookingReference,
-            'security_deposit' => $room->property->security_deposit,
-            'monthly_rent' => $room->price_per_month,
-            'subtotal' => $totalRentAmount,
-            'down_payment_amount' => $totalRentAmount * config('hostel.booking.down_payment_rate', 0.1),
-            'tax' => ($totalRentAmount) * config('hostel.booking.tax_rate', 0.08),
-            'service_fee' => (($totalRentAmount) * config('hostel.booking.service_fee_rate', 0.05)) + $serviceFees,
-            'total_amount' => $totalAmount,
         ]);
 
-        $booking->setRelation('room', $room);
+        if (isset($data['room_id'])) {
+            $room = Room::with('property')->findOrFail($data['room_id']);
+            $bookingReference = 'BOOK-' . $checkInCarbon->format('YmdHis') . '-' . str_pad($room->id, 5, '0', STR_PAD_LEFT);
+            $durationMonths = $checkInCarbon->diffInMonths($checkOutCarbon);
+            $totalRentAmount = $room->price_per_month * $durationMonths;
+            $totalAmount = $totalRentAmount + (($totalRentAmount) * config('hostel.booking.tax_rate', 0.08)) + (($totalRentAmount) * config('hostel.booking.service_fee_rate', 0.05));
+
+            $services = Service::whereIn('id', $data['services'] ?? [])->get();
+            $serviceFees = $services->sum('price');
+            $booking->duration_months = $durationMonths;
+            $booking->booking_reference = $bookingReference;
+            $booking->security_deposit = $room->property->security_deposit;
+            $booking->monthly_rent = $room->price_per_month;
+            $booking->subtotal = $totalRentAmount;
+            $booking->down_payment_amount = $totalRentAmount * config('hostel.booking.down_payment_rate', 0.1);
+            $booking->tax = ($totalRentAmount) * config('hostel.booking.tax_rate', 0.08);
+            $booking->service_fee = (($totalRentAmount) * config('hostel.booking.service_fee_rate', 0.05)) + $serviceFees;
+            $booking->total_amount = $totalAmount;
+            $booking->setRelation('room', $room);
+        }
+
+        if (isset($data['property_id'])) {
+            $property = Property::with('rooms')->findOrFail($data['property_id']);
+            $bookingReference = 'BOOK-' . $checkInCarbon->format('YmdHis') . '-' . str_pad($property->property_code, 5, '0', STR_PAD_LEFT);
+            $durationMonths = $checkInCarbon->diffInMonths($checkOutCarbon);
+            $totalRentAmount = $property->price_per_month * $durationMonths;
+            $totalAmount = $totalRentAmount + (($totalRentAmount) * config('hostel.booking.tax_rate', 0.08)) + (($totalRentAmount) * config('hostel.booking.service_fee_rate', 0.05));
+
+            $services = Service::whereIn('id', $data['services'] ?? [])->get();
+            $serviceFees = $services->sum('price');
+            $booking->duration_months = $durationMonths;
+            $booking->booking_reference = $bookingReference;
+            $booking->security_deposit = $property->security_deposit;
+            $booking->monthly_rent = $property->price_per_month;
+            $booking->subtotal = $totalRentAmount;
+            $booking->down_payment_amount = $totalRentAmount * config('hostel.booking.down_payment_rate', 0.1);
+            $booking->tax = ($totalRentAmount) * config('hostel.booking.tax_rate', 0.08);
+            $booking->service_fee = (($totalRentAmount) * config('hostel.booking.service_fee_rate', 0.05)) + $serviceFees;
+            $booking->total_amount = $totalAmount;
+            $booking->setRelation('property', $property);
+        }
         $booking->setRelation('services', $services);
 
         // dd($booking->toArray());
@@ -229,8 +257,6 @@ class BookingController extends Controller
         }
 
         // Clear session
-        // session()->forget('booking_confirmation');
-
         return view('booking.confirmation', compact('booking'));
     }
 
