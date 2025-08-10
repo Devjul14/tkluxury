@@ -353,13 +353,28 @@ $page = 'confirmation';
                     </div>
 
                     <div class="room-card">
+                        @if($booking->room)
                         <div class="room-media">
                             <img src="{{ $booking->room->image ? asset($booking->room->image) : asset('img/hero.webp') }}" alt="{{ $booking->room->name }}" />
                         </div>
+                        @endif
+                        @if($booking->property)
+                        <div class="room-media">
+                            <img src="{{ $booking->property->getThumbnailAttribute() ? asset($booking->property->getThumbnailAttribute()) : asset('img/hero.webp') }}" alt="{{ $booking->property->name }}" />
+                        </div>
+                        @endif
+                        @if ($booking->room)
                         <div>
                             <h5 class="room-title">{{ $booking->room->name }}</h5>
                             <p class="room-type">{{ $booking->room->type }}</p>
                         </div>
+                        @endif
+                        @if ($booking->property)
+                        <div>
+                            <h5 class="room-title">{{ $booking->property->title }}</h5>
+                            <p class="room-type">{{ $booking->property->property_type }}</p>
+                        </div>
+                        @endif
                     </div>
 
                     <div class="mb-3">
@@ -371,10 +386,12 @@ $page = 'confirmation';
                             <span class="detail-label">Check-out:</span>
                             <span class="detail-value">{{ Carbon::parse($booking->check_out_date)->format('l, M d, Y') }}</span>
                         </div>
+                        @if ($booking->room)
                         <div class="detail-item">
                             <span class="detail-label">Guests:</span>
                             <span class="detail-value">{{ $booking->room->capacity }} {{ Str::plural('person', $booking->room->capacity) }}</span>
                         </div>
+                        @endif
                         <div class="detail-item">
                             <span class="detail-label">Nights:</span>
                             <span class="detail-value">{{ Carbon::parse($booking->check_in_date)->diffInDays(Carbon::parse($booking->check_out_date)) }}</span>
@@ -383,14 +400,18 @@ $page = 'confirmation';
 
 
                     <div>
+                        @if ($booking->room)
                         <div class="detail-item">
                             <span class="detail-label">Price per night:</span>
                             <span class="detail-value">${{ number_format($booking->room->price, 2) }}</span>
                         </div>
+                        @endif
+                        @if ($booking->property)
                         <div class="detail-item">
                             <span class="detail-label">Subtotal:</span>
                             <span class="detail-value">${{ number_format($booking->subtotal, 2) }}</span>
                         </div>
+                        @endif
                         @if($booking->tax > 0)
                         <div class="detail-item">
                             <span class="detail-label">Tax:</span>

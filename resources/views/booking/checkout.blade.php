@@ -214,6 +214,10 @@ textarea.form-group_field {
     color: #343a40;
     margin-bottom: 5px;
     font-weight: 600;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 
 .checkout_main-sidebar_summary_room-content_text {
@@ -371,13 +375,19 @@ function calculateNightsBetweenDates($checkInDate, $checkOutDate)
                     <li class="list-item">
                         <a class="link" href="{{ route('home') }}">Home</a>
                     </li>
-
                     <li class="list-item">
-                        <a class="link" href="{{ route('rooms.index') }}">Rooms</a>
+                        <a class="link" href="{{ route('rooms.index') }}">{{ $booking->property ? "Properties" : "Rooms" }}</a>
                     </li>
+                    @if($booking->property)
+                    <li class="list-item">
+                        <a class="link" href="{{ route('rooms.show', $booking->property->id) }}">{{ $booking->property->title }}</a>
+                    </li>
+                    @endif
+                    @if($booking->room)
                     <li class="list-item">
                         <a class="link" href="{{ route('rooms.show', $booking->room->id) }}">{{ $booking->room->description }}</a>
                     </li>
+                    @endif
                     <li class="list-item">
                         <a class="link" href="{{ route('booking.checkout', $booking->booking_reference) }}">Checkout</a>
                     </li>
@@ -646,6 +656,7 @@ function calculateNightsBetweenDates($checkInDate, $checkOutDate)
                         <div class="checkout_main-sidebar_summary" data-aos="fade-left">
                             <h3 class="checkout_main-sidebar_summary-title">Booking Summary</h3>
                             
+                            @if($booking->room)
                             <div class="checkout_main-sidebar_summary_room">
                                 <div class="checkout_main-sidebar_summary_room-media">
                                     <img class="checkout_main-sidebar_summary_room-media_img" src="{{ $booking->room->image ? asset($booking->room->image) : asset('img/hero.webp') }}" alt="{{ $booking->room->name }}" />
@@ -656,6 +667,18 @@ function calculateNightsBetweenDates($checkInDate, $checkOutDate)
                                 </div>
                             </div>
 
+                            @endif
+                            @if($booking->property)
+                            <div class="checkout_main-sidebar_summary_room">
+                                <div class="checkout_main-sidebar_summary_room-media">
+                                    <img class="checkout_main-sidebar_summary_room-media_img" src="{{ $booking->property->getThumbnailAttribute() ? asset($booking->property->getThumbnailAttribute()) : asset('img/hero.webp') }}" alt="{{ $booking->property->name }}" />
+                                </div>
+                                <div class="checkout_main-sidebar_summary_room-content">
+                                    <h4 class="checkout_main-sidebar_summary_room-content_title">{{ $booking->property->description }}</h4>
+                                    <p class="checkout_main-sidebar_summary_room-content_text">{{ $booking->property->property_type }}</p>
+                                </div>
+                            </div>
+                            @endif
                             <div class="checkout_main-sidebar_summary_details">
                                 <div class="checkout_main-sidebar_summary_details_item">
                                     <span class="label">Check-in:</span>
@@ -665,10 +688,12 @@ function calculateNightsBetweenDates($checkInDate, $checkOutDate)
                                     <span class="label">Check-out:</span>
                                     <span class="value">{{ $booking->check_out_date->format('d.m.Y') }}</span>
                                 </div>
+                                @if($booking->room)
                                 <div class="checkout_main-sidebar_summary_details_item">
                                     <span class="label">Guests:</span>
                                     <span class="value">{{ $booking->room->capacity }}</span>
                                 </div>
+                                @endif
                                 <div class="checkout_main-sidebar_summary_details_item">
                                     <span class="label">Nights:</span>
                                     <span class="value">{{ calculateNightsBetweenDates($booking->check_in_date, $booking->check_out_date) }}</span>
@@ -687,7 +712,12 @@ function calculateNightsBetweenDates($checkInDate, $checkOutDate)
                             <div class="checkout_main-sidebar_summary_pricing">
                                 <div class="checkout_main-sidebar_summary_pricing_item">
                                     <span class="label">Price per month:</span>
-                                    <span class="value">{{ Number::currency($booking->room->price_per_month, env('APP_DEFAULT_CURRENCY', 'IDR')) }}</span>
+                                    @if($booking->room)
+                                        <span class="value">{{ Number::currency($booking->room->price_per_month, env('APP_DEFAULT_CURRENCY', 'IDR')) }}</span>
+                                    @endif
+                                    @if($booking->property)
+                                        <span class="value">{{ Number::currency($booking->property->price_per_month, env('APP_DEFAULT_CURRENCY', 'IDR')) }}</span>
+                                    @endif
                                 </div>
                                 <div class="checkout_main-sidebar_summary_pricing_item">
                                     <span class="label">Subtotal:</span>
