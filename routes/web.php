@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\PropertySearchController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +27,16 @@ Route::get('/test-view-any', function () {
     return Gate::forUser($user)->check('viewAny', User::class) ? 'allowed' : 'denied';
 });
 
+// routes/web.php
+Route::get('/test-map', function () {
+    $properties = \App\Models\Property::select('title', 'latitude', 'longitude', 'distance')->get();
+    $institute = \App\Models\Institute::first(); // atau null jika tidak ada
+    $pagedProperties = $properties; // dummy pagination untuk komponen
+
+    return view('test-map', compact('properties', 'institute', 'pagedProperties'));
+});
+
+
 // Home page
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -39,6 +50,10 @@ Route::get('/term', [PageController::class, 'term'])->name('term');
 Route::get('/properties', [PropertyController::class, 'index'])->name('properties.index');
 Route::get('/properties/{property}', [PropertyController::class, 'show'])->name('properties.show');
 Route::get('/properties/{property}/rooms', [PropertyController::class, 'rooms'])->name('properties.rooms');
+
+Route::get('/properties/search', [PropertySearchController::class, 'index'])->name('properties.search');
+Route::get('/properties/results', [PropertySearchController::class, 'results'])->name('properties.results');
+
 
 // Rooms routes
 Route::get('/rooms', [RoomController::class, 'index'])->name('rooms.index');
