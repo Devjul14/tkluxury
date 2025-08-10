@@ -223,6 +223,20 @@ $page = 'room';
                         </div>
                     </section>
 
+                    <section class="facilities">
+                        <h4 class="facilities_header">Services</h4>
+                        <div class="facilities_list d-sm-flex flex-wrap">
+                            @foreach($services as $service)
+                            <label for="service-{{ $service->id }}" class="mx-2 facilities_list-block_item d-flex align-items-center">
+                                <span class="icon">
+                                    <input type="checkbox" id="service-{{ $service->id }}" name="services[]" value="{{ $service->id }}" class="checkbox_input">
+                                </span>
+                                {{ $service->title }}
+                            </label>
+                            @endforeach
+                        </div>
+                    </section>
+
                     <div class="rating">
                         <span class="rating_summary">
                             <span class="h2">4.25</span>
@@ -248,7 +262,56 @@ $page = 'room';
                         </div>
                     </div>
                 </div>
+
+                
                 <div class="room_main-cards col-lg-4">
+                    <div class="room_main-cards_card">
+                        <span class="pricing">
+                            <span class="pricing_price h2">$59</span>
+                            / 1 night
+                        </span>
+                        <div class="booking" autocomplete="off" data-type="booking">
+                            <input type="hidden" name="property_id" value="{{ $property->id }}">
+
+                            <div class="booking_group d-flex flex-column">
+                                <label class="booking_group-label h5" for="checkIn">Check-in</label>
+                                <div class="booking_group-wrapper">
+                                    <i class="icon-calendar icon"></i>
+                                    <input
+                                        class="booking_group-field field required"
+                                        data-type="date"
+                                        data-start="true"
+                                        type="text"
+                                        id="checkIn"
+                                        name="check_in"
+                                        placeholder="Add arrival date"
+                                        readonly />
+                                    <i class="icon-chevron_down icon"></i>
+                                </div>
+                            </div>
+
+                            <div class="booking_group d-flex flex-column">
+                                <label class="booking_group-label h5" for="checkOut">Check-out</label>
+                                <div class="booking_group-wrapper">
+                                    <i class="icon-calendar icon"></i>
+                                    <input
+                                        class="booking_group-field field required"
+                                        data-type="date"
+                                        data-end="true"
+                                        type="text"
+                                        id="checkOut"
+                                        name="check_out"
+                                        placeholder="Add departure date"
+                                        readonly />
+                                    <i class="icon-chevron_down icon"></i>
+                                </div>
+                            </div>
+
+                            <button class="booking_btn btn theme-element theme-element--accent" type="submit">Book now</button>
+                        </div>
+
+                    </div>
+
                     <div class="room_main-cards_card" style="padding: 0; height: 18rem;">
                         <iframe
                             width="100%"

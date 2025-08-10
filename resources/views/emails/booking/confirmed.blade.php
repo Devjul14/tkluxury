@@ -21,16 +21,29 @@
                     <div class="booking-status">Confirmed</div>
                 </div>
                 
+                @if($booking->room)
                 <div class="room-info">
                     <div class="room-image">
                         <img src="{{ $booking->room->image }}" alt="{{ $booking->room->name }}">
                     </div>
                     <div class="room-details">
                         <h3>{{ $booking->room->name }}</h3>
-                        <p>{{ $booking->room->type_type }}</p>
+                        <p>{{ $booking->room->room_type }}</p>
                     </div>
                 </div>
+                @endif
                 
+                @if($booking->property)
+                <div class="room-info">
+                    <div class="room-image">
+                        <img src="{{ $booking->property->getThumbnailAttribute() ? asset($booking->property->getThumbnailAttribute()) : asset('img/hero.webp') }}" alt="{{ $booking->property->name }}">
+                    </div>
+                    <div class="room-details">
+                        <h3>{{ $booking->property->title }}</h3>
+                        <p>{{ $booking->property->property_type }}</p>
+                    </div>
+                </div>
+                @endif
                 <div class="booking-details">
                     <div class="detail-row">
                         <span class="detail-label">Check-in:</span>
@@ -40,18 +53,20 @@
                         <span class="detail-label">Check-out:</span>
                         <span class="detail-value">{{ Carbon::parse($booking->check_out_date)->format('l, M d, Y') }}</span>
                     </div>
+                    @if($booking->room)
                     <div class="detail-row">
                         <span class="detail-label">Guests:</span>
-                        <span class="detail-value">{{ $booking->capacity }} {{ Str::plural('person', $booking->capacity) }}</span>
+                        <span class="detail-value">{{ $booking->room->capacity }} {{ Str::plural('person', $booking->room->capacity) }}</span>
                     </div>
+                    @endif
                     <div class="detail-row">
                         <span class="detail-label">Nights:</span>
                         <span class="detail-value">{{ Carbon::parse($booking->check_in_date)->diffInDays(Carbon::parse($booking->check_out_date)) }}</span>
                     </div>
                     
                     <div class="detail-row">
-                        <span class="detail-label">Price per night:</span>
-                        <span class="detail-value">${{ number_format($booking->room->price_per_month, 2) }}</span>
+                        <span class="detail-label">Price per month:</span>
+                        <span class="detail-value">${{ number_format($booking->monthly_rent, 2) }}</span>
                     </div>
                     <div class="detail-row">
                         <span class="detail-label">Subtotal:</span>
