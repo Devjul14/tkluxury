@@ -13,7 +13,7 @@ $page = 'room';
 <style>
     .review {
         padding: 2rem;
-        background-color: #ffffff;
+        background-color: #1e3a8a;
         border-radius: 8px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
         margin-bottom: 2rem;
@@ -214,7 +214,9 @@ $page = 'room';
                             @foreach($chunk as $feature)
                             <div class="facilities_list-block">
                                 <span class="facilities_list-block_item d-flex align-items-center">
-                                    <span class="icon-{{ $feature->icon }} icon"></span>
+                                    <x-dynamic-component
+                                        :component="$feature->icon ? 'heroicon-o-' . $feature->icon : 'heroicon-o-question-mark-circle'"
+                                        style="width: 16px; height: 16px; color: #1e3a8a;" />
                                     {{ $feature->name }}
                                 </span>
                             </div>

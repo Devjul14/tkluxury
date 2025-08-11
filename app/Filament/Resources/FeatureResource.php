@@ -10,6 +10,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Guava\FilamentIconPicker\Forms\IconPicker;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -18,9 +19,9 @@ class FeatureResource extends Resource
     protected static ?string $model = Feature::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-star';
-    
+
     protected static ?string $navigationGroup = 'Property Management';
-    
+
     protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
@@ -32,9 +33,11 @@ class FeatureResource extends Resource
                         Forms\Components\TextInput::make('name')
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('icon')
-                            ->maxLength(255)
-                            ->helperText('Icon class name (e.g., heroicon-o-wifi)'),
+                        IconPicker::make('icon')
+                            ->columns(4)
+                            ->mutateDehydratedStateUsing(function ($state) {
+                                return str_replace('heroicon-o-', '', $state);
+                            }),
                         Forms\Components\Select::make('category')
                             ->options([
                                 'amenities' => 'Amenities',
