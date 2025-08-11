@@ -105,7 +105,7 @@ $page = 'index';
         <div class="rooms_header d-sm-flex justify-content-between align-items-center">
             <h2 class="rooms_header-title" data-aos="fade-right">Properties</h2>
             <div class="wrapper" data-aos="fade-left">
-                <a class="btn theme-element theme-element--light" href="{{ route('rooms.index') ?? 'rooms.html' }}">View all properties</a>
+                <a class="btn theme-element theme-element--light" href="{{ route('properties.index') ?? 'rooms.html' }}">View all properties</a>
             </div>
         </div>
         <ul class="rooms_list d-md-flex flex-wrap">
@@ -126,7 +126,7 @@ $page = 'index';
                         </span>
                     </div>
                     <div class="main d-md-flex flex-column justify-content-between flex-grow-1">
-                        <a class="main_title h4" href="{{ route('rooms.show', $property->id) }}" data-shave="true">
+                        <a class="main_title h4" href="{{ route('properties.show', $property->property_code) }}" data-shave="true">
                             {{ $property->title ?? 'Lorem ipsum' }}
                         </a>
                         <div class="main_amenities">
@@ -139,7 +139,7 @@ $page = 'index';
                                 Type {{ $property->property_type }}
                             </span>
                         </div>
-                        <a class="link link--arrow d-inline-flex align-items-center" href="{{ route('rooms.show', $property->id) }}">
+                        <a class="link link--arrow d-inline-flex align-items-center" href="{{ route('properties.show', $property->property_code) }}">
                             See more
                             <i class="icon-arrow_right icon"></i>
                         </a>

@@ -45,11 +45,11 @@ $page = 'about';
             <ul class="about_benefits-list d-md-flex">
                 <li class="about_benefits-list_item col-12 col-md-4 mb-3 mb-md-0">
                     <span class="countNum number h1 d-flex align-items-center" data-suffix="+" data-value="500">0</span>
-                    <p class="number-label">Happy Guests</p>
+                    <p class="number-label">Happy Students</p>
                 </li>
                 <li class="about_benefits-list_item col-12 col-md-4 mb-3 mb-md-0">
                     <span class="countNum number h1 d-flex align-items-center" data-suffix="+" data-value="50">0</span>
-                    <p class="number-label">Rooms</p>
+                    <p class="number-label">Properties</p>
                 </li>
                 <li class="about_benefits-list_item col-12 col-md-4">
                     <span class="countNum number h1 d-flex align-items-center" data-suffix="%" data-value="10">0</span>
@@ -171,7 +171,7 @@ $page = 'about';
                         </div>
                         <div class="main">
                             <h4 class="main_title">Clean & Comfortable</h4>
-                            <p class="main_text">Our rooms are cleaned daily and equipped with comfortable beds, fresh linens, and all the essentials you need.</p>
+                            <p class="main_text">Our properties are cleaned daily and equipped with comfortable beds, fresh linens, and all the essentials you need.</p>
                         </div>
                     </li>
                     <li class="list-item d-flex align-items-sm-center" data-aos="fade-up" data-aos-delay="100">

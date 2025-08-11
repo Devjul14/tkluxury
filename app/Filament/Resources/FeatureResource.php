@@ -10,8 +10,10 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Support\Colors\Color;
 use Filament\Tables\Table;
+
 use Filament\Forms;
 use Filament\Tables;
+
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -34,6 +36,7 @@ class FeatureResource extends Resource
                         Forms\Components\TextInput::make('name')
                             ->required()
                             ->maxLength(255),
+
                         Forms\Components\Select::make('icon')
                             ->native(false)
                             ->options(function () {
@@ -49,6 +52,7 @@ class FeatureResource extends Resource
                                 $record->refresh();
                             })
                             ->required(),
+
                         Forms\Components\Select::make('category')
                             ->native(false)
                             ->searchable()

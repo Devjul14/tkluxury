@@ -188,6 +188,16 @@ class PropertyResource extends Resource
                             ->required(),
                         Forms\Components\Toggle::make('furnished')
                             ->required(),
+                        Forms\Components\Select::make('features')
+                            ->label('Additional Features')
+                            ->multiple()
+                            ->searchable()
+                            ->preload()
+                            ->relationship('features', 'name')
+                            ->optionsLimit(50)
+                            ->placeholder('Select additional features...')
+                            ->helperText('Search and select additional features for this property')
+                            ->columnSpanFull(),
                         Forms\Components\Select::make('maintenance_status')
                             ->options([
                                 'excellent' => 'Excellent',

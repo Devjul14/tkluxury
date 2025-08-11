@@ -14,7 +14,7 @@ $page = 'room';
 <style>
     .review {
         padding: 2rem;
-        background-color: #ffffff;
+        background-color: #1e3a8a;
         border-radius: 8px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
         margin-bottom: 2rem;
@@ -103,6 +103,10 @@ $page = 'room';
 
     .btn.theme-element {
         padding: 0.75rem 1.5rem;
+
+
+        background-color: #1e3a8a;
+
         color: white;
         border: none;
         font-weight: 600;
@@ -210,6 +214,7 @@ $page = 'room';
                             @foreach($chunk as $feature)
                             <div class="facilities_list-block">
                                 <span class="facilities_list-block_item d-flex align-items-center">
+
                                     <span class="icon-{{ $feature->icon }} icon">
                                         <img src="{{ IconifyService::getIcon($feature->icon, '#235784') }}" alt="{{ $feature->name }}">
                                     </span>
