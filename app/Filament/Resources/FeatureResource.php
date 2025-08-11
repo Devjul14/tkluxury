@@ -5,11 +5,13 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\FeatureResource\Pages;
 use App\Filament\Resources\FeatureResource\RelationManagers;
 use App\Models\Feature;
-use Filament\Forms;
+use App\Services\IconifyService;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Support\Colors\Color;
 use Filament\Tables\Table;
+use Filament\Forms;
+use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -18,9 +20,9 @@ class FeatureResource extends Resource
     protected static ?string $model = Feature::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-star';
-    
+
     protected static ?string $navigationGroup = 'Property Management';
-    
+
     protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
@@ -32,10 +34,24 @@ class FeatureResource extends Resource
                         Forms\Components\TextInput::make('name')
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('icon')
-                            ->maxLength(255)
-                            ->helperText('Icon class name (e.g., heroicon-o-wifi)'),
+                        Forms\Components\Select::make('icon')
+                            ->native(false)
+                            ->options(function () {
+                                $icons = IconifyService::getIcons();
+                                return array_combine($icons, $icons);
+                            })
+                            ->suffixIcon(fn($state) => IconifyService::getIcon($state))
+                            ->reactive()
+                            ->searchable()
+                            ->suffixIconColor(Color::Amber)
+                            ->dehydrated(fn($state): array => ['icon' => $state])
+                            ->afterStateUpdated(function ($record, $state) {
+                                $record->refresh();
+                            })
+                            ->required(),
                         Forms\Components\Select::make('category')
+                            ->native(false)
+                            ->searchable()
                             ->options([
                                 'amenities' => 'Amenities',
                                 'accessibility' => 'Accessibility',
@@ -48,9 +64,14 @@ class FeatureResource extends Resource
                         Forms\Components\Textarea::make('description')
                             ->maxLength(65535)
                             ->columnSpanFull(),
+                    ])
+                    ->columns(2),
+                Forms\Components\Section::make('Settings')
+                    ->schema([
                         Forms\Components\Toggle::make('is_active')
                             ->required(),
-                    ])->columns(2),
+                    ])
+                    ->columns(2),
             ]);
     }
 

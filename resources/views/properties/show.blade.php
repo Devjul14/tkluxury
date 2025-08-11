@@ -1,4 +1,5 @@
 @use('Illuminate\Support\Number')
+@use('App\Services\IconifyService')
 
 @extends('layouts.app')
 
@@ -214,7 +215,9 @@ $page = 'room';
                             @foreach($chunk as $feature)
                             <div class="facilities_list-block">
                                 <span class="facilities_list-block_item d-flex align-items-center">
-                                    <span class="icon-{{ $feature->icon }} icon"></span>
+                                    <span class="icon-{{ $feature->icon }} icon">
+                                        <img src="{{ IconifyService::getIcon($feature->icon) }}" alt="{{ $feature->name }}">
+                                    </span>
                                     {{ $feature->name }}
                                 </span>
                             </div>
