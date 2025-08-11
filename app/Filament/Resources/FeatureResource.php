@@ -43,7 +43,7 @@ class FeatureResource extends Resource
                                 $icons = IconifyService::getIcons();
                                 return array_combine($icons, $icons);
                             })
-                            ->suffixIcon(fn($state) => IconifyService::getIcon($state))
+                            ->suffixIcon(fn($state) => $state ? IconifyService::getIcon($state) : IconifyService::getIcon('question', '#9CA3AF'))
                             ->reactive()
                             ->searchable()
                             ->suffixIconColor(Color::Amber)

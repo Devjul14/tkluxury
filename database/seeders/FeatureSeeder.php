@@ -23,7 +23,7 @@ class FeatureSeeder extends Seeder
             ],
             [
                 'name' => 'Parking',
-                'icon' => 'car',
+                'icon' => 'truck', // Changed from 'car' to 'truck'
                 'category' => 'amenities',
                 'description' => 'On-site parking available',
             ],
@@ -35,19 +35,19 @@ class FeatureSeeder extends Seeder
             ],
             [
                 'name' => 'Laundry',
-                'icon' => 'tshirt',
+                'icon' => 'shirt', // Changed from 'tshirt' to 'shirt'
                 'category' => 'amenities',
                 'description' => 'Washing and drying facilities',
             ],
             [
                 'name' => 'Kitchen',
-                'icon' => 'utensils',
+                'icon' => 'kitchen-set', // Changed from 'utensils' to 'kitchen-set'
                 'category' => 'amenities',
                 'description' => 'Fully equipped kitchen',
             ],
             [
                 'name' => 'Balcony',
-                'icon' => 'home',
+                'icon' => 'house', // Changed from 'home' to 'house'
                 'category' => 'amenities',
                 'description' => 'Private balcony or terrace',
             ],
@@ -59,11 +59,11 @@ class FeatureSeeder extends Seeder
             ],
             [
                 'name' => 'Heating',
-                'icon' => 'thermometer-half',
+                'icon' => 'thermometer', // Changed from 'thermometer-half' to 'thermometer'
                 'category' => 'amenities',
                 'description' => 'Central heating system',
             ],
-            
+
             // Accessibility
             [
                 'name' => 'Wheelchair Accessible',
@@ -83,17 +83,17 @@ class FeatureSeeder extends Seeder
                 'category' => 'accessibility',
                 'description' => 'Ground floor accommodation',
             ],
-            
+
             // Safety
             [
                 'name' => 'Security System',
-                'icon' => 'shield-alt',
+                'icon' => 'shield', // Changed from 'shield-alt' to 'shield'
                 'category' => 'safety',
                 'description' => '24/7 security monitoring',
             ],
             [
                 'name' => 'Fire Alarm',
-                'icon' => 'fire',
+                'icon' => 'fire-extinguisher', // Changed from 'fire' to 'fire-extinguisher'
                 'category' => 'safety',
                 'description' => 'Fire detection and alarm system',
             ],
@@ -109,29 +109,29 @@ class FeatureSeeder extends Seeder
                 'category' => 'safety',
                 'description' => 'Secure building entry system',
             ],
-            
+
             // Study Spaces
             [
                 'name' => 'Study Room',
-                'icon' => 'book',
+                'icon' => 'desktop', // Changed from 'book' to 'desktop'
                 'category' => 'study_spaces',
                 'description' => 'Dedicated study area',
             ],
             [
                 'name' => 'Library Access',
-                'icon' => 'library',
+                'icon' => 'book-open', // Changed from 'library' to 'book-open'
                 'category' => 'study_spaces',
                 'description' => 'Access to university library',
             ],
             [
                 'name' => 'Quiet Hours',
-                'icon' => 'volume-mute',
+                'icon' => 'clock-rotate-left', // Changed from 'volume-mute' to 'clock-rotate-left'
                 'category' => 'study_spaces',
                 'description' => 'Designated quiet study hours',
             ],
             [
                 'name' => 'Computer Lab',
-                'icon' => 'laptop',
+                'icon' => 'computer', // Changed from 'laptop' to 'computer'
                 'category' => 'study_spaces',
                 'description' => 'Access to computer facilities',
             ],
