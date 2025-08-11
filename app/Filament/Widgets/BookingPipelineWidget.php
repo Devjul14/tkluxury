@@ -40,9 +40,9 @@ class BookingPipelineWidget extends BaseWidget
             $difference = $todayCount - $yesterdayCount;
 
             $description = match (true) {
-                $difference > 0 => "+{$difference} dari kemarin",
-                $difference < 0 => "{$difference} dari kemarin",
-                default => 'Tidak berubah',
+                $difference > 0 => "+{$difference} from yesterday",
+                $difference < 0 => "{$difference} from yesterday",
+                default => 'No change',
             };
 
             $descriptionColor = match (true) {

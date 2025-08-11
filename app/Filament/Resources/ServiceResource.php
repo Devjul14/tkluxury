@@ -5,22 +5,19 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ServiceResource\Pages;
 use App\Filament\Resources\ServiceResource\RelationManagers;
 use App\Models\Service;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\BadgeColumn;
+use Filament\Tables\Table;
+use Filament\Forms;
+use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ServiceResource extends Resource
 {
-
     protected static ?string $navigationGroup = 'Maintenance & Operations';
     protected static ?int $navigationSort = 2;
-
     protected static ?string $navigationIcon = 'heroicon-o-cog';
     protected static ?string $modelLabel = 'Service';
     protected static ?string $pluralModelLabel = 'Services';
@@ -60,11 +57,12 @@ class ServiceResource extends Resource
                     ->label('Price')
                     ->money('usd', true)
                     ->sortable(),
-                BadgeColumn::make('status')
+                TextColumn::make('status')
                     ->colors([
                         'success' => 'active',
                         'danger' => 'inactive',
-                    ]),
+                    ])
+                    ->badge(),
                 TextColumn::make('created_at')
                     ->label('Created'),
             ]);

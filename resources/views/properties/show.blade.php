@@ -1,4 +1,5 @@
 @use('Illuminate\Support\Number')
+@use('App\Services\IconifyService')
 
 @extends('layouts.app')
 
@@ -102,17 +103,16 @@ $page = 'room';
 
     .btn.theme-element {
         padding: 0.75rem 1.5rem;
+
+
         background-color: #1e3a8a;
+
         color: white;
         border: none;
         font-weight: 600;
         border-radius: 4px;
         cursor: pointer;
         transition: background-color 0.2s ease;
-    }
-
-    .btn.theme-element:hover {
-        background-color: #0056b3;
     }
 </style>
 @endpush
@@ -214,9 +214,10 @@ $page = 'room';
                             @foreach($chunk as $feature)
                             <div class="facilities_list-block">
                                 <span class="facilities_list-block_item d-flex align-items-center">
-                                    <x-dynamic-component
-                                        :component="$feature->icon ? 'heroicon-o-' . $feature->icon : 'heroicon-o-question-mark-circle'"
-                                        style="width: 16px; height: 16px; color: #1e3a8a;" />
+
+                                    <span class="icon-{{ $feature->icon }} icon">
+                                        <img src="{{ IconifyService::getIcon($feature->icon, '#235784') }}" alt="{{ $feature->name }}">
+                                    </span>
                                     {{ $feature->name }}
                                 </span>
                             </div>
