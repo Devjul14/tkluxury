@@ -102,7 +102,7 @@ $page = 'room';
 
     .btn.theme-element {
         padding: 0.75rem 1.5rem;
-        background-color: #007bff;
+        background-color: #1e3a8a;
         color: white;
         border: none;
         font-weight: 600;
