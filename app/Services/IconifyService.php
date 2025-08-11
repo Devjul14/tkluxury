@@ -35,10 +35,10 @@ class IconifyService
         });
     }
 
-    public static function getIcon($icon)
+    public static function getIcon(string $icon, ?string $color = null)
     {
         // yellow
-        $color = '#FFC107';
+        $color = $color ?? '#FFC107';
         return sprintf('%s/%s/%s.svg?height=16&color=%s', self::API_URL, self::PREFIX, $icon, urlencode($color));
     }
 }
