@@ -5,7 +5,6 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\PropertyResource\Pages;
 use App\Filament\Resources\PropertyResource\RelationManagers;
 use App\Models\Property;
-use Dotswan\MapPicker\Fields\Map;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
@@ -13,8 +12,15 @@ use Filament\Tables\Table;
 use Filament\Forms;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Database\Eloquent\Model;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
+use GuzzleHttp\Client;
+use Dotswan\MapPicker\Fields\Map;
+
 
 class PropertyResource extends Resource
 {
@@ -72,16 +78,70 @@ class PropertyResource extends Resource
                         Forms\Components\TextInput::make('postal_code')
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('latitude')
-                            ->numeric()
-                            ->step(0.000001),
-                        Forms\Components\TextInput::make('longitude')
-                            ->numeric()
-                            ->step(0.000001),
-                        Forms\Components\TextInput::make('distance_to_institute')
-                            ->numeric()
-                            ->step(0.001)
-                            ->suffix('km'),
+                    ])
+                    ->columns(2),
+
+                Forms\Components\Section::make('Map Location')
+                    ->schema([
+                        // Mengganti TextInput dengan Select untuk fungsionalitas pencarian dinamis
+                        Select::make('search_location')
+                            ->label('Search for a location in Malaysia')
+                            ->placeholder('e.g., Kuala Lumpur, Selangor')
+                            ->live()
+                            ->searchable() // Mengaktifkan fitur pencarian
+                            ->getSearchResultsUsing(function (string $search) {
+                                if (empty($search)) {
+                                    return [];
+                                }
+
+                                $results = [];
+                                // Ganti dengan panggilan API geocoding Anda sendiri.
+                                // Contoh ini menggunakan Nominatim OpenStreetMap.
+                                try {
+                                    $client = new Client(['verify' => false]);
+                                    $response = $client->get('https://nominatim.openstreetmap.org/search', [
+                                        'query' => [
+                                            'q' => $search . ', Malaysia', // Membatasi pencarian ke Malaysia
+                                            'format' => 'json',
+                                            'limit' => 5, // Mengambil 5 hasil teratas
+                                            'addressdetails' => 1
+                                        ]
+                                    ]);
+
+                                    $data = json_decode($response->getBody()->getContents(), true);
+
+                                    foreach ($data as $item) {
+                                        $lat = number_format((float) $item['lat'], 6);
+                                        $lon = number_format((float) $item['lon'], 6);
+                                        $displayName = $item['display_name'];
+                                        $results["$lat,$lon"] = $displayName;
+                                    }
+                                } catch (\Exception $e) {
+                                    // Anda dapat menangani error di sini, misalnya, log error
+                                    // atau menampilkan notifikasi
+
+                                }
+
+                                return $results;
+                            })
+                            ->afterStateUpdated(function ($state, Set $set) {
+                                if ($state) {
+                                    // Mengurai string 'lat,lng' yang dipilih dari Select
+                                    [$latitude, $longitude] = explode(',', $state);
+
+                                    $set('latitude', (float) $latitude);
+                                    $set('longitude', (float) $longitude);
+
+                                    // Perbarui state 'map' agar komponen peta merespons
+                                    $set('map', [
+                                        'lat' => (float) $latitude,
+                                        'lng' => (float) $longitude,
+                                        'zoom' => 12, // Atur zoom ke level yang lebih dekat
+                                    ]);
+                                }
+                            })
+                            ->columnSpanFull(),
+
                         Map::make('map')
                             ->label('Location')
                             ->columnSpanFull()
@@ -134,9 +194,20 @@ class PropertyResource extends Resource
                                     $set('latitude', (float) number_format((float) $state['lat'], 5, '.', ''));
                                     $set('longitude', (float) number_format((float) $state['lng'], 5, '.', ''));
                                 }
-                            })
+                            }),
+                        Forms\Components\TextInput::make('latitude')
+                            ->numeric()
+                            ->step(0.000001),
+                        Forms\Components\TextInput::make('longitude')
+                            ->numeric()
+                            ->step(0.000001),
+                        Forms\Components\TextInput::make('distance_to_institute')
+                            ->numeric()
+                            ->step(0.001)
+                            ->suffix('km'),
                     ])
-                    ->columns(2),
+                    ->columns(3),
+
                 Forms\Components\Section::make('Room Information')
                     ->schema([
                         Forms\Components\TextInput::make('total_rooms')

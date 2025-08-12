@@ -21,7 +21,8 @@ $page = 'index';
     .booking_group-field select {
         z-index: 999999999;
         position: relative;
-        -webkit-appearance: none; /* Removes default dropdown arrow */
+        -webkit-appearance: none;
+        /* Removes default dropdown arrow */
         -moz-appearance: none;
         appearance: none;
     }
@@ -57,7 +58,9 @@ $page = 'index';
         border-radius: 4px
     }
 
-    .pagination-page_link:focus,.pagination-page_link:hover,.pagination-page_link[data-current=true] {
+    .pagination-page_link:focus,
+    .pagination-page_link:hover,
+    .pagination-page_link[data-current=true] {
         font-weight: 600;
         color: #fff;
         background: #235784
@@ -118,7 +121,7 @@ $page = 'index';
                             <i class="icon-chevron_down icon"></i>
                         </div>
                     </div>
-                    
+
                     <div class="booking_group d-flex flex-column">
                         <label class="booking_group-label h5" for="institute">Institute</label>
                         <div class="booking_group-wrapper">
@@ -126,13 +129,13 @@ $page = 'index';
                             <select class="booking_group-field field" name="institute" id="institute">
                                 <option value="" selected>All Institutes</option>
                                 @foreach($institutes as $institute)
-                                  <option value="{{ $institute->id }}" {{ request('institute') == $institute->id ? 'selected' : '' }}>{{ $institute->name }}</option>
+                                <option value="{{ $institute->id }}" {{ request('institute') == $institute->id ? 'selected' : '' }}>{{ $institute->name }}</option>
                                 @endforeach
                             </select>
                             <i class="icon-chevron_down icon"></i>
                         </div>
-                    </div>  
-                    
+                    </div>
+
                     <div class="booking_group d-flex flex-column">
                         <span class="booking_group-label h5">Student</span>
                         <div class="booking_group-wrapper booking_group-wrapper--guests">
@@ -194,6 +197,12 @@ $page = 'index';
                         </a>
                         <div class="main_amenities">
                             <span class="main_amenities-item d-inline-flex align-items-center">
+                                <svg width="15" height="20" viewBox="0 0 42 57" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M18.8125 54.9062C19.7969 56.4375 22.0938 56.4375 23.0781 54.9062C39.0469 31.9375 42 29.5312 42 21C42 9.40625 32.5938 0 21 0C9.29688 0 0 9.40625 0 21C0 29.5312 2.84375 31.9375 18.8125 54.9062ZM21 29.75C16.0781 29.75 12.25 25.9219 12.25 21C12.25 16.1875 16.0781 12.25 21 12.25C25.8125 12.25 29.75 16.1875 29.75 21C29.75 25.9219 25.8125 29.75 21 29.75Z" fill="#235784" />
+                                </svg>
+                                &nbsp;Distance to Institute {{ $property->distance_to_institute }} km
+                            </span>
+                            <span class="main_amenities-item d-inline-flex align-items-center">
                                 <i class="icon-user icon"></i>
                                 Available room {{ $property->available_rooms }}
                             </span>
@@ -229,7 +238,7 @@ $page = 'index';
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const fields = document.querySelectorAll('form input, form select');
-        
+
         fields.forEach((field) => {
             field.addEventListener('change', function(e) {
                 // Do not submit for student input, it requires dropdown interaction
