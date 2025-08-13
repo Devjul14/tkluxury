@@ -18,17 +18,22 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
+
 class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
         return $panel
             ->id('admin')
-            ->path('dashboard')
+            ->path('admin')
+            ->colors([
+            'primary' => Color::Blue, // Mengubah warna utama menjadi biru
+            'gray' => Color::Slate,    // Mengubah warna abu-abu menjadi slate
+                    ])
             ->login()
             ->registration()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Blue,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
