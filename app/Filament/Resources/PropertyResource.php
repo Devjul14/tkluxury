@@ -148,10 +148,27 @@ class PropertyResource extends Resource
                             ->numeric()
                             ->prefix('$'),
                         Forms\Components\TextInput::make('monthly_expenses')
+                        ->label('Monthly Rental')
                             ->numeric()
                             ->prefix('$')
                             ->default(0),
-                    ])
+                       Forms\Components\Select::make('down_payment_type')
+                            ->label('Down Payment Type')
+                            ->options([
+                                'fixed' => 'Fixed Value',
+                                'percentage' => 'Percentage',
+                            ])
+                            ->default('percentage')
+                            ->reactive(),
+
+                        Forms\Components\TextInput::make('down_payment_value')
+                            ->label('Down Payment Value')
+                            ->required()
+                            ->numeric()
+                            ->prefix(fn ($get) => $get('down_payment_type') === 'fixed' ? '$' : null)
+                            ->suffix(fn ($get) => $get('down_payment_type') === 'percentage' ? '%' : null)
+                            ->default(config('hostel.booking.down_payment_rate', 0.1) * 100)
+                            ])
                     ->columns(3),
                 Forms\Components\Section::make('Availability')
                     ->schema([

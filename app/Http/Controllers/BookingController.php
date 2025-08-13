@@ -91,7 +91,15 @@ class BookingController extends Controller
             $booking->security_deposit = $room->property->security_deposit;
             $booking->monthly_rent = $room->price_per_month;
             $booking->subtotal = $totalRentAmount;
-            $booking->down_payment_amount = $totalRentAmount * config('hostel.booking.down_payment_rate', 0.1);
+
+            if ($property->down_payment_type === 'percentage') {
+                $booking->down_payment_amount = $totalRentAmount * ($property->down_payment_value / 100);
+            } elseif ($property->down_payment_type === 'fixed') {
+                $booking->down_payment_amount = $property->down_payment_value;
+            } else {
+                $booking->down_payment_amount = $totalRentAmount * config('hostel.booking.down_payment_rate', 0.1);
+            }
+
             $booking->tax = ($totalRentAmount) * config('hostel.booking.tax_rate', 0.08);
             $booking->service_fee = (($totalRentAmount) * config('hostel.booking.service_fee_rate', 0.05)) + $serviceFees;
             $booking->total_amount = $totalAmount;
@@ -112,7 +120,13 @@ class BookingController extends Controller
             $booking->security_deposit = $property->security_deposit;
             $booking->monthly_rent = $property->price_per_month;
             $booking->subtotal = $totalRentAmount;
-            $booking->down_payment_amount = $totalRentAmount * config('hostel.booking.down_payment_rate', 0.1);
+            if ($property->down_payment_type === 'percentage') {
+                $booking->down_payment_amount = $totalRentAmount * ($property->down_payment_value / 100);
+            } elseif ($property->down_payment_type === 'fixed') {
+                $booking->down_payment_amount = $property->down_payment_value;
+            } else {
+                $booking->down_payment_amount = $totalRentAmount * config('hostel.booking.down_payment_rate', 0.1);
+            }
             $booking->tax = ($totalRentAmount) * config('hostel.booking.tax_rate', 0.08);
             $booking->service_fee = (($totalRentAmount) * config('hostel.booking.service_fee_rate', 0.05)) + $serviceFees;
             $booking->total_amount = $totalAmount;

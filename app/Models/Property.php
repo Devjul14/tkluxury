@@ -37,6 +37,8 @@ class Property extends Model
         'property_manager_notes',
         'acquisition_date',
         'monthly_expenses',
+        'down_payment_type',
+        'down_payment_value',
     ];
 
     protected $casts = [
