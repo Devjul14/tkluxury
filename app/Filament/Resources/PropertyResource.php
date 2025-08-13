@@ -65,9 +65,8 @@ class PropertyResource extends Resource
                             ->required(),
                     ])
                     ->columns(2),
-                Forms\Components\Section::make('Location & Address')
+                Forms\Components\Section::make('Address')
                     ->schema([
-                        // Pastikan field-field ini ada di model atau form state.
                         Forms\Components\Textarea::make('address')
                             ->required()
                             ->maxLength(65535),
@@ -80,28 +79,42 @@ class PropertyResource extends Resource
                         Forms\Components\TextInput::make('postal_code')
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('latitude')
-                            ->numeric()
-                            ->step(0.000001)
-                            ->readOnly(),
-                        Forms\Components\TextInput::make('longitude')
-                            ->numeric()
-                            ->step(0.000001)
-                            ->readOnly(),
-                        Forms\Components\TextInput::make('distance_to_institute')
-                            ->numeric()
-                            ->step(0.001)
-                            ->suffix('km')
-                            ->label('Distance to Institute (km)'),
-                        
-                        // Gunakan ViewField untuk menampilkan peta.
-                        ViewField::make('location_map') // Ubah nama field untuk menghindari konflik
+                    ])
+                    ->columns(2),
+
+                Forms\Components\Section::make('Location Map')
+                    ->schema([
+                        // These fields are now in a new section with a 3-column layout.
+                        Forms\Components\Grid::make(3)
+                            ->schema([
+                                Forms\Components\TextInput::make('latitude')
+                                    ->numeric()
+                                    ->step(0.000001)
+                                    ->readOnly()
+                                    ->live()
+                                    ->columnSpan(1),
+                                Forms\Components\TextInput::make('longitude')
+                                    ->numeric()
+                                    ->step(0.000001)
+                                    ->readOnly()
+                                    ->live()
+                                    ->columnSpan(1),
+                                // Forms\Components\TextInput::make('distance_to_institute')
+                                //     ->numeric()
+                                //     ->step(0.001)
+                                //     ->suffix('km')
+                                //     ->label('Distance to Institute (km)')
+                                //     ->columnSpan(1),
+                            ]),
+
+                        // The ViewField for the map remains, now in its own section.
+                        ViewField::make('location_map')
                             ->label('Location on Map')
                             ->view('forms.components.google-maps-location')
                             ->columnSpanFull()
-                            ->hiddenLabel(), // Sembunyikan label bawaan Filament
+                            ->hiddenLabel(),
                     ])
-                    ->columns(2),
+                    ->columns(1),
                     Forms\Components\Section::make('Room Information')
                     ->schema([
                         Forms\Components\TextInput::make('total_rooms')

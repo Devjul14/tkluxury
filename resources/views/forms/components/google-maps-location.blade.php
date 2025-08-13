@@ -6,12 +6,12 @@
     <div
         x-data="{
             // Gunakan wire:model.live untuk sinkronisasi otomatis
-            latitude: $wire.entangle('data.latitude').defer,
-            longitude: $wire.entangle('data.longitude').defer,
-            address: $wire.entangle('data.address').defer,
-            city: $wire.entangle('data.city').defer,
-            state: $wire.entangle('data.state').defer,
-            postal_code: $wire.entangle('data.postal_code').defer,
+            latitude: $wire.entangle('data.latitude'),
+            longitude: $wire.entangle('data.longitude'),
+            address: $wire.entangle('data.address'),
+            city: $wire.entangle('data.city'),
+            state: $wire.entangle('data.state'),
+            postal_code: $wire.entangle('data.postal_code'),
 
             map: null,
             marker: null,
@@ -24,7 +24,7 @@
             loadGoogleMaps() {
                 if (typeof google === 'undefined' || typeof google.maps === 'undefined') {
                     const script = document.createElement('script');
-                    script.src = `https://maps.googleapis.com/maps/api/js?key={{ config('services.Google Maps.api_key') }}&libraries=places&region=MY`;
+                    script.src = `https://maps.googleapis.com/maps/api/js?key={{ config('services.google_maps.api_key') }}&libraries=places&region=MY`;
                     script.async = true;
                     script.defer = true;
                     script.onload = () => {
@@ -45,7 +45,7 @@
                 this.map = new google.maps.Map(this.$refs.map, {
                     center: { lat: parseFloat(defaultLat), lng: parseFloat(defaultLng) },
                     zoom: 12,
-                    mapId: 'YOUR_MAP_ID_HERE', // Opsional: Ganti dengan Map ID Anda
+                    mapId: 'YOUR_MAP_ID_HERE',
                 });
 
                 this.marker = new google.maps.Marker({
@@ -56,6 +56,7 @@
 
                 this.marker.addListener('dragend', () => {
                     const position = this.marker.getPosition();
+                    // Gunakan $wire.set() untuk memaksa sinkronisasi data
                     this.latitude = position.lat();
                     this.longitude = position.lng();
                     this.reverseGeocode(position);
@@ -63,6 +64,7 @@
 
                 this.map.addListener('click', (event) => {
                     this.marker.setPosition(event.latLng);
+                    // Gunakan $wire.set() untuk memaksa sinkronisasi data
                     this.latitude = event.latLng.lat();
                     this.longitude = event.latLng.lng();
                     this.reverseGeocode(event.latLng);

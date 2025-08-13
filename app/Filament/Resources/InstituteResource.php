@@ -15,6 +15,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\ViewField;
 
 class InstituteResource extends Resource
 {
@@ -75,67 +76,33 @@ class InstituteResource extends Resource
                         Forms\Components\TextInput::make('postal_code')
                             ->required()
                             ->maxLength(255),
-                        Forms\Components\TextInput::make('latitude')
-                            ->numeric()
-                            ->step(0.000001),
-                        Forms\Components\TextInput::make('longitude')
-                            ->numeric()
-                            ->step(0.000001),
-                        Map::make('map')
-                            ->label('Location')
-                            ->columnSpanFull()
-                            ->defaultLocation(latitude: 3.139003, longitude: 101.686855)
-                            ->draggable(true)
-                            ->clickable(true)
-                            ->zoom(8)
-                            ->minZoom(0)
-                            ->maxZoom(28)
-                            ->tilesUrl('https://tile.openstreetmap.de/{z}/{x}/{y}.png')
-                            ->detectRetina(true)
-                            // Marker Configuration
-                            ->showMarker(true)
-                            ->markerColor('#3b82f6')
-                            ->markerIconSize([36, 36])
-                            ->markerIconAnchor([18, 36])
-                            // Controls
-                            ->showFullscreenControl(true)
-                            ->showZoomControl(true)
-                            // Location Features
-                            ->rangeSelectField('distance')
-                            // GeoMan Integration
-                            ->geoManPosition('topleft')
-                            ->drawCircleMarker(true)
-                            ->dragMode(true)
-                            ->cutPolygon(true)
-                            ->editPolygon(true)
-                            ->deleteLayer(true)
-                            ->setColor('#3388ff')
-                            ->setFilledColor('#cad9ec')
-                            ->snappable(true, 20)
-                            ->extraControl(['customControl' => true])
-                            ->extraTileControl(['customTileOption' => 'value'])
-                            ->afterStateHydrated(function ($state, ?Model $record, callable $set) {
-                                if (!$record) {
-                                    return;
-                                }
-
-                                if ($record->latitude && $record->longitude) {
-                                    $set('map', [
-                                        'lat' => (float) number_format((float) $record->latitude, 5, '.', ''),
-                                        'lng' => (float) number_format((float) $record->longitude, 5, '.', ''),
-                                    ]);
-                                    $set('latitude', (float) number_format((float) $record->latitude, 5, '.', ''));
-                                    $set('longitude', (float) number_format((float) $record->longitude, 5, '.', ''));
-                                }
-                            })
-                            ->afterStateUpdated(function ($state, Set $set) {
-                                if (is_array($state) && isset($state['lat'], $state['lng'])) {
-                                    $set('latitude', (float) number_format((float) $state['lat'], 5, '.', ''));
-                                    $set('longitude', (float) number_format((float) $state['lng'], 5, '.', ''));
-                                }
-                            })
                     ])
                     ->columns(2),
+
+                Forms\Components\Section::make('Location Map')
+                    ->schema([
+                        Forms\Components\Grid::make(3)
+                            ->schema([
+                                Forms\Components\TextInput::make('latitude')
+                                    ->numeric()
+                                    ->step(0.000001)
+                                    ->readOnly()
+                                    ->live()
+                                    ->columnSpan(1),
+                                Forms\Components\TextInput::make('longitude')
+                                    ->numeric()
+                                    ->step(0.000001)
+                                    ->readOnly()
+                                    ->live()
+                                    ->columnSpan(1),
+                            ]),
+                        ViewField::make('location_map')
+                            ->label('Location on Map')
+                            ->view('forms.components.google-maps-location')
+                            ->columnSpanFull()
+                            ->hiddenLabel(),
+                    ])
+                    ->columns(1),
 
                 Forms\Components\Section::make('Settings')
                     ->schema([
