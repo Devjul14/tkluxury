@@ -103,10 +103,10 @@
                         <div class="dropdown-menu collapse" id="contactsMenu">
                             <ul class="dropdown-list">
                                 <li class="list-item">
-                                    <a class="dropdown-item nav-item" href="{{ route('lang.switch', ['locale' => 'en']) }}">English</a>
+                                    <a class="dropdown-item nav-item" href="{{ url('/lang/en') }}">English</a>
                                 </li>
                                 <li class="list-item">
-                                    <a class="dropdown-item nav-item" href="{{ route('lang.switch', ['locale' => 'ar']) }}">Arabic</a>
+                                    <a class="dropdown-item nav-item" href="{{ url('/lang/ar') }}">العربية</a>
                                 </li>
 
                             </ul>

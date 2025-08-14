@@ -84,6 +84,12 @@ return [
 
     'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
 
+    'available_locales' => [
+        'Español (España)' => 'es',
+        'English' => 'en',
+        'العربية' => 'ar', // Tambahkan baris ini
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Encryption Key

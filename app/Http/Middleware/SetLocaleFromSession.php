@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\App;
 
 class SetLocaleFromSession
 {
@@ -19,9 +20,9 @@ class SetLocaleFromSession
         ]);
 
         if (Session::has('locale')) {
-            // dd(session()->getId());
-            app()->setLocale(Session::get('locale'));
+            App::setLocale(Session::get('locale'));
         }
+
         return $next($request);
     }
 }

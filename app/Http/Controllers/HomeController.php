@@ -8,12 +8,17 @@ use App\Models\Review;
 use App\Models\Room;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\App;
 
 class HomeController extends Controller
 {
     public function index(Request $request)
     {
         // Sample featured rooms data
+        if (Session::has('locale')) {
+            App::setLocale(Session::get('locale'));
+        }
 
         $properties = Property::all();
         $featuredRooms = Room::where('is_available', true);
