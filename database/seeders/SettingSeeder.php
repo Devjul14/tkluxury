@@ -28,14 +28,14 @@ class SettingSeeder extends Seeder
             [
                 'group' => 'homepage',
                 'key' => 'hero_main_text',
-                'type' => 'text',
-                'value' => 'Find Your Ideal Student Home — 3 to 12 Month Rentals',
+                'type' => 'json',
+                'value' => '{"en": "Find Your Ideal Student Home — 3 to 12 Month Rentals", "ar": "ابحث عن سكن الطلاب المثالي لك - إيجارات من 3 إلى 12 شهرًا"}',
             ],
             [
                 'group' => 'homepage',
                 'key' => 'hero_sub_text',
-                'type' => 'text',
-                'value' => 'Discover comfortable, fully-furnished student accommodations near top universities and vibrant city centers. Flexible stays. Hassle-free living.',
+                'type' => 'json',
+                'value' => '{"en": "Discover comfortable, fully-furnished student accommodations near top universities and vibrant city centers. Flexible stays. Hassle-free living.", "ar": "اكتشف أماكن إقامة طلابية مريحة ومفروشة بالكامل..."}'
             ],
             [
                 'group' => 'homepage',

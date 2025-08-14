@@ -11,12 +11,16 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Widgets;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Illuminate\Support\Facades\Session;
+use App\Http\Middleware\SetLocaleFromSession;
+
 
 
 class AdminPanelProvider extends PanelProvider
@@ -27,9 +31,9 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->colors([
-            'primary' => Color::Blue, // Mengubah warna utama menjadi biru
-            'gray' => Color::Slate,    // Mengubah warna abu-abu menjadi slate
-                    ])
+                'primary' => Color::Blue, // Mengubah warna utama menjadi biru
+                'gray' => Color::Slate,    // Mengubah warna abu-abu menjadi slate
+            ])
             ->login()
             ->registration()
             ->colors([
@@ -46,6 +50,7 @@ class AdminPanelProvider extends PanelProvider
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,
+                SetLocaleFromSession::class,
                 AuthenticateSession::class,
                 ShareErrorsFromSession::class,
                 VerifyCsrfToken::class,
@@ -56,5 +61,14 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ]);
+    }
+
+    public function boot(): void
+    {
+        if (Schema::hasTable('settings')) {
+            if (Session::has('locale')) {
+                app()->setLocale(Session::get('locale'));
+            }
+        }
     }
 }

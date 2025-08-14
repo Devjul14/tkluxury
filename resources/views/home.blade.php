@@ -8,6 +8,8 @@ $page = 'index';
 
 @section('content')
 <!-- hero section start -->
+{{ app()->getLocale() }}
+
 <section class="hero section">
     <div class="container container--hero d-lg-flex align-items-center justify-content-between">
         <div class="hero_main">

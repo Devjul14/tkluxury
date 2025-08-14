@@ -86,6 +86,9 @@
                             </ul>
                         </div>
                     </li>
+                    <li class="header_nav-list_item">
+                        <a class="nav-item {{ request()->routeIs('contacts') ? 'active' : '' }}" href="{{ route('contacts.index') }}">Contacts</a>
+                    </li>
                     <li class="header_nav-list_item dropdown">
                         <a
                             class="nav-link nav-link--contacts dropdown-toggle d-inline-flex align-items-center {{ request()->routeIs('contacts.*') ? 'active' : '' }}"
@@ -94,17 +97,18 @@
                             data-bs-target="#contactsMenu"
                             aria-expanded="false"
                             aria-controls="contactsMenu">
-                            Contacts
+                            Language
                             <i class="icon-chevron_down--entypo icon"></i>
                         </a>
                         <div class="dropdown-menu collapse" id="contactsMenu">
                             <ul class="dropdown-list">
                                 <li class="list-item">
-                                    <a class="dropdown-item nav-item" data-page="contacts01" href="{{ route('contacts.index') }}">Contacts</a>
+                                    <a class="dropdown-item nav-item" href="{{ route('lang.switch', ['locale' => 'en']) }}">English</a>
                                 </li>
-                                <!-- <li class="list-item">
-                                    <a class="dropdown-item nav-item" data-page="contacts02" href="{{ route('contacts.v2') }}">Contacts V2</a>
-                                </li> -->
+                                <li class="list-item">
+                                    <a class="dropdown-item nav-item" href="{{ route('lang.switch', ['locale' => 'ar']) }}">Arabic</a>
+                                </li>
+
                             </ul>
                         </div>
                     </li>

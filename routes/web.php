@@ -7,6 +7,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 /*
  * |--------------------------------------------------------------------------
@@ -19,21 +20,15 @@ use Illuminate\Support\Facades\Route;
  * |
  */
 
-Route::get('/test-view-any', function () {
-    $user = \App\Models\User::first();  // pastikan user_type-nya admin/staff
-    auth()->login($user);
 
-    return Gate::forUser($user)->check('viewAny', User::class) ? 'allowed' : 'denied';
-});
 
-// routes/web.php
-Route::get('/test-map', function () {
-    $properties = \App\Models\Property::select('title', 'latitude', 'longitude', 'distance')->get();
-    $institute = \App\Models\Institute::first(); // atau null jika tidak ada
-    $pagedProperties = $properties; // dummy pagination untuk komponen
+Route::middleware('web')->get('lang/{locale}', function ($locale) {
+    if (!in_array($locale, ['en', 'ar'])) abort(400);
+    Session::put('locale', $locale);
+    // dd(session()->getId());
+    return redirect()->back();
+})->name('lang.switch');
 
-    return view('test-map', compact('properties', 'institute', 'pagedProperties'));
-});
 
 
 // Home page
