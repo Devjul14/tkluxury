@@ -18,10 +18,13 @@ $page = 'about';
                 <a class="link" href="#">About Luxury</a>
             </li>
         </ul> -->
-        <h1 class="page_title">About</h1>
+        <h1 class="page_title">
+            {{ setting('about_title', 'About') }}
+        </h1>
         <p class="page_header-text" data-aos="fade-up" data-aos-delay="50">
-            Discover our story and what makes us the perfect choice for your stay
+            {{ setting('about_text', 'Discover our story and what makes us the perfect choice for your stay') }}
         </p>
+
     </div>
 </header>
 
@@ -30,30 +33,36 @@ $page = 'about';
     <section class="about_benefits section">
         <div class="container">
             <div class="about_benefits-header d-md-flex align-items-center justify-content-between">
-                <h2 class="text-center" data-aos="fade-up">Our Story</h2>
+                <h2 class="text-center" data-aos="fade-up">
+                    {{ setting('our_story_title', 'Our Story') }}
+                </h2>
             </div>
             <div class="text-center mb-4">
                 <p class="about_main-content_text" data-aos="fade-up" data-aos-delay="50">
-                    Founded in 2010, Luxury has been providing exceptional accommodation experiences for travelers from around the world.
-                    What started as a small hostel has grown into a beloved destination for backpackers, students, and budget-conscious travelers.
+                    {{ setting('our_story_paragraph_1', 'Founded in 2010, Luxury has been providing exceptional accommodation experiences for travelers from around the world. What started as a small hostel has grown into a beloved destination for backpackers, students, and budget-conscious travelers.') }}
                 </p>
                 <p class="about_main-content_text" data-aos="fade-up" data-aos-delay="100">
-                    Our mission is to create a welcoming, safe, and comfortable environment where travelers can connect, share stories,
-                    and create lasting memories. We believe that great accommodation should be accessible to everyone, regardless of budget.
+                    {{ setting('our_story_paragraph_2', 'Our mission is to create a welcoming, safe, and comfortable environment where travelers can connect, share stories, and create lasting memories. We believe that great accommodation should be accessible to everyone, regardless of budget.') }}
                 </p>
             </div>
             <ul class="about_benefits-list d-md-flex">
                 <li class="about_benefits-list_item col-12 col-md-4 mb-3 mb-md-0">
                     <span class="countNum number h1 d-flex align-items-center" data-suffix="+" data-value="500">0</span>
-                    <p class="number-label">Happy Students</p>
+                    <p class="number-label">
+                        {{ setting('happy_students_label', 'Happy Students') }}
+                    </p>
                 </li>
                 <li class="about_benefits-list_item col-12 col-md-4 mb-3 mb-md-0">
                     <span class="countNum number h1 d-flex align-items-center" data-suffix="+" data-value="50">0</span>
-                    <p class="number-label">Properties</p>
+                    <p class="number-label">
+                        {{ setting('properties_label', 'Properties') }}
+                    </p>
                 </li>
                 <li class="about_benefits-list_item col-12 col-md-4">
                     <span class="countNum number h1 d-flex align-items-center" data-suffix="%" data-value="10">0</span>
-                    <p class="number-label">Years Experience</p>
+                    <p class="number-label">
+                        {{ setting('years_experience_label', 'Years Experience') }}
+                    </p>
                 </li>
             </ul>
             <div class="about_benefits-video" data-aos="fade-in">
@@ -73,10 +82,8 @@ $page = 'about';
     <section class="about_benefits section">
         <div class="container d-xl-flex align-items-center">
             <div class="about_stages-main col-xl-6">
-                <h2 class="about_benefits-header">Why Choose Luxury?</h2>
-                <!-- <p class="benefits_header-text" data-aos="fade-up" data-aos-delay="50">
-                    We offer everything you need for a comfortable and memorable stay
-                </p> -->
+                <h2 class="about_benefits-header">{{setting('why_choose_luxury_title','Why Choose Luxury?')}}</h2>
+
                 <ul class="about_stages-main_list">
                     <li class="list-item d-flex align-items-sm-center" data-aos="fade-up">
                         <div class="media">
@@ -88,8 +95,8 @@ $page = 'about';
                             </span>
                         </div>
                         <div class="main">
-                            <h4 class="main_title">Prime Location</h4>
-                            <p class="main_text">Located in the heart of the city, we're just minutes away from major attractions, public transportation, and local hotspots.
+                            <h4 class="main_title">{{setting('prime_location_title','Prime Location')}}</h4>
+                            <p class="main_text">{{setting('prime_location_text','Located in the heart of the city, we are just minutes away from major attractions, public transportation, and local hotspots.')}}
                             </p>
                         </div>
                     </li>
@@ -105,8 +112,8 @@ $page = 'about';
                             </span>
                         </div>
                         <div class="main">
-                            <h4 class="main_title">Free WiFi</h4>
-                            <p class="main_text">Stay connected with complimentary high-speed WiFi throughout the property, perfect for work or staying in touch with loved ones.
+                            <h4 class="main_title">{{setting('free_wifi_title','Free WiFi')}}</h4>
+                            <p class="main_text">{{setting('free_wifi_text','Stay connected with complimentary high-speed WiFi throughout the property, perfect for work or staying in touch with loved ones.')}}
                         </div>
                     </li>
                     <li class="list-item d-flex align-items-sm-center" data-aos="fade-up" data-aos-delay="100">
@@ -127,8 +134,8 @@ $page = 'about';
                             </span>
                         </div>
                         <div class="main">
-                            <h4 class="main_title">24/7 Security</h4>
-                            <p class="main_text">Your safety is our priority. We have 24/7 security and secure lockers to keep your belongings safe during your stay.</p>
+                            <h4 class="main_title">{{setting('24_7_security_title','24/7 Security')}}</h4>
+                            <p class="main_text">{{setting('24_7_security_text','Your safety is our priority. We have 24/7 security and secure lockers to keep your belongings safe during your stay.')}}</p>
                         </div>
                     </li>
                 </ul>
@@ -147,8 +154,8 @@ $page = 'about';
                             </span>
                         </div>
                         <div class="main">
-                            <h4 class="main_title">Social Atmosphere</h4>
-                            <p class="main_text">Meet fellow travelers in our common areas, join organized activities, and make new friends from around the world.
+                            <h4 class="main_title">{{setting('social_atmosphere_title','Social Atmosphere')}}</h4>
+                            <p class="main_text">{{setting('social_atmosphere_text','Meet fellow travelers in our common areas, join organized activities, and make new friends from around the world.')}}
                             </p>
                         </div>
                     </li>
@@ -170,8 +177,8 @@ $page = 'about';
                             </span>
                         </div>
                         <div class="main">
-                            <h4 class="main_title">Clean & Comfortable</h4>
-                            <p class="main_text">Our properties are cleaned daily and equipped with comfortable beds, fresh linens, and all the essentials you need.</p>
+                            <h4 class="main_title">{{setting('clean_comfortable_title','Clean & Comfortable')}}</h4>
+                            <p class="main_text">{{setting('clean_comfortable_text','Our properties are cleaned daily and equipped with comfortable beds, fresh linens, and all the essentials you need.')}}</p>
                         </div>
                     </li>
                     <li class="list-item d-flex align-items-sm-center" data-aos="fade-up" data-aos-delay="100">
@@ -191,8 +198,8 @@ $page = 'about';
 
                         </div>
                         <div class="main">
-                            <h4 class="main_title">Friendly Staff</h4>
-                            <p class="main_text">Our knowledgeable staff is always ready to help with recommendations, directions, and any questions you might have.</p>
+                            <h4 class="main_title">{{setting('friendly_staff_title','Friendly Staff')}}</h4>
+                            <p class="main_text">{{setting('friendly_staff_text','Our knowledgeable staff is always ready to help with recommendations, directions, and any questions you might have.')}}</p>
                         </div>
                     </li>
                 </ul>
@@ -207,43 +214,42 @@ $page = 'about';
     <section class="about_rules section">
         <div class="container d-xl-flex justify-content-between align-items-center">
             <div class="about_rules-main col-xl-5">
-                <h2 class="about_rules-main_header" data-aos="fade-right">House Rules</h2>
+                <h2 class="about_rules-main_header" data-aos="fade-right">{{ setting('main_header','House Rules') }}</h2>
                 <p class="page_header-text mb-3" data-aos="fade-up" data-aos-delay="50">
-                    To ensure everyone has a pleasant stay, please follow these guidelines :
+                    {{ setting('intro_text','To ensure everyone has a pleasant stay, please follow these guidelines :') }}
                 </p>
                 <ul class="about_rules-main_list">
-                    <h3>Check-in/Check-out</h3>
+                    <h3>{{ setting('check_in_header','Check-in/Check-out') }}</h3>
                     <li class="list-item d-flex align-items-baseline" data-aos="fade-up">
-                        &bull; Check-in: 2:00 PM - 10:00 PM <br>
-                        &bull; Check-out: 11:00 AM <br>
-                        &bull; Late check-in available with prior notice <br>
+                        &bull; {{ setting('check_in_time','Check-in: 2:00 PM - 10:00 PM') }} <br>
+                        &bull; {{ setting('check_out_time','Check-out: 11:00 AM') }} <br>
+                        &bull; {{ setting('late_check_in_notice','Late check-in available with prior notice') }} <br>
                     </li>
-                    <h3>Quiet Hours</h3>
+                    <h3>{{ setting('quiet_hours_header','Quiet Hours') }}</h3>
                     <li class="list-item d-flex align-items-baseline" data-aos="fade-up">
-                        &bull; Quiet hours: 11:00 PM - 7:00 AM <br>
-                        &bull; Please respect other guests <br>
-                        &bull; No loud music or parties <br>
+                        &bull; {{ setting('quiet_hours_time','Quiet hours: 11:00 PM - 7:00 AM') }} <br>
+                        &bull; {{ setting('respect_guests_note','Please respect other guests') }} <br>
+                        &bull; {{ setting('no_loud_music_note','No loud music or parties') }} <br>
                     </li>
-                    <h3>Smoking Policy</h3>
+                    <h3>{{ setting('smoking_policy_header','Smoking Policy') }}</h3>
                     <li class="list-item d-flex align-items-baseline" data-aos="fade-up">
-                        &bull; No smoking inside the building <br>
-                        &bull; Designated smoking areas available <br>
-                        &bull; Smoking fee applies if violated <br>
+                        &bull; {{ setting('no_smoking_note','No smoking inside the building') }} <br>
+                        &bull; {{ setting('designated_smoking_areas','Designated smoking areas available') }} <br>
+                        &bull; {{ setting('smoking_fee','Smoking fee applies if violated') }} <br>
                     </li>
-                    <h3>Pet Policy</h3>
+                    <h3>{{ setting('pet_policy_header','Pet Policy') }}</h3>
                     <li class="list-item d-flex align-items-baseline" data-aos="fade-up">
-                        &bull; Pet Policy <br>
-                        &bull; Additional cleaning fee applies <br>
-                        &bull; Please inform us in advance <br>
+                        &bull; {{ setting('pet_policy_header','Pet Policy') }} <br>
+                        &bull; {{ setting('additional_pet_fee','Additional cleaning fee applies') }} <br>
+                        &bull; {{ setting('inform_in_advance','Please inform us in advance') }} <br>
                     </li>
                 </ul>
             </div>
             <div class="contacts col-xl-6" data-aos="fade-up">
                 <div class="contacts_header">
-                    <h2 class="contacts_header-title">We are ready answer your question</h2>
+                    <h2 class="contacts_header-title">{{ setting('header_title','We are ready answer your question') }}</h2>
                     <p class="contacts_header-text">
-                        Egestas pretium aenean pharetra magna ac. Et tortor consequat id porta nibh venenatis cras
-                        sed
+                        {{ setting('header_text','Egestas pretium aenean pharetra magna ac. Et tortor consequat id porta nibh venenatis cras sed') }}
                     </p>
                 </div>
                 <form class="contacts_form form d-sm-flex flex-wrap justify-content-between" action="form.php"
@@ -252,29 +258,39 @@ $page = 'about';
                         <label class="label" for="feedbackName">
                             <i class="icon-user icon"></i>
                         </label>
-                        <input class="field required" id="feedbackName" type="text" placeholder="Name" />
+                        <input class="field required" id="feedbackName" type="text"
+                            placeholder="{{ setting('name_placeholder','Name') }}" />
                     </div>
                     <div class="field-wrapper">
                         <label class="label" for="feedbackEmail">
                             <i class="icon-email icon"></i>
                         </label>
                         <input class="field required" id="feedbackEmail" type="text" data-type="email"
-                            placeholder="Email" />
+                            placeholder="{{ setting('email_placeholder','Email') }}" />
                     </div>
-                    <textarea class="field textarea required" id="feedbackMessage" placeholder="Message"></textarea>
-                    <button class="btn theme-element theme-element--accent" type="submit">Send message</button>
+                    <textarea class="field textarea required" id="feedbackMessage"
+                        placeholder="{{ setting('message_placeholder','Message') }}"></textarea>
+                    <button class="btn theme-element theme-element--accent" type="submit">
+                        {{ setting('send_message_button','Send message') }}
+                    </button>
                 </form>
             </div>
+
         </div>
     </section>
+
     <!-- rules section end -->
 
     <!-- FAQ section start -->
     <section class="about_faq section">
         <div class="container">
             <div class="about_faq-header d-lg-flex justify-content-between align-items-center">
-                <h2 class="about_faq-header_title">Frequently Asked Questions</h2>
-                <p class="about_faq-header_text">Find answers to common questions about your stay</p>
+                <h2 class="about_faq-header_title">
+                    {{ setting('header_title','Frequently Asked Questions') }}
+                </h2>
+                <p class="about_faq-header_text">
+                    {{ setting('header_text','Find answers to common questions about your stay') }}
+                </p>
             </div>
             <div class="about_faq-main d-grid">
                 <!-- item 1 -->
@@ -282,14 +298,14 @@ $page = 'about';
                     <div class="item-wrapper d-flex flex-column justify-content-between">
                         <h4 class="accordion_component-item_header d-flex justify-content-between align-items-center collapsed"
                             data-bs-toggle="collapse" data-bs-target="#item-1" aria-expanded="true">
-                            What time is check-in and check-out?
+                            {{ setting('question_1','What time is check-in and check-out?') }}
                             <span class="wrapper">
                                 <i class="icon-chevron_down icon transform"></i>
                             </span>
                         </h4>
                         <div id="item-1" class="accordion-collapse collapse show">
                             <div class="accordion_component-item_body">
-                                Check-in is from 2:00 PM to 10:00 PM, and check-out is at 11:00 AM. If you need to arrive earlier or later, please contact us in advance and we'll do our best to accommodate you.
+                                {{ setting('answer_1',"Check-in is from 2:00 PM to 10:00 PM, and check-out is at 11:00 AM. If you need to arrive earlier or later, please contact us in advance and we'll do our best to accommodate you.") }}
                             </div>
                         </div>
                     </div>
@@ -299,14 +315,14 @@ $page = 'about';
                     <div class="item-wrapper d-flex flex-column justify-content-between">
                         <h4 class="accordion_component-item_header d-flex justify-content-between align-items-center"
                             data-bs-toggle="collapse" data-bs-target="#item-2" aria-expanded="true">
-                            Do you provide towels and linens?
+                            {{ setting('question_2','Do you provide towels and linens?') }}
                             <span class="wrapper">
                                 <i class="icon-chevron_down icon transform"></i>
                             </span>
                         </h4>
                         <div id="item-2" class="accordion-collapse collapse show">
                             <div class="accordion_component-item_body">
-                                Yes, we provide fresh towels and linens for all guests. Towels are changed daily, and linens are changed every 3 days for longer stays.
+                                {{ setting('answer_2','Yes, we provide fresh towels and linens for all guests. Towels are changed daily, and linens are changed every 3 days for longer stays.') }}
                             </div>
                         </div>
                     </div>
@@ -316,14 +332,14 @@ $page = 'about';
                     <div class="item-wrapper d-flex flex-column justify-content-between">
                         <h4 class="accordion_component-item_header d-flex justify-content-between align-items-center collapsed"
                             data-bs-toggle="collapse" data-bs-target="#item-3" aria-expanded="true">
-                            Is breakfast included?
+                            {{ setting('question_3','Is breakfast included?') }}
                             <span class="wrapper">
                                 <i class="icon-chevron_down icon transform"></i>
                             </span>
                         </h4>
                         <div id="item-3" class="accordion-collapse collapse show">
                             <div class="accordion_component-item_body">
-                                We offer a complimentary continental breakfast from 7:00 AM to 10:00 AM daily. This includes coffee, tea, bread, jam, and seasonal fruits.
+                                {{ setting('answer_3','We offer a complimentary continental breakfast from 7:00 AM to 10:00 AM daily. This includes coffee, tea, bread, jam, and seasonal fruits.') }}
                             </div>
                         </div>
                     </div>
@@ -333,14 +349,14 @@ $page = 'about';
                     <div class="item-wrapper d-flex flex-column justify-content-between">
                         <h4 class="accordion_component-item_header d-flex justify-content-between align-items-center collapsed"
                             data-bs-toggle="collapse" data-bs-target="#item-4" aria-expanded="true">
-                            Can I cancel my booking?
+                            {{ setting('question_4','Can I cancel my booking?') }}
                             <span class="wrapper">
                                 <i class="icon-chevron_down icon transform"></i>
                             </span>
                         </h4>
                         <div id="item-4" class="accordion-collapse collapse show">
                             <div class="accordion_component-item_body">
-                                Yes, you can cancel your booking up to 24 hours before check-in for a full refund. Cancellations within 24 hours may be subject to a cancellation fee.
+                                {{ setting('answer_4','Yes, you can cancel your booking up to 24 hours before check-in for a full refund. Cancellations within 24 hours may be subject to a cancellation fee.') }}
                             </div>
                         </div>
                     </div>
@@ -350,26 +366,29 @@ $page = 'about';
                     <div class="item-wrapper d-flex flex-column justify-content-between">
                         <h4 class="accordion_component-item_header d-flex justify-content-between align-items-center collapsed"
                             data-bs-toggle="collapse" data-bs-target="#item-5" aria-expanded="true">
-                            Do you have parking available?
+                            {{ setting('question_5','Do you have parking available?') }}
                             <span class="wrapper">
                                 <i class="icon-chevron_down icon transform"></i>
                             </span>
                         </h4>
                         <div id="item-5" class="accordion-collapse collapse show">
                             <div class="accordion_component-item_body">
-                                We have limited parking spaces available on a first-come, first-served basis. There's also public parking nearby. Please contact us in advance if you need parking.
+                                {{ setting('answer_5',"We have limited parking spaces available on a first-come, first-served basis. There's also public parking nearby. Please contact us in advance if you need parking.") }}
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="about_faq-main_card accent d-flex flex-column justify-content-between">
-                    <h4 class="title">Do you have any questions?</h4>
-                    <p class="text flex-grow-1">Diam phasellus vestibulum lorem sed risus ultricies tristique</p>
-                    <a class="btn theme-element theme-element--light" href="contacts.html">Ask a question</a>
+                    <h4 class="title">{{ setting('card_title','Do you have any questions?') }}</h4>
+                    <p class="text flex-grow-1">{{ setting('card_text','Diam phasellus vestibulum lorem sed risus ultricies tristique') }}</p>
+                    <a class="btn theme-element theme-element--light" href="contacts.html">
+                        {{ setting('card_button_text','Ask a question') }}
+                    </a>
                 </div>
             </div>
         </div>
     </section>
+
     <!-- FAQ section end -->
 </main>
 @endsection
