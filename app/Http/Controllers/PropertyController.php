@@ -7,8 +7,8 @@ use App\Models\Property;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Session;
 
 class PropertyController extends Controller
 {
@@ -32,6 +32,9 @@ class PropertyController extends Controller
         }
 
         if ($request->filled('check_in') && $request->filled('check_out')) {
+            session()->put('check_in_filter', $request->check_in);
+            session()->put('check_out_filter', $request->check_out);
+
             $properties->whereHas('rooms', function ($query) use ($request) {
                 $query->whereDoesntHave('bookings', function ($query) use ($request) {
                     $query->where(function ($q) use ($request) {

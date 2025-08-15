@@ -6,12 +6,40 @@
 $page = 'index';
 @endphp
 
+@push("styles")
+<style>
+    select.booking_group-field {
+        background: transparent;
+        outline: none;
+        width: 100%;
+        border: none;
+    }
+
+    .hero_main form.booking {
+        position: relative;
+        z-index: 11;
+        width: fit-content;
+    }
+    select.booking_group-field {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
+
+    .hero_media {
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 10;
+    }
+</style>
+@endpush
 @section('content')
 <!-- hero section start -->
 
 
 <section class="hero section">
-    <div class="container container--hero d-lg-flex align-items-center justify-content-between">
+    <div class="container position-relative container--hero d-lg-flex align-items-center justify-content-between">
         <div class="hero_main">
             <h1 class="hero_main-title" data-aos="fade-up">{{ __('Find Your Ideal Student Home — 3 to 12 Month Rentals') }}</h1>
             <div class="hero_main-content d-flex">
@@ -55,6 +83,20 @@ $page = 'index';
                         </div>
                     </div>
                     <div class="booking_group d-flex flex-column">
+                        <label class="booking_group-label h5" for="institute">{{ __('Institute') }}</label>
+                        <div class="booking_group-wrapper">
+                            <i class="icon-location icon"></i>
+                            <select class="booking_group-field field" name="institute" id="institute">
+                                <option value="" selected>{{ __('All Institutes') }}</option>
+                                @foreach($institutes as $institute)
+                                <option value="{{ $institute->id }}" {{ request('institute') == $institute->id ? 'selected' : '' }}>{{ $institute->name }}</option>
+                                @endforeach
+                            </select>
+                            <i class="icon-chevron_down icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="booking_group d-flex flex-column">
                         <span class="booking_group-label h5">{{ __('Student')}}</span>
                         <div class="booking_group-wrapper booking_group-wrapper--guests">
                             <i class="icon-user icon"></i>
@@ -67,21 +109,21 @@ $page = 'index';
                             <div class="booking_group-dropdown collapse" id="bookingDropdown">
                                 <div class="content">
                                     <div class="booking_group-dropdown_wrapper d-flex align-items-center justify-content-between">
-                                        <label class="label h5" for="adults">{{ __('Student')}}</label>
+                                        <label class="label h5" for="adults">{{ __('Student') }}</label>
                                         <div class="main d-flex align-items-center justify-content-between">
                                             <a class="qty_minus qty-changer d-flex align-items-center justify-content-center" href="#" data-disabled="true"></a>
                                             <input class="field required" id="adults" name="adults" type="text" value="{{ old('adults', request('adults') ?? 1) }}" />
                                             <a class="qty_plus qty-changer d-flex align-items-center justify-content-center" href="#" data-disabled="">+</a>
                                         </div>
                                     </div>
-                                    <!-- <div class="booking_group-dropdown_wrapper d-flex align-items-center justify-content-between">
+                                    <div class="booking_group-dropdown_wrapper d-none align-items-center justify-content-between">
                                         <label class="label h5" for="children">Children</label>
                                         <div class="main d-flex align-items-center justify-content-between">
                                             <a class="qty_minus qty-changer d-flex align-items-center justify-content-center" href="#" data-disabled=""></a>
                                             <input class="field required" id="children" name="children" type="text" value="{{ old('children', request('children') ?? 0) }}" />
                                             <a class="qty_plus qty-changer d-flex align-items-center justify-content-center" href="#" data-disabled="">+</a>
                                         </div>
-                                    </div> -->
+                                    </div>
                                 </div>
                             </div>
                         </div>
