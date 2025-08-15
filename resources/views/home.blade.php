@@ -6,12 +6,40 @@
 $page = 'index';
 @endphp
 
+@push("styles")
+<style>
+    select.booking_group-field {
+        background: transparent;
+        outline: none;
+        width: 100%;
+        border: none;
+    }
+
+    .hero_main form.booking {
+        position: relative;
+        z-index: 11;
+        width: fit-content;
+    }
+    select.booking_group-field {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
+
+    .hero_media {
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 10;
+    }
+</style>
+@endpush
 @section('content')
 <!-- hero section start -->
 
 
 <section class="hero section">
-    <div class="container container--hero d-lg-flex align-items-center justify-content-between">
+    <div class="container position-relative container--hero d-lg-flex align-items-center justify-content-between">
         <div class="hero_main">
             <h1 class="hero_main-title" data-aos="fade-up">{{ __('Find Your Ideal Student Home — 3 to 12 Month Rentals') }}</h1>
             <div class="hero_main-content d-flex">
@@ -54,6 +82,20 @@ $page = 'index';
                             <i class="icon-chevron_down icon"></i>
                         </div>
                     </div>
+                    <div class="booking_group d-flex flex-column">
+                        <label class="booking_group-label h5" for="institute">Institute</label>
+                        <div class="booking_group-wrapper">
+                            <i class="icon-location icon"></i>
+                            <select class="booking_group-field field" name="institute" id="institute">
+                                <option value="" selected>All Institutes</option>
+                                @foreach($institutes as $institute)
+                                <option value="{{ $institute->id }}" {{ request('institute') == $institute->id ? 'selected' : '' }}>{{ $institute->name }}</option>
+                                @endforeach
+                            </select>
+                            <i class="icon-chevron_down icon"></i>
+                        </div>
+                    </div>
+
                     <div class="booking_group d-flex flex-column">
                         <span class="booking_group-label h5">Student</span>
                         <div class="booking_group-wrapper booking_group-wrapper--guests">
