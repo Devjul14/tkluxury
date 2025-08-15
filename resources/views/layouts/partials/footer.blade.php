@@ -9,27 +9,27 @@
 
                 </a>
                 <p class="footer_main-block_text">
-                    {{ setting('hero_sub_text', 'Ut tellus elementum sagittis vitae et leo duis ut. Sit amet consectetur adipiscing elit duis. Ultrices gravida dictum fusce ut placer orci nulla pellentesque') }}
+                    {{ __('Discover comfortable, fully-furnished student accommodations near top universities and vibrant city centers. Flexible stays. Hassle-free living.') }}
                 </p>
             </div>
 
             <div class="footer_main-block footer_main-block--nav col-sm-6 col-lg-auto">
-                <h4 class="footer_main-block_header">Quick links</h4>
+                <h4 class="footer_main-block_header">{{ __('Quick links')}}</h4>
                 <ul class="footer_main-block_nav d-flex flex-lg-column">
                     <li class="list-item">
-                        <a class="link underlined underlined--white nav-item" data-page="home" href="{{ route('home') }}">Home</a>
+                        <a class="link underlined underlined--white nav-item" data-page="home" href="{{ route('home') }}">{{ __('Home')}}</a>
                     </li>
                     <li class="list-item">
-                        <a class="link underlined underlined--white nav-item" data-page="about" href="{{ route('about') }}">About</a>
+                        <a class="link underlined underlined--white nav-item" data-page="about" href="{{ route('about') }}">{{ __('About')}}</a>
                     </li>
                     <li class="list-item">
-                        <a class="link underlined underlined--white nav-item" data-page="rooms" href="{{ route('properties.index') }}">Properties</a>
+                        <a class="link underlined underlined--white nav-item" data-page="rooms" href="{{ route('properties.index') }}">{{ __('Properties')}}</a>
                     </li>
                 </ul>
             </div>
 
             <div class="footer_main-block footer_main-block--contacts col-sm-5 col-lg-auto">
-                <h4 class="footer_main-block_header">Contact Us</h4>
+                <h4 class="footer_main-block_header">{{ __('Contact Us')}}</h4>
                 <ul class="footer_main-block_contacts">
                     <li class="list-item d-flex">
                         <i class="icon-location icon"></i>
@@ -55,8 +55,8 @@
             </div>
 
             <div class="footer_main-block footer_main-block--follow col-sm-5 col-lg-auto d-flex flex-column">
-                <h4 class="footer_main-block_header">Follow Us</h4>
-                <p class="footer_main-block_text">{{ setting('description', 'Venenatis urna cursus eget nunc scelerisque') }}</p>
+                <h4 class="footer_main-block_header">{{ __('Follow Us')}}</h4>
+                <p class="footer_main-block_text">{{ __('follow our social media')}}</p>
                 <ul class="socials d-flex align-items-center">
                     <li class="list-item">
                         <a class="link" href="{{ setting('facebook', '#') }}">
@@ -87,7 +87,7 @@
         <div class="container">
             <p class="footer_copyright-text">
                 <span class="linebreak">{{ setting('name', 'Hosteller') }} &copy; {{ date('Y') }}</span>
-                <span class="linebreak">All rights reserved</span>
+                <span class="linebreak">{{ __('All rights reserved')}}</span>
             </p>
         </div>
     </div>
