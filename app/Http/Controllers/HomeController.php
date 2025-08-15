@@ -36,6 +36,9 @@ class HomeController extends Controller
             }
 
             if ($request->filled('check_in') && $request->filled('check_out')) {
+                session()->put('check_in_filter', $request->check_in);
+                session()->put('check_out_filter', $request->check_out);
+
                 $properties->whereHas('rooms', function ($query) use ($request) {
                     $query->whereDoesntHave('bookings', function ($query) use ($request) {
                         $query->where(function ($q) use ($request) {
