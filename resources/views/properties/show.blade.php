@@ -288,6 +288,7 @@ $page = 'room';
                                         id="checkIn"
                                         name="check_in"
                                         placeholder="Add arrival date"
+                                        value="{{ old('check_in', session()->get('check_in_filter') ?? request('check_in')) }}"
                                         readonly />
                                     <i class="icon-chevron_down icon"></i>
                                 </div>
@@ -303,6 +304,7 @@ $page = 'room';
                                         data-end="true"
                                         type="text"
                                         id="checkOut"
+                                        value="{{ old('check_out', session()->get('check_out_filter') ?? request('check_out')) }}"
                                         name="check_out"
                                         placeholder="Add departure date"
                                         readonly />

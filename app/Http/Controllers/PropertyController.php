@@ -7,8 +7,8 @@ use App\Models\Property;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Session;
 
 class PropertyController extends Controller
 {

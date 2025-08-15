@@ -83,25 +83,11 @@ $page = 'index';
                         </div>
                     </div>
                     <div class="booking_group d-flex flex-column">
-                        <label class="booking_group-label h5" for="institute">Institute</label>
+                        <label class="booking_group-label h5" for="institute">{{ __('Institute') }}</label>
                         <div class="booking_group-wrapper">
                             <i class="icon-location icon"></i>
                             <select class="booking_group-field field" name="institute" id="institute">
-                                <option value="" selected>All Institutes</option>
-                                @foreach($institutes as $institute)
-                                <option value="{{ $institute->id }}" {{ request('institute') == $institute->id ? 'selected' : '' }}>{{ $institute->name }}</option>
-                                @endforeach
-                            </select>
-                            <i class="icon-chevron_down icon"></i>
-                        </div>
-                    </div>
-
-                    <div class="booking_group d-flex flex-column">
-                        <label class="booking_group-label h5" for="institute">Institute</label>
-                        <div class="booking_group-wrapper">
-                            <i class="icon-location icon"></i>
-                            <select class="booking_group-field field" name="institute" id="institute">
-                                <option value="" selected>All Institutes</option>
+                                <option value="" selected>{{ __('All Institutes') }}</option>
                                 @foreach($institutes as $institute)
                                 <option value="{{ $institute->id }}" {{ request('institute') == $institute->id ? 'selected' : '' }}>{{ $institute->name }}</option>
                                 @endforeach
@@ -123,21 +109,21 @@ $page = 'index';
                             <div class="booking_group-dropdown collapse" id="bookingDropdown">
                                 <div class="content">
                                     <div class="booking_group-dropdown_wrapper d-flex align-items-center justify-content-between">
-                                        <label class="label h5" for="adults">{{ __('Student')}}</label>
+                                        <label class="label h5" for="adults">{{ __('Student') }}</label>
                                         <div class="main d-flex align-items-center justify-content-between">
                                             <a class="qty_minus qty-changer d-flex align-items-center justify-content-center" href="#" data-disabled="true"></a>
                                             <input class="field required" id="adults" name="adults" type="text" value="{{ old('adults', request('adults') ?? 1) }}" />
                                             <a class="qty_plus qty-changer d-flex align-items-center justify-content-center" href="#" data-disabled="">+</a>
                                         </div>
                                     </div>
-                                    <!-- <div class="booking_group-dropdown_wrapper d-flex align-items-center justify-content-between">
+                                    <div class="booking_group-dropdown_wrapper d-none align-items-center justify-content-between">
                                         <label class="label h5" for="children">Children</label>
                                         <div class="main d-flex align-items-center justify-content-between">
                                             <a class="qty_minus qty-changer d-flex align-items-center justify-content-center" href="#" data-disabled=""></a>
                                             <input class="field required" id="children" name="children" type="text" value="{{ old('children', request('children') ?? 0) }}" />
                                             <a class="qty_plus qty-changer d-flex align-items-center justify-content-center" href="#" data-disabled="">+</a>
                                         </div>
-                                    </div> -->
+                                    </div>
                                 </div>
                             </div>
                         </div>
