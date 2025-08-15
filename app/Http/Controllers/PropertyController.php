@@ -7,11 +7,16 @@ use App\Models\Property;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\App;
 
 class PropertyController extends Controller
 {
     public function index(Request $request)
     {
+        if (Session::has('locale')) {
+            App::setLocale(Session::get('locale'));
+        }
         $properties = Property::query()
             ->with(['images', 'rooms'])
             ->where('is_active', true);

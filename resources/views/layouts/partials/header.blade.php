@@ -33,20 +33,20 @@
             <nav class="header_nav">
                 <ul class="header_nav-list">
                     <li class="header_nav-list_item">
-                        <a class="nav-item {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}" data-page="home">Home</a>
+                        <a class="nav-item {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}" data-page="home">{{__('Home')}}</a>
                     </li>
                     <li class="header_nav-list_item">
-                        <a class="nav-item {{ request()->routeIs('about') ? 'active' : '' }}" href="{{ route('about') }}" data-page="about">About</a>
+                        <a class="nav-item {{ request()->routeIs('about') ? 'active' : '' }}" href="{{ route('about') }}" data-page="about">{{ __('About') }}</a>
                     </li>
                     <li class="header_nav-list_item">
                         <a
                             class="nav-item {{ request()->routeIs('properties.*') ? 'active' : '' }}"
                             href="{{ route('properties.index') }}"
                             data-page="properties">
-                            Properties
+                            {{__('Properties')}}
                         </a>
                     </li>
-                    <li class="header_nav-list_item dropdown">
+                    <!-- <li class="header_nav-list_item dropdown">
                         <a
                             class="nav-link dropdown-toggle d-inline-flex align-items-center"
                             href="#"
@@ -82,12 +82,15 @@
                                 </li>
                                 <li class="list-item">
                                     <a class="dropdown-item nav-item" data-page="error02" href="{{ route('404') }}">Error Page V2</a>
-                                </li> -->
+                                </li> 
                             </ul>
                         </div>
+                    </li> -->
+                    <li class="header_nav-list_item">
+                        <a class="nav-item" href="{{ route('gallery') }}">{{ __('Gallery')}}</a>
                     </li>
                     <li class="header_nav-list_item">
-                        <a class="nav-item {{ request()->routeIs('contacts') ? 'active' : '' }}" href="{{ route('contacts.index') }}">Contacts</a>
+                        <a class="nav-item {{ request()->routeIs('contacts') ? 'active' : '' }}" href="{{ route('contacts.index') }}">{{ __('Contacts')}}</a>
                     </li>
                     <li class="header_nav-list_item dropdown">
                         <a
@@ -97,7 +100,7 @@
                             data-bs-target="#contactsMenu"
                             aria-expanded="false"
                             aria-controls="contactsMenu">
-                            Language
+                            {{__('Language')}}
                             <i class="icon-chevron_down--entypo icon"></i>
                         </a>
                         <div class="dropdown-menu collapse" id="contactsMenu">

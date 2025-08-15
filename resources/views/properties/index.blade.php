@@ -88,7 +88,7 @@ $page = 'index';
             <form class="booking" action="{{ route('properties.index') }}" method="get" autocomplete="off" data-type="booking" data-aos="fade-up" style="width: 100% !important">
                 <div class="item-wrapper d-sm-flex flex-wrap flex-lg-nowrap align-items-lg-center" style="width: 100% !important">
                     <div class="booking_group d-flex flex-column">
-                        <label class="booking_group-label h5" for="checkIn">Check-in</label>
+                        <label class="booking_group-label h5" for="checkIn">{{ __('Check in')}}</label>
                         <div class="booking_group-wrapper">
                             <i class="icon-calendar icon"></i>
                             <input
@@ -97,7 +97,7 @@ $page = 'index';
                                 data-start="true"
                                 type="text"
                                 id="checkIn"
-                                placeholder="Add date"
+                                placeholder="{{ __('Add date')}}"
                                 name="check_in"
                                 value="{{ request('check_in', old('check_in')) }}"
                                 readonly />
@@ -105,7 +105,7 @@ $page = 'index';
                         </div>
                     </div>
                     <div class="booking_group d-flex flex-column">
-                        <label class="booking_group-label h5" for="checkOut">Check-out</label>
+                        <label class="booking_group-label h5" for="checkOut">{{ __('Check out')}}</label>
                         <div class="booking_group-wrapper">
                             <i class="icon-calendar icon"></i>
                             <input
@@ -115,7 +115,7 @@ $page = 'index';
                                 type="text"
                                 id="checkOut"
                                 name="check_out"
-                                placeholder="Add date"
+                                placeholder="{{ __('Add date')}}"
                                 value="{{ request('check_out', old('check_out')) }}"
                                 readonly />
                             <i class="icon-chevron_down icon"></i>
@@ -123,11 +123,11 @@ $page = 'index';
                     </div>
 
                     <div class="booking_group d-flex flex-column">
-                        <label class="booking_group-label h5" for="institute">Institute</label>
+                        <label class="booking_group-label h5" for="institute">{{ __('Institutes')}}</label>
                         <div class="booking_group-wrapper">
                             <i class="icon-location icon"></i>
                             <select class="booking_group-field field" name="institute" id="institute">
-                                <option value="" selected>All Institutes</option>
+                                <option value="" selected>{{ __('All Institutes')}}</option>
                                 @foreach($institutes as $institute)
                                 <option value="{{ $institute->id }}" {{ request('institute') == $institute->id ? 'selected' : '' }}>{{ $institute->name }}</option>
                                 @endforeach
@@ -137,7 +137,7 @@ $page = 'index';
                     </div>
 
                     <div class="booking_group d-flex flex-column">
-                        <span class="booking_group-label h5">Student</span>
+                        <span class="booking_group-label h5">{{ __('Student')}}</span>
                         <div class="booking_group-wrapper booking_group-wrapper--guests">
                             <i class="icon-user icon"></i>
                             <div
@@ -149,26 +149,26 @@ $page = 'index';
                             <div class="booking_group-dropdown collapse" id="bookingDropdown">
                                 <div class="content">
                                     <div class="booking_group-dropdown_wrapper d-flex align-items-center justify-content-between">
-                                        <label class="label h5" for="student">Student</label>
+                                        <label class="label h5" for="student">{{ __('Student')}}</label>
                                         <div class="main d-flex align-items-center justify-content-between">
                                             <a class="qty_minus qty-changer d-flex align-items-center justify-content-center" href="#" data-disabled="true"></a>
                                             <input class="field required" id="adults" name="student" type="text" value="{{ old('student', request('student') ?? 1) }}" />
                                             <a class="qty_plus qty-changer d-flex align-items-center justify-content-center" href="#" data-disabled="">+</a>
                                         </div>
                                     </div>
-                                    <div class="booking_group-dropdown_wrapper d-flex align-items-center justify-content-between" style="display: none !important;">
+                                    <!-- <div class="booking_group-dropdown_wrapper d-flex align-items-center justify-content-between" style="display: none !important;">
                                         <label class="label h5" for="children">Children</label>
                                         <div class="main d-flex align-items-center justify-content-between">
                                             <a class="qty_minus qty-changer d-flex align-items-center justify-content-center" href="#" data-disabled=""></a>
                                             <input class="field required" id="children" name="children" type="text" value="{{ old('children', request('children') ?? 0) }}" />
                                             <a class="qty_plus qty-changer d-flex align-items-center justify-content-center" href="#" data-disabled="">+</a>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <button id="filterSubmit" class="booking_btn btn theme-element theme-element--accent" type="submit">Search</button>
+                    <button id="filterSubmit" class="booking_btn btn theme-element theme-element--accent" type="submit">{{ __('Search')}}</button>
                 </div>
             </form>
         </div>
@@ -188,7 +188,7 @@ $page = 'index';
                         </picture>
                         <span class="media_label media_label--pricing">
                             <span class="price h4">${{ $property->price_per_month }}</span>
-                            / month
+                            / {{ __('month')}}
                         </span>
                     </div>
                     <div class="main d-md-flex flex-column justify-content-between flex-grow-1">
@@ -198,15 +198,15 @@ $page = 'index';
                         <div class="main_amenities">
                             <span class="main_amenities-item d-inline-flex align-items-center">
                                 <i class="icon-user icon"></i>
-                                Available room {{ $property->available_rooms }}
+                                {{ __('Available room')}} {{ $property->available_rooms }}
                             </span>
                             <span class="main_amenities-item d-inline-flex align-items-center">
                                 <i class="icon-bunk_bed icon"></i>
-                                Type {{ $property->property_type }}
+                                {{ __('Type')}} {{ $property->property_type }}
                             </span>
                         </div>
                         <a class="link link--arrow d-inline-flex align-items-center" href="{{ route('properties.show', $property->property_code) }}">
-                            See more
+                            {{ __('See more')}}
                             <i class="icon-arrow_right icon"></i>
                         </a>
                     </div>

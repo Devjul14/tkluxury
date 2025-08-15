@@ -23,7 +23,7 @@ $page = 'index';
             <form class="booking" action="{{ route('home') }}" method="get" autocomplete="off" data-type="booking" data-aos="fade-up">
                 <div class="item-wrapper d-sm-flex flex-wrap flex-lg-nowrap align-items-lg-center">
                     <div class="booking_group d-flex flex-column">
-                        <label class="booking_group-label h5" for="checkIn">Check-in</label>
+                        <label class="booking_group-label h5" for="checkIn">{{ __('Check in')}}</label>
                         <div class="booking_group-wrapper">
                             <i class="icon-calendar icon"></i>
                             <input
@@ -39,7 +39,7 @@ $page = 'index';
                         </div>
                     </div>
                     <div class="booking_group d-flex flex-column">
-                        <label class="booking_group-label h5" for="checkOut">Check-out</label>
+                        <label class="booking_group-label h5" for="checkOut">{{ __('Check out')}}</label>
                         <div class="booking_group-wrapper">
                             <i class="icon-calendar icon"></i>
                             <input
@@ -55,7 +55,7 @@ $page = 'index';
                         </div>
                     </div>
                     <div class="booking_group d-flex flex-column">
-                        <span class="booking_group-label h5">Student</span>
+                        <span class="booking_group-label h5">{{ __('Student')}}</span>
                         <div class="booking_group-wrapper booking_group-wrapper--guests">
                             <i class="icon-user icon"></i>
                             <div
@@ -67,26 +67,26 @@ $page = 'index';
                             <div class="booking_group-dropdown collapse" id="bookingDropdown">
                                 <div class="content">
                                     <div class="booking_group-dropdown_wrapper d-flex align-items-center justify-content-between">
-                                        <label class="label h5" for="adults">Adults</label>
+                                        <label class="label h5" for="adults">{{ __('Student')}}</label>
                                         <div class="main d-flex align-items-center justify-content-between">
                                             <a class="qty_minus qty-changer d-flex align-items-center justify-content-center" href="#" data-disabled="true"></a>
                                             <input class="field required" id="adults" name="adults" type="text" value="{{ old('adults', request('adults') ?? 1) }}" />
                                             <a class="qty_plus qty-changer d-flex align-items-center justify-content-center" href="#" data-disabled="">+</a>
                                         </div>
                                     </div>
-                                    <div class="booking_group-dropdown_wrapper d-flex align-items-center justify-content-between">
+                                    <!-- <div class="booking_group-dropdown_wrapper d-flex align-items-center justify-content-between">
                                         <label class="label h5" for="children">Children</label>
                                         <div class="main d-flex align-items-center justify-content-between">
                                             <a class="qty_minus qty-changer d-flex align-items-center justify-content-center" href="#" data-disabled=""></a>
                                             <input class="field required" id="children" name="children" type="text" value="{{ old('children', request('children') ?? 0) }}" />
                                             <a class="qty_plus qty-changer d-flex align-items-center justify-content-center" href="#" data-disabled="">+</a>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <button id="filterSubmit" class="booking_btn btn theme-element theme-element--accent" type="submit">Search</button>
+                    <button id="filterSubmit" class="booking_btn btn theme-element theme-element--accent" type="submit">{{ __('Search')}}</button>
                 </div>
             </form>
         </div>
@@ -109,7 +109,7 @@ $page = 'index';
                 {{ __('Properties') }}
             </h2>
             <div class="wrapper" data-aos="fade-left">
-                <a class="btn theme-element theme-element--light" href="{{ route('properties.index') ?? 'rooms.html' }}">View all properties</a>
+                <a class="btn theme-element theme-element--light" href="{{ route('properties.index') ?? 'rooms.html' }}">{{ __('View all properties')}}</a>
             </div>
         </div>
         <ul class="rooms_list d-md-flex flex-wrap">
@@ -126,7 +126,7 @@ $page = 'index';
                         </picture>
                         <span class="media_label media_label--pricing">
                             <span class="price h4">${{ $property->price_per_month }}</span>
-                            / month
+                            / {{ __('month')}}
                         </span>
                     </div>
                     <div class="main d-md-flex flex-column justify-content-between flex-grow-1">
@@ -136,15 +136,15 @@ $page = 'index';
                         <div class="main_amenities">
                             <span class="main_amenities-item d-inline-flex align-items-center">
                                 <i class="icon-user icon"></i>
-                                Available room {{ $property->available_rooms }}
+                                {{ __('Available room')}} {{ $property->available_rooms }}
                             </span>
                             <span class="main_amenities-item d-inline-flex align-items-center">
                                 <i class="icon-bunk_bed icon"></i>
-                                Type {{ $property->property_type }}
+                                {{ __('Type')}} {{ $property->property_type }}
                             </span>
                         </div>
                         <a class="link link--arrow d-inline-flex align-items-center" href="{{ route('properties.show', $property->property_code) }}">
-                            See more
+                            {{ __('See more')}}
                             <i class="icon-arrow_right icon"></i>
                         </a>
                     </div>
@@ -315,7 +315,7 @@ $page = 'index';
                         <span class="level h2">{{ $averageRatings['average_overall_rating'] }}</span>
                         <sup class="h4">/10</sup>
                     </span>
-                    <span class="main_reviews">{{ $averageRatings['average_overall_rating'] }} ratings</span>
+                    <span class="main_reviews">{{ $averageRatings['average_overall_rating'] }} {{ __('ratings')}}</span>
                 </div>
                 <div class="media">
                     <svg width="193" height="32" viewBox="0 0 193 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -331,7 +331,7 @@ $page = 'index';
                         <span class="level h2">{{ $averageRatings['total_comments'] }}</span>
                         <sup class="h4">+</sup>
                     </span>
-                    <span class="main_reviews">comments</span>
+                    <span class="main_reviews">{{ __('comments')}}</span>
                 </div>
                 <div class="media">
                     <svg width="214" height="30" viewBox="0 0 214 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -346,7 +346,7 @@ $page = 'index';
                         <span class="level h2">{{ $averageRatings['percentage_admin_response'] }}</span>
                         <sup class="h4">%</sup>
                     </span>
-                    <span class="main_reviews">{{ $averageRatings['total_admin_response'] }} responses</span>
+                    <span class="main_reviews">{{ $averageRatings['total_admin_response'] }} {{ __('responses')}}</span>
                 </div>
                 <div class="media">
                     <svg width="98" height="32" viewBox="0 0 98 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -361,7 +361,7 @@ $page = 'index';
                         <span class="level h2">{{ $averageRatings['percentage_featured'] }}</span>
                         <sup class="h4">%</sup>
                     </span>
-                    <span class="main_reviews">{{ $averageRatings['total_comments'] }} recommendations</span>
+                    <span class="main_reviews">{{ $averageRatings['total_comments'] }} {{ __('recommendations')}}</span>
                 </div>
                 <div class="media">
                     <svg width="242" height="47" viewBox="0 0 242 47" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -628,7 +628,7 @@ $page = 'index';
                 {{ __('Photos of our properties') }}
             </h2>
             <div class="wrapper">
-                <a class="btn theme-element theme-element--light" href="{{ route('gallery') ?? 'gallery.html' }}">View all photos</a>
+                <a class="btn theme-element theme-element--light" href="{{ route('gallery') ?? 'gallery.html' }}">{{ __('View all photos')}}</a>
             </div>
         </div>
         <div class="gallery_grid d-grid">
