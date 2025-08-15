@@ -77,6 +77,7 @@ class BookingController extends Controller
             'status' => 'pending',
         ]);
 
+        $services = collect();
         if (isset($data['room_id'])) {
             $room = Room::with('property')->findOrFail($data['room_id']);
             $bookingReference = 'BOOK-' . $checkInCarbon->format('YmdHis') . '-' . str_pad($room->id, 5, '0', STR_PAD_LEFT);
@@ -92,10 +93,10 @@ class BookingController extends Controller
             $booking->monthly_rent = $room->price_per_month;
             $booking->subtotal = $totalRentAmount;
 
-            if ($property->down_payment_type === 'percentage') {
-                $booking->down_payment_amount = $totalRentAmount * ($property->down_payment_value / 100);
-            } elseif ($property->down_payment_type === 'fixed') {
-                $booking->down_payment_amount = $property->down_payment_value;
+            if ($room->property->down_payment_type === 'percentage') {
+                $booking->down_payment_amount = $totalRentAmount * ($room->property->down_payment_value / 100);
+            } elseif ($room->property->down_payment_type === 'fixed') {
+                $booking->down_payment_amount = $room->property->down_payment_value;
             } else {
                 $booking->down_payment_amount = $totalRentAmount * config('hostel.booking.down_payment_rate', 0.1);
             }
@@ -134,7 +135,6 @@ class BookingController extends Controller
         }
         $booking->setRelation('services', $services);
 
-        // dd($booking->toArray());
         session()->put('booking', $booking);
 
         // For now, redirect to checkout
@@ -148,6 +148,10 @@ class BookingController extends Controller
         $booking = Booking::with(['room', 'student'])
             ->where('booking_reference', $bookingReference)
             ->first() ?? session()->get('booking');
+        $services = Service::query()
+            ->where('status', 'active')
+            ->orderBy('title', 'asc')
+            ->get();
 
         if (!$booking) {
             abort(404);
@@ -155,6 +159,7 @@ class BookingController extends Controller
 
         return view('booking.checkout', [
             'booking' => $booking,
+            'services' => $services,
         ]);
     }
 
@@ -215,6 +220,8 @@ class BookingController extends Controller
             // Misc
             'terms' => 'required|accepted',
             'date_of_birth' => 'required|date|before:-18 years',
+            'services' => 'array',
+            'services.*' => 'exists:services,id',
         ]);
 
         // Remove card data if payment is not card-based
@@ -227,8 +234,13 @@ class BookingController extends Controller
             ]));
         }
 
+        $services = Service::whereIn('id', $validated['services'] ?? [])->get();
         $booking = session()->get('booking');
+        $booking->setRelation('services', $services);
         $booking->special_requests = $request->special_requests;
+
+        $serviceFees = $services->sum('price');
+        $booking->service_fee = (($booking->subtotal) * config('hostel.booking.service_fee_rate', 0.05)) + $serviceFees;
 
         // create student data
         $generatedPassword = Str::random(8) . str_pad(random_int(1, 100), 2, '0', STR_PAD_LEFT);
@@ -251,6 +263,7 @@ class BookingController extends Controller
 
         // Store booking in session for confirmation page
         session(['booking_confirmation' => $booking]);
+
         Mail::to($booking->student->email)->send(new BookingConfirmed($booking, $generatedPassword, $booking->services));
 
         return redirect()->route('booking.confirmation');

@@ -674,6 +674,33 @@ return $checkInDate->diffInDays($checkOutDate);
                                 </div>
                             </div>
                         </div>
+                        
+                        <div class="checkout_main-content_form-section" data-aos="fade-up">
+                            <h3 class="checkout_main-content_form-section_title">Services</h3>
+
+                            <div class="facilities">
+                                <div class="facilities_list d-sm-flex flex-wrap">
+                                    @foreach($services as $service)
+                                        <label for="service-{{ $service->id }}" class="mx-2 facilities_list-block_item d-flex align-items-center">
+                                            <span class="icon">
+                                                <input 
+                                                    data-fee="{{ $service->price }}" 
+                                                    type="checkbox" {{ in_array($service->id, $booking->services->pluck("id")->toArray()) ? "checked" : '' }} 
+                                                    id="service-{{ $service->id }}" 
+                                                    name="services[]" value="{{ $service->id }}" 
+                                                    class="service-box checkbox_input"
+                                                >
+                                            </span>
+                                            {{ $service->title }}
+                                        </label>
+                                    @endforeach
+                                </div>
+                            </div>
+                            @error("services")
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+
 
                         <!-- Terms and Conditions -->
                         <div class="checkout_main-content_form-section" data-aos="fade-up">
@@ -768,7 +795,7 @@ return $checkInDate->diffInDays($checkOutDate);
                             </div>
                             <div class="checkout_main-sidebar_summary_pricing_item">
                                 <span class="label">Subtotal:</span>
-                                <span class="value">{{ Number::currency($booking->subtotal, env('APP_DEFAULT_CURRENCY', 'IDR')) }}</span>
+                                <span class="value" id="subtotal-overview">{{ Number::currency($booking->subtotal, env('APP_DEFAULT_CURRENCY', 'IDR')) }}</span>
                             </div>
                             @if($booking->tax > 0)
                             <div class="checkout_main-sidebar_summary_pricing_item">
@@ -779,12 +806,12 @@ return $checkInDate->diffInDays($checkOutDate);
                             @if($booking->service_fee > 0)
                             <div class="checkout_main-sidebar_summary_pricing_item">
                                 <span class="label">Service Fee:</span>
-                                <span class="value">{{ Number::currency($booking->service_fee, env('APP_DEFAULT_CURRENCY', 'IDR')) }}</span>
+                                <span class="value" id="service-fee-overview">{{ Number::currency($booking->service_fee, env('APP_DEFAULT_CURRENCY', 'IDR')) }}</span>
                             </div>
                             @endif
                             <div class="checkout_main-sidebar_summary_pricing_item checkout_main-sidebar_summary_pricing_item">
                                 <span class="label">Total:</span>
-                                <span class="value">{{ Number::currency($booking->total_amount, env('APP_DEFAULT_CURRENCY', 'IDR')) }}</span>
+                                <span class="value" id="total-overview">{{ Number::currency($booking->total_amount, env('APP_DEFAULT_CURRENCY', 'IDR')) }}</span>
                             </div>
                             <div class="checkout_main-sidebar_summary_pricing_item checkout_main-sidebar_summary_pricing_item--total">
                                 <span class="label">Down Payment:</span>
@@ -816,6 +843,12 @@ return $checkInDate->diffInDays($checkOutDate);
         const paymentMethodSelect = document.getElementById('payment_method');
         const cardCreditPayment = document.getElementById('card_credit_payment');
         const buttonSubmits = document.querySelectorAll('button[type="submit"]');
+        const serviceBoxes = document.querySelectorAll(".service-box");
+        const totalOverview = document.getElementById("total-overview");
+        const subTotalOverview = document.getElementById("subtotal-overview");
+        const subTotal = Number(subTotalOverview.innerText.replace(/\W+/, ""));
+        const serviceFeeRate = Number("{{ config('hostel.booking.service_fee_rate', 0.05) }}");
+        const serviceFeeOverview = document.getElementById("service-fee-overview");
 
         paymentMethodSelect.addEventListener('change', function() {
             if (["credit_card", "debit_card"].includes(this.value)) {
@@ -824,6 +857,25 @@ return $checkInDate->diffInDays($checkOutDate);
                 cardCreditPayment.classList.add('d-none');
             }
         });
+
+        serviceBoxes.forEach(serviceBox => {
+            serviceBox.addEventListener("change", function(){
+                let serviceFees = 0;
+
+                serviceBoxes.forEach(serviceBox => {
+                    if (serviceBox.checked) {
+                        serviceFees += Number(serviceBox.getAttribute("data-fee"));
+
+                    }
+                });
+
+                let total = subTotal * serviceFeeRate + serviceFees;
+
+                console.log({ serviceFees, total })
+                totalOverview.innerText = `$${total.toLocaleString()}`;
+                serviceFeeOverview.innerText = `$${serviceFees.toLocaleString()}`;
+            });
+        })
 
         buttonSubmits.forEach((buttonSubmit) => {
             buttonSubmit.addEventListener('click', function(e) {

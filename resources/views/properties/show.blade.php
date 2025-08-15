@@ -292,6 +292,11 @@ $page = 'room';
                                         readonly />
                                     <i class="icon-chevron_down icon"></i>
                                 </div>
+                                <span class="text-danger">
+                                    @error("check_in")
+                                        {{ $message }}
+                                    @enderror
+                                </span>
                             </div>
 
                             <div class="booking_group d-flex flex-column">
@@ -310,6 +315,11 @@ $page = 'room';
                                         readonly />
                                     <i class="icon-chevron_down icon"></i>
                                 </div>
+                                <span class="text-danger">
+                                    @error("check_out")
+                                        {{ $message }}
+                                    @enderror
+                                </span>
                             </div>
 
                             <button class="booking_btn btn theme-element theme-element--accent" type="submit">Book now</button>
@@ -331,95 +341,6 @@ $page = 'room';
 
 
                 </div>
-            </div>
-
-            <div class="row">
-                <!-- rooms section start -->
-                <!-- <section class="rooms section--blockbg section">
-                    <div class="block"></div>
-                    <div class="container">
-                        <div class="rooms_header d-sm-flex justify-content-between align-items-center">
-                            <h2 class="rooms_header-title" data-aos="fade-right">Property rooms</h2>
-                            <div class="wrapper" data-aos="fade-left">
-                                <a class="btn theme-element theme-element--light" href="rooms.html">View all rooms</a>
-                            </div>
-                        </div>
-                        <ul class="rooms_list d-md-flex flex-wrap">
-                            @foreach ($relatedRooms as $room)
-                            <li class="rooms_list-item col-md-6 mb-4 col-xl-4" data-order="1" data-aos="fade-up">
-                                <div class="item-wrapper d-md-flex flex-column">
-                                    <div class="media">
-                                        <picture>
-                                            <source data-srcset="{{ $room->getThumbnailAttribute() ? asset($room->getThumbnailAttribute()) : url('asset/img/hero.webp') }}" srcset="{{ $room->getThumbnailAttribute() ? asset($room->getThumbnailAttribute()) : url('asset/img/hero.webp') }}" />
-                                            <img class="lazy" data-src="{{ $room->getThumbnailAttribute() ? asset($room->getThumbnailAttribute()) : url('asset/img/hero.webp') }}" src="{{ $room->getThumbnailAttribute() ? asset($room->getThumbnailAttribute()) : url('asset/img/hero.webp') }}" alt="media" />
-                                        </picture>
-                                        <span class="media_label media_label--pricing">
-                                            <span class="price h4">{{ Number::currency($room->price_per_month / 30, env('APP_DEFAULT_CURRENCY', 'IDR')) }}</span>
-                                            / 1 night
-                                        </span>
-                                    </div>
-                                    <div class="main d-md-flex flex-column justify-content-between flex-grow-1">
-                                        <a class="main_title h4" href="{{ route('rooms.show', $room->id) }}" data-shave="true">#{{ $room->room_number }}</a>
-                                        <div class="main_amenities">
-                                            <span class="main_amenities-item d-inline-flex align-items-center">
-                                                <i class="icon-user icon"></i>
-                                                {{ $room->capacity }} Sleeps
-                                            </span>
-                                            <span class="main_amenities-item d-inline-flex align-items-center">
-                                                <i class="icon-bunk_bed icon"></i>
-                                                {{ $room->room_type_label }}
-                                            </span>
-                                        </div>
-                                        <a class="link link--arrow d-inline-flex align-items-center" href="{{ route('rooms.show', $room->id) }}">
-                                            See more
-                                            <i class="icon-arrow_right icon"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </section> -->
-                <!-- rooms section end -->
-                <!-- <section class="room_comments col-md-6">
-                    <h3 class="room_comments-header">Post comments</h3>
-                    <ul class="room_comments-list">
-                        <li class="list-item d-flex flex-column flex-sm-row align-items-start">
-                            <div class="media">
-                                <picture>
-                                    <source data-srcset="img/hero.webp" srcset="img/hero.webp" />
-                                    <img class="lazy" data-src="img/hero.webp" src="img/hero.webp" alt="media" />
-                                </picture>
-                            </div>
-                            <div class="main">
-                                <div class="main_info d-flex flex-column">
-                                    <span class="name h4">Gloria Ellis</span>
-                                    <span class="date">June 16, 2021</span>
-                                </div>
-                                <p class="text">
-                                    Ac placerat vestibulum lectus mauris ultrices. Velit scelerisque in dictum non consectetur a. Eget
-                                    nunc lobortis mattis aliquam faucibus purus in. Ultricies leo integer malesuada nunc.
-                                </p>
-                            </div>
-                            <a class="replyTrigger" href="#">
-                                <span class="icon-reply"></span>
-                            </a>
-                        </li>
-                    </ul>
-
-                </section>
-                <div class="col-md-6">
-                    <div class="room_main-cards_card  accent">
-                        <h3 class="title">Stay Longer, Save More</h3>
-                        <p class="text">It's simple: the longer you stay, the more you save!</p>
-                        <div class="content">
-                            <p class="text">Save up to <b>20%</b> off the nightly rate on stays between 7-14 nights</p>
-                            <p class="text">Save up to <b>30%</b> off the nightly rate on stays between 14-29 nights</p>
-                        </div>
-                    </div>
-                </div> -->
-
             </div>
 
             <!-- <section class="review col-lg-8">
