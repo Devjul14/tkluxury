@@ -19,10 +19,10 @@ $page = 'about';
             </li>
         </ul> -->
         <h1 class="page_title">
-            {{ setting('about_title', 'About') }}
+            {{ __('About') }}
         </h1>
         <p class="page_header-text" data-aos="fade-up" data-aos-delay="50">
-            {{ setting('about_text', 'Discover our story and what makes us the perfect choice for your stay') }}
+            {{ __('Discover our story and what makes us the perfect choice for your stay') }}
         </p>
 
     </div>
@@ -34,34 +34,34 @@ $page = 'about';
         <div class="container">
             <div class="about_benefits-header d-md-flex align-items-center justify-content-between">
                 <h2 class="text-center" data-aos="fade-up">
-                    {{ setting('our_story_title', 'Our Story') }}
+                    {{ __('Our Story') }}
                 </h2>
             </div>
             <div class="text-center mb-4">
                 <p class="about_main-content_text" data-aos="fade-up" data-aos-delay="50">
-                    {{ setting('our_story_paragraph_1', 'Founded in 2010, Luxury has been providing exceptional accommodation experiences for travelers from around the world. What started as a small hostel has grown into a beloved destination for backpackers, students, and budget-conscious travelers.') }}
+                    {{ __('Founded in 2010, Luxury has been providing exceptional accommodation experiences for travelers from around the world. What started as a small hostel has grown into a beloved destination for backpackers, students, and budget-conscious travelers.') }}
                 </p>
                 <p class="about_main-content_text" data-aos="fade-up" data-aos-delay="100">
-                    {{ setting('our_story_paragraph_2', 'Our mission is to create a welcoming, safe, and comfortable environment where travelers can connect, share stories, and create lasting memories. We believe that great accommodation should be accessible to everyone, regardless of budget.') }}
+                    {{ __('Our mission is to create a welcoming, safe, and comfortable environment where travelers can connect, share stories, and create lasting memories. We believe that great accommodation should be accessible to everyone, regardless of budget.') }}
                 </p>
             </div>
             <ul class="about_benefits-list d-md-flex">
                 <li class="about_benefits-list_item col-12 col-md-4 mb-3 mb-md-0">
                     <span class="countNum number h1 d-flex align-items-center" data-suffix="+" data-value="500">0</span>
                     <p class="number-label">
-                        {{ setting('happy_students_label', 'Happy Students') }}
+                        {{ __('Happy Students') }}
                     </p>
                 </li>
                 <li class="about_benefits-list_item col-12 col-md-4 mb-3 mb-md-0">
                     <span class="countNum number h1 d-flex align-items-center" data-suffix="+" data-value="50">0</span>
                     <p class="number-label">
-                        {{ setting('properties_label', 'Properties') }}
+                        {{ __('Properties') }}
                     </p>
                 </li>
                 <li class="about_benefits-list_item col-12 col-md-4">
                     <span class="countNum number h1 d-flex align-items-center" data-suffix="%" data-value="10">0</span>
                     <p class="number-label">
-                        {{ setting('years_experience_label', 'Years Experience') }}
+                        {{ __('Years Experience') }}
                     </p>
                 </li>
             </ul>
@@ -82,7 +82,7 @@ $page = 'about';
     <section class="about_benefits section">
         <div class="container d-xl-flex align-items-center">
             <div class="about_stages-main col-xl-6">
-                <h2 class="about_benefits-header">{{setting('why_choose_luxury_title','Why Choose Luxury?')}}</h2>
+                <h2 class="about_benefits-header">{{__('Why Choose Luxury?')}}</h2>
 
                 <ul class="about_stages-main_list">
                     <li class="list-item d-flex align-items-sm-center" data-aos="fade-up">
@@ -95,8 +95,8 @@ $page = 'about';
                             </span>
                         </div>
                         <div class="main">
-                            <h4 class="main_title">{{setting('prime_location_title','Prime Location')}}</h4>
-                            <p class="main_text">{{setting('prime_location_text','Located in the heart of the city, we are just minutes away from major attractions, public transportation, and local hotspots.')}}
+                            <h4 class="main_title">{{__('Prime Location')}}</h4>
+                            <p class="main_text">{{__('Located in the heart of the city, we\'re just minutes away from major attractions, public transportation, and local hotspots.')}}
                             </p>
                         </div>
                     </li>
@@ -112,8 +112,8 @@ $page = 'about';
                             </span>
                         </div>
                         <div class="main">
-                            <h4 class="main_title">{{setting('free_wifi_title','Free WiFi')}}</h4>
-                            <p class="main_text">{{setting('free_wifi_text','Stay connected with complimentary high-speed WiFi throughout the property, perfect for work or staying in touch with loved ones.')}}
+                            <h4 class="main_title">{{__('Free WiFi')}}</h4>
+                            <p class="main_text">{{__('Stay connected with complimentary high-speed WiFi throughout the property, perfect for work or staying in touch with loved ones.')}}
                         </div>
                     </li>
                     <li class="list-item d-flex align-items-sm-center" data-aos="fade-up" data-aos-delay="100">
@@ -134,8 +134,8 @@ $page = 'about';
                             </span>
                         </div>
                         <div class="main">
-                            <h4 class="main_title">{{setting('24_7_security_title','24/7 Security')}}</h4>
-                            <p class="main_text">{{setting('24_7_security_text','Your safety is our priority. We have 24/7 security and secure lockers to keep your belongings safe during your stay.')}}</p>
+                            <h4 class="main_title">{{__('24/7 Security')}}</h4>
+                            <p class="main_text">{{__('Your safety is our priority. We have 24/7 security and secure lockers to keep your belongings safe during your stay.')}}</p>
                         </div>
                     </li>
                 </ul>
@@ -154,8 +154,8 @@ $page = 'about';
                             </span>
                         </div>
                         <div class="main">
-                            <h4 class="main_title">{{setting('social_atmosphere_title','Social Atmosphere')}}</h4>
-                            <p class="main_text">{{setting('social_atmosphere_text','Meet fellow travelers in our common areas, join organized activities, and make new friends from around the world.')}}
+                            <h4 class="main_title">{{__('Social Atmosphere')}}</h4>
+                            <p class="main_text">{{__('Meet fellow travelers in our common areas, join organized activities, and make new friends from around the world.')}}
                             </p>
                         </div>
                     </li>
@@ -177,14 +177,13 @@ $page = 'about';
                             </span>
                         </div>
                         <div class="main">
-                            <h4 class="main_title">{{setting('clean_comfortable_title','Clean & Comfortable')}}</h4>
-                            <p class="main_text">{{setting('clean_comfortable_text','Our properties are cleaned daily and equipped with comfortable beds, fresh linens, and all the essentials you need.')}}</p>
+                            <h4 class="main_title">{{__('Clean & Comfortable')}}</h4>
+                            <p class="main_text">{{__('Our properties are cleaned daily and equipped with comfortable beds, fresh linens, and all the essentials you need.')}}</p>
                         </div>
                     </li>
                     <li class="list-item d-flex align-items-sm-center" data-aos="fade-up" data-aos-delay="100">
                         <div class="media">
                             <span class="theme-element">
-
                                 <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M35.5133 23.6979L35.3079 23.8084C34.4779 22.8045 33.0399 22.4154 31.9444 22.9688L31.9327 22.9748L31.4477 23.2351C30.2625 22.2348 28.5752 22.0828 27.2293 22.8552L24.6173 24.2712H21.1416C20.389 24.2702 19.6463 24.1006 18.9683 23.7748L18.4902 23.5443C15.7145 22.1981 12.4156 22.5193 9.95364 24.3753C9.94229 24.384 9.9312 24.3926 9.92064 24.4024L8.76626 25.4267C8.33 25.8129 7.81433 26.0994 7.25535 26.2662L6.59973 24.121C6.53304 23.903 6.33126 23.754 6.10262 23.754H0.519728C0.370932 23.754 0.229272 23.8176 0.130628 23.9286C0.0319839 24.0397 -0.0141828 24.1875 0.00382146 24.3348L1.86476 39.5445C1.89654 39.8045 2.11795 39.9999 2.38066 39.9999H10.7545C10.9192 39.9999 11.0742 39.9221 11.1722 39.7901C11.2702 39.6582 11.2997 39.4878 11.2516 39.3307L10.1516 35.7326L13.5777 33.5741C14.0361 33.3212 14.574 33.2519 15.0819 33.3801C15.0926 33.3827 15.1034 33.3852 15.1143 33.3871L22.0837 34.6663C23.9777 35.0041 25.9304 34.7293 27.6565 33.882C27.6786 33.8711 27.6998 33.8587 27.7201 33.8448L39.7744 25.5948C40.0011 25.4397 40.0673 25.1354 39.9255 24.9005C39.0143 23.3878 37.07 22.8579 35.5133 23.6979ZM32.4195 23.8903C33.0532 23.574 33.8508 23.8333 34.3603 24.3179L29.7893 26.776L29.5207 26.917C29.376 26.5074 29.1645 26.1243 28.8946 25.7833L32.4195 23.8903ZM27.7367 23.7596L27.7323 23.7621L26.6244 24.3616C27.1603 24.4784 27.6659 24.7052 28.1089 25.0276L30.433 23.7803C29.6084 23.2843 28.5784 23.2746 27.7446 23.7551C27.7422 23.7566 27.7395 23.7581 27.7367 23.7596ZM2.84044 38.9638L1.10675 24.7901H5.71742L10.0527 38.9638H2.84044ZM22.2696 33.6467C23.9312 33.9427 25.6442 33.7055 27.1618 32.9691L38.7394 25.0459C38.0331 24.3001 36.9119 24.1209 36.0071 24.6093L30.2773 27.6896L29.7349 27.9745C29.7401 28.0572 29.7436 28.1402 29.7436 28.2241C29.7436 28.5102 29.5109 28.7421 29.2239 28.7421C29.2161 28.7421 29.2082 28.7416 29.2003 28.7416L25.2456 28.5633C24.0873 28.5112 22.9267 28.5646 21.7782 28.7228C21.4954 28.7591 21.2362 28.5615 21.1971 28.2801C21.158 27.9986 21.3536 27.7383 21.6356 27.6966C22.8469 27.5298 24.071 27.4734 25.2927 27.5282L28.6531 27.6797C28.389 26.3038 27.1827 25.3082 25.7773 25.3062H21.141C20.2317 25.305 19.3343 25.1 18.5151 24.7065L18.0371 24.4759C15.6185 23.3029 12.7447 23.5785 10.5949 25.1895L9.45679 26.1997C8.90867 26.6858 8.26081 27.047 7.55835 27.258L9.83644 34.705L13.034 32.69C13.0419 32.685 13.0499 32.6802 13.058 32.6758C13.7449 32.2915 14.5528 32.1824 15.3175 32.3706L22.2696 33.6467Z" fill="currentColor" />
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M4.62732 38.125H5.99768C6.48221 38.125 6.875 37.7323 6.875 37.2478V35.8772C6.875 35.3927 6.48221 35 5.99768 35H4.62732C4.14279 35 3.75 35.3927 3.75 35.8772V37.2478C3.75 37.7323 4.14279 38.125 4.62732 38.125ZM4.79167 37.0833V36.0417H5.83333V37.0833H4.79167Z" fill="currentColor" />
@@ -193,13 +192,11 @@ $page = 'about';
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M33.5482 5.69622V7.2072C33.5482 9.16537 32.0077 10.7528 30.1074 10.7528C28.207 10.7528 26.6665 9.16537 26.6665 7.2072V5.69622C26.6665 3.73805 28.207 2.15063 30.1074 2.15063C32.0077 2.15063 33.5482 3.73805 33.5482 5.69622ZM27.6832 5.69622V7.2072C27.6832 8.58677 28.7685 9.70514 30.1074 9.70514C31.4462 9.70514 32.5315 8.58677 32.5315 7.2072V5.69622C32.5315 4.31665 31.4462 3.19828 30.1074 3.19828C28.7685 3.19828 27.6832 4.31665 27.6832 5.69622Z" fill="currentColor" />
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M13.3334 5.69622V7.2072C13.3334 9.16537 11.7929 10.7528 9.89252 10.7528C7.99219 10.7528 6.45166 9.16537 6.45166 7.2072V5.69622C6.45166 4.42951 7.10748 3.25901 8.17209 2.62565C9.2367 1.9923 10.5483 1.9923 11.613 2.62565C12.6776 3.25901 13.3334 4.42951 13.3334 5.69622ZM7.46836 5.69622V7.2072C7.46836 8.09962 7.9304 8.92426 8.68044 9.37048C9.43048 9.81669 10.3546 9.81669 11.1046 9.37048C11.8546 8.92426 12.3167 8.09962 12.3167 7.2072V5.69622C12.3167 4.31665 11.2313 3.19828 9.89252 3.19828C8.55369 3.19828 7.46836 4.31665 7.46836 5.69622Z" fill="currentColor" />
                                 </svg>
-
                             </span>
-
                         </div>
                         <div class="main">
-                            <h4 class="main_title">{{setting('friendly_staff_title','Friendly Staff')}}</h4>
-                            <p class="main_text">{{setting('friendly_staff_text','Our knowledgeable staff is always ready to help with recommendations, directions, and any questions you might have.')}}</p>
+                            <h4 class="main_title">{{__('Friendly Staff')}}</h4>
+                            <p class="main_text">{{__('Our knowledgeable staff is always ready to help with recommendations, directions, and any questions you might have.')}}</p>
                         </div>
                     </li>
                 </ul>
@@ -214,42 +211,41 @@ $page = 'about';
     <section class="about_rules section">
         <div class="container d-xl-flex justify-content-between align-items-center">
             <div class="about_rules-main col-xl-5">
-                <h2 class="about_rules-main_header" data-aos="fade-right">{{ setting('main_header','House Rules') }}</h2>
+                <h2 class="about_rules-main_header" data-aos="fade-right">{{ __('House Rules') }}</h2>
                 <p class="page_header-text mb-3" data-aos="fade-up" data-aos-delay="50">
-                    {{ setting('intro_text','To ensure everyone has a pleasant stay, please follow these guidelines :') }}
+                    {{ __('To ensure everyone has a pleasant stay, please follow these guidelines :') }}
                 </p>
                 <ul class="about_rules-main_list">
-                    <h3>{{ setting('check_in_header','Check-in/Check-out') }}</h3>
+                    <h3>{{ __('Check-in/Check-out') }}</h3>
                     <li class="list-item d-flex align-items-baseline" data-aos="fade-up">
-                        &bull; {{ setting('check_in_time','Check-in: 2:00 PM - 10:00 PM') }} <br>
-                        &bull; {{ setting('check_out_time','Check-out: 11:00 AM') }} <br>
-                        &bull; {{ setting('late_check_in_notice','Late check-in available with prior notice') }} <br>
+                        &bull; {{ __('Check-in: 2:00 PM - 10:00 PM') }} <br>
+                        &bull; {{ __('Check-out: 11:00 AM') }} <br>
+                        &bull; {{ __('Late check-in available with prior notice') }} <br>
                     </li>
-                    <h3>{{ setting('quiet_hours_header','Quiet Hours') }}</h3>
+                    <h3>{{ __('Quiet Hours') }}</h3>
                     <li class="list-item d-flex align-items-baseline" data-aos="fade-up">
-                        &bull; {{ setting('quiet_hours_time','Quiet hours: 11:00 PM - 7:00 AM') }} <br>
-                        &bull; {{ setting('respect_guests_note','Please respect other guests') }} <br>
-                        &bull; {{ setting('no_loud_music_note','No loud music or parties') }} <br>
+                        &bull; {{ __('Quiet hours: 11:00 PM - 7:00 AM') }} <br>
+                        &bull; {{ __('Please respect other guests') }} <br>
+                        &bull; {{ __('No loud music or parties') }} <br>
                     </li>
-                    <h3>{{ setting('smoking_policy_header','Smoking Policy') }}</h3>
+                    <h3>{{ __('Smoking Policy') }}</h3>
                     <li class="list-item d-flex align-items-baseline" data-aos="fade-up">
-                        &bull; {{ setting('no_smoking_note','No smoking inside the building') }} <br>
-                        &bull; {{ setting('designated_smoking_areas','Designated smoking areas available') }} <br>
-                        &bull; {{ setting('smoking_fee','Smoking fee applies if violated') }} <br>
+                        &bull; {{ __('No smoking inside the building') }} <br>
+                        &bull; {{ __('Designated smoking areas available') }} <br>
+                        &bull; {{ __('Smoking fee applies if violated') }} <br>
                     </li>
-                    <h3>{{ setting('pet_policy_header','Pet Policy') }}</h3>
+                    <h3>{{ __('Pet Policy') }}</h3>
                     <li class="list-item d-flex align-items-baseline" data-aos="fade-up">
-                        &bull; {{ setting('pet_policy_header','Pet Policy') }} <br>
-                        &bull; {{ setting('additional_pet_fee','Additional cleaning fee applies') }} <br>
-                        &bull; {{ setting('inform_in_advance','Please inform us in advance') }} <br>
+                        &bull; {{ __('Please inform us in advance') }} <br>
+                        &bull; {{ __('Additional cleaning fee applies') }} <br>
                     </li>
                 </ul>
             </div>
             <div class="contacts col-xl-6" data-aos="fade-up">
                 <div class="contacts_header">
-                    <h2 class="contacts_header-title">{{ setting('header_title','We are ready answer your question') }}</h2>
+                    <h2 class="contacts_header-title">{{ __('We are ready answer your question') }}</h2>
                     <p class="contacts_header-text">
-                        {{ setting('header_text','Egestas pretium aenean pharetra magna ac. Et tortor consequat id porta nibh venenatis cras sed') }}
+                        {{ __('Egestas pretium aenean pharetra magna ac. Et tortor consequat id porta nibh venenatis cras sed') }}
                     </p>
                 </div>
                 <form class="contacts_form form d-sm-flex flex-wrap justify-content-between" action="form.php"
@@ -259,23 +255,22 @@ $page = 'about';
                             <i class="icon-user icon"></i>
                         </label>
                         <input class="field required" id="feedbackName" type="text"
-                            placeholder="{{ setting('name_placeholder','Name') }}" />
+                            placeholder="{{ __('Name') }}" />
                     </div>
                     <div class="field-wrapper">
                         <label class="label" for="feedbackEmail">
                             <i class="icon-email icon"></i>
                         </label>
                         <input class="field required" id="feedbackEmail" type="text" data-type="email"
-                            placeholder="{{ setting('email_placeholder','Email') }}" />
+                            placeholder="{{ __('Email') }}" />
                     </div>
                     <textarea class="field textarea required" id="feedbackMessage"
-                        placeholder="{{ setting('message_placeholder','Message') }}"></textarea>
+                        placeholder="{{ __('Message') }}"></textarea>
                     <button class="btn theme-element theme-element--accent" type="submit">
-                        {{ setting('send_message_button','Send message') }}
+                        {{ __('Send message') }}
                     </button>
                 </form>
             </div>
-
         </div>
     </section>
 
@@ -286,103 +281,98 @@ $page = 'about';
         <div class="container">
             <div class="about_faq-header d-lg-flex justify-content-between align-items-center">
                 <h2 class="about_faq-header_title">
-                    {{ setting('header_title','Frequently Asked Questions') }}
+                    {{ __('Frequently Asked Questions') }}
                 </h2>
                 <p class="about_faq-header_text">
-                    {{ setting('header_text','Find answers to common questions about your stay') }}
+                    {{ __('Find answers to common questions about your stay') }}
                 </p>
             </div>
             <div class="about_faq-main d-grid">
-                <!-- item 1 -->
                 <div class="accordion_component-item">
                     <div class="item-wrapper d-flex flex-column justify-content-between">
                         <h4 class="accordion_component-item_header d-flex justify-content-between align-items-center collapsed"
                             data-bs-toggle="collapse" data-bs-target="#item-1" aria-expanded="true">
-                            {{ setting('question_1','What time is check-in and check-out?') }}
+                            {{ __('What time is check-in and check-out?') }}
                             <span class="wrapper">
                                 <i class="icon-chevron_down icon transform"></i>
                             </span>
                         </h4>
                         <div id="item-1" class="accordion-collapse collapse show">
                             <div class="accordion_component-item_body">
-                                {{ setting('answer_1',"Check-in is from 2:00 PM to 10:00 PM, and check-out is at 11:00 AM. If you need to arrive earlier or later, please contact us in advance and we'll do our best to accommodate you.") }}
+                                {{ __("Check-in is from 2:00 PM to 10:00 PM, and check-out is at 11:00 AM. If you need to arrive earlier or later, please contact us in advance and we'll do our best to accommodate you.") }}
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- item 2 -->
                 <div class="accordion_component-item">
                     <div class="item-wrapper d-flex flex-column justify-content-between">
                         <h4 class="accordion_component-item_header d-flex justify-content-between align-items-center"
                             data-bs-toggle="collapse" data-bs-target="#item-2" aria-expanded="true">
-                            {{ setting('question_2','Do you provide towels and linens?') }}
+                            {{ __('Do you provide towels and linens?') }}
                             <span class="wrapper">
                                 <i class="icon-chevron_down icon transform"></i>
                             </span>
                         </h4>
                         <div id="item-2" class="accordion-collapse collapse show">
                             <div class="accordion_component-item_body">
-                                {{ setting('answer_2','Yes, we provide fresh towels and linens for all guests. Towels are changed daily, and linens are changed every 3 days for longer stays.') }}
+                                {{ __('Yes, we provide fresh towels and linens for all guests. Towels are changed daily, and linens are changed every 3 days for longer stays.') }}
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- item 3 -->
                 <div class="accordion_component-item">
                     <div class="item-wrapper d-flex flex-column justify-content-between">
                         <h4 class="accordion_component-item_header d-flex justify-content-between align-items-center collapsed"
                             data-bs-toggle="collapse" data-bs-target="#item-3" aria-expanded="true">
-                            {{ setting('question_3','Is breakfast included?') }}
+                            {{ __('Is breakfast included?') }}
                             <span class="wrapper">
                                 <i class="icon-chevron_down icon transform"></i>
                             </span>
                         </h4>
                         <div id="item-3" class="accordion-collapse collapse show">
                             <div class="accordion_component-item_body">
-                                {{ setting('answer_3','We offer a complimentary continental breakfast from 7:00 AM to 10:00 AM daily. This includes coffee, tea, bread, jam, and seasonal fruits.') }}
+                                {{ __('We offer a complimentary continental breakfast from 7:00 AM to 10:00 AM daily. This includes coffee, tea, bread, jam, and seasonal fruits.') }}
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- item 4 -->
                 <div class="accordion_component-item">
                     <div class="item-wrapper d-flex flex-column justify-content-between">
                         <h4 class="accordion_component-item_header d-flex justify-content-between align-items-center collapsed"
                             data-bs-toggle="collapse" data-bs-target="#item-4" aria-expanded="true">
-                            {{ setting('question_4','Can I cancel my booking?') }}
+                            {{ __('Can I cancel my booking?') }}
                             <span class="wrapper">
                                 <i class="icon-chevron_down icon transform"></i>
                             </span>
                         </h4>
                         <div id="item-4" class="accordion-collapse collapse show">
                             <div class="accordion_component-item_body">
-                                {{ setting('answer_4','Yes, you can cancel your booking up to 24 hours before check-in for a full refund. Cancellations within 24 hours may be subject to a cancellation fee.') }}
+                                {{ __('Yes, you can cancel your booking up to 24 hours before check-in for a full refund. Cancellations within 24 hours may be subject to a cancellation fee.') }}
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- item 5 -->
                 <div class="accordion_component-item">
                     <div class="item-wrapper d-flex flex-column justify-content-between">
                         <h4 class="accordion_component-item_header d-flex justify-content-between align-items-center collapsed"
                             data-bs-toggle="collapse" data-bs-target="#item-5" aria-expanded="true">
-                            {{ setting('question_5','Do you have parking available?') }}
+                            {{ __('Do you have parking available?') }}
                             <span class="wrapper">
                                 <i class="icon-chevron_down icon transform"></i>
                             </span>
                         </h4>
                         <div id="item-5" class="accordion-collapse collapse show">
                             <div class="accordion_component-item_body">
-                                {{ setting('answer_5',"We have limited parking spaces available on a first-come, first-served basis. There's also public parking nearby. Please contact us in advance if you need parking.") }}
+                                {{ __("We have limited parking spaces available on a first-come, first-served basis. There's also public parking nearby. Please contact us in advance if you need parking.") }}
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="about_faq-main_card accent d-flex flex-column justify-content-between">
-                    <h4 class="title">{{ setting('card_title','Do you have any questions?') }}</h4>
-                    <p class="text flex-grow-1">{{ setting('card_text','Diam phasellus vestibulum lorem sed risus ultricies tristique') }}</p>
+                    <h4 class="title">{{ __('Do you have any questions?') }}</h4>
+                    <p class="text flex-grow-1">{{ __('Diam phasellus vestibulum lorem sed risus ultricies tristique') }}</p>
                     <a class="btn theme-element theme-element--light" href="contacts.html">
-                        {{ setting('card_button_text','Ask a question') }}
+                        {{ __('Ask a question') }}
                     </a>
                 </div>
             </div>

@@ -31,19 +31,19 @@ $page = 'gallery';
         <div class="container">
             <ul class="gallery_filters d-flex flex-wrap align-items-baseline">
                 <li class="list-item">
-                    <a data-target="all" class="gallery_filters-filter underlined underlined--accent active" href="#">All</a>
+                    <a data-target="all" class="gallery_filters-filter underlined underlined--accent active" href="#">{{ __('All') }}</a>
                 </li>
                 <li class="list-item">
-                    <a data-target="apartment" class="gallery_filters-filter underlined underlined--accent" href="#">Apartment</a>
+                    <a data-target="apartment" class="gallery_filters-filter underlined underlined--accent" href="#">{{ __('Apartment') }}</a>
                 </li>
                 <li class="list-item">
-                    <a data-target="standard" class="gallery_filters-filter underlined underlined--accent" href="#">Standard Room</a>
+                    <a data-target="standard" class="gallery_filters-filter underlined underlined--accent" href="#">{{ __('Standard Room') }}</a>
                 </li>
                 <li class="list-item">
-                    <a data-target="kitchen" class="gallery_filters-filter underlined underlined--accent" href="#">Kitchen</a>
+                    <a data-target="kitchen" class="gallery_filters-filter underlined underlined--accent" href="#">{{ __('Kitchen') }}</a>
                 </li>
                 <li class="list-item">
-                    <a data-target="living" class="gallery_filters-filter underlined underlined--accent" href="#">Living Room</a>
+                    <a data-target="living" class="gallery_filters-filter underlined underlined--accent" href="#">{{ __('Living Room') }}</a>
                 </li>
             </ul>
             <div class="gallery_masonry row g-0">

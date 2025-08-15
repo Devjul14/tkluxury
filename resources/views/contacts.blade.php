@@ -10,7 +10,7 @@ $page = 'contacts';
 <header class="page">
     <div class="container">
         <div class="page_header">
-            <h1 class="page_header-title" data-aos="fade-up">Contact Us</h1>
+            <h1 class="page_header-title" data-aos="fade-up">{{ __('Contact Us') }}</h1>
             <!-- <p class="page_header-text" data-aos="fade-up" data-aos-delay="50">
                 
             </p> -->
@@ -24,9 +24,9 @@ $page = 'contacts';
         <div class="container container--contacts d-xl-flex align-items-center">
             <div class="contacts_info col-xl-7" data-aos="fade-up">
                 <div class="contacts_info-header">
-                    <h2 class="contacts_info-header_title">Contacts</h2>
+                    <h2 class="contacts_info-header_title">{{ __('Contact Us') }}</h2>
                     <p class="contacts_info-header_text">
-                        Get in touch with us for any questions or assistance
+                        {{__('Get in touch with us for any questions or assistance')}}
                     </p>
                 </div>
                 <div class="contacts_info-main">
@@ -65,7 +65,7 @@ $page = 'contacts';
                         </div>
                     </div>
                 </div>
-                <div class="contacts_info-footer">
+                <!-- <div class="contacts_info-footer">
                     <h4 class="contacts_info-footer_header">Vel turpis nunc eget lorem dolor sed ?</h4>
                     <div class="contacts_info-footer_content">
                         <p class="text">
@@ -75,7 +75,7 @@ $page = 'contacts';
                             Vel turpis nunc eget lorem dolor sed. Et tortor consequat id porta nibh venenatis cras sed
                         </p>
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="contacts_map">
                 <div style="width: 100%; height: 100%;">
@@ -94,7 +94,7 @@ $page = 'contacts';
     </section>
     <!-- contact info section end -->
     <!-- contact form section start -->
-    <section class="contacts_secondary section">
+    <!-- <section class="contacts_secondary section">
         <div class="container d-xl-flex align-items-center justify-content-between">
             <div class="contacts_secondary-rating">
                 <h2 class="contacts_secondary-header">Our ratings do not contradict</h2>
@@ -398,7 +398,7 @@ $page = 'contacts';
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
     <!-- contact form section end -->
 </main>
 @endsection
