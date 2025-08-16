@@ -7,6 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Home') | {{ config('app.name', 'Hosteller') }}</title>
+    <!-- Standard Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('storage/' . (setting('brand_logo') ?? 'img/brand.png')) }}?v={{ time() }}">
+
+
 
     <!-- Meta tags -->
     @yield('meta')

@@ -19,13 +19,14 @@ $page = 'index';
         position: relative;
         overflow: hidden;
     }
-    
-    .hero_main, 
+
+    .hero_main,
     .hero_main::before {
         position: relative;
         z-index: 2;
         background: transparent;
     }
+
     .hero_main form.booking {
         position: relative;
         z-index: 2;
@@ -188,10 +189,10 @@ $page = 'index';
                             {{ $property->title ?? 'Lorem ipsum' }}
                         </a>
                         <div class="main_amenities">
-                            <span class="main_amenities-item d-inline-flex align-items-center">
+                            <!-- <span class="main_amenities-item d-inline-flex align-items-center">
                                 <i class="icon-user icon"></i>
                                 {{ __('Available room')}} {{ $property->available_rooms }}
-                            </span>
+                            </span> -->
                             <span class="main_amenities-item d-inline-flex align-items-center">
                                 <i class="icon-bunk_bed icon"></i>
                                 {{ __('Type')}} {{ $property->property_type }}
