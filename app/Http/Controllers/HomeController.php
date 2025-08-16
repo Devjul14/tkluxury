@@ -22,40 +22,38 @@ class HomeController extends Controller
             App::setLocale(Session::get('locale'));
         }
 
-        $properties = Cache::remember('properties', 60, function () use ($request) {
-            $properties = Property::query()
-                ->with(['images', 'rooms'])
-                ->where('is_active', true);
+        $properties = Property::query()
+            ->with(['images', 'rooms'])
+            ->where('is_active', true);
 
-            if ($request->filled('institute')) {
-                $properties->where('institute_id', $request->institute);
-            }
+        if ($request->filled('institute')) {
+            $properties->where('institute_id', $request->institute);
+        }
 
-            if ($request->filled('room_count')) {
-                $properties->has('rooms', '>=', (int) $request->room_count);
-            }
+        if ($request->filled('room_count')) {
+            $properties->has('rooms', '>=', (int) $request->room_count);
+        }
 
-            if ($request->filled('check_in') && $request->filled('check_out')) {
-                session()->put('check_in_filter', $request->check_in);
-                session()->put('check_out_filter', $request->check_out);
+        if ($request->filled('check_in') && $request->filled('check_out')) {
+            session()->put('check_in_filter', $request->check_in);
+            session()->put('check_out_filter', $request->check_out);
 
-                $properties->whereDoesntHave('bookings', function ($query) use ($request) {
-                    $query->where(function ($q) use ($request) {
-                        $q
-                            ->where('check_in_date', '<', $request->check_out)
-                            ->where('check_out_date', '>', $request->check_in);
-                    });
+            $properties->whereDoesntHave('bookings', function ($query) use ($request) {
+                $query->where(function ($q) use ($request) {
+                    $q
+                        ->where('check_in_date', '<', $request->check_out)
+                        ->where('check_out_date', '>', $request->check_in);
                 });
-            }
+            });
+        }
 
-            if ($request->filled('student')) {
-                $properties->whereHas('rooms', function ($query) use ($request) {
-                    $query->where('capacity', '>=', $request->student);
-                });
-            }
+        if ($request->filled('student')) {
+            $properties->whereHas('rooms', function ($query) use ($request) {
+                $query->where('capacity', '>=', $request->student);
+            });
+        }
 
-            return $properties->get();
-        });
+        $properties = $properties->get();
 
         $featuredRooms = Cache::remember('featuredRooms', 60, function () use ($request) {
             $featuredRooms = Room::where('is_available', true);
@@ -86,13 +84,13 @@ class HomeController extends Controller
         });
 
         $roomPromo = $featuredRooms->count() > 0 ? $featuredRooms->random() : null;
-        $galleryImages = Cache::remember('galleryImages', 60, function () {
+        $galleryImages = Cache::remember('galleryImages', 10, function () {
             return PropertyImage::all()->take(4);
         });
-        $institutes = Cache::remember('institutes', 60, function () {
+        $institutes = Cache::remember('institutes', 10, function () {
             return Institute::all();
         });
-        $allReviews = Cache::remember('allReviews', 60, function () {
+        $allReviews = Cache::remember('allReviews', 10, function () {
             return Review::all();
         });
 
