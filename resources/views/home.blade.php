@@ -20,6 +20,7 @@ $page = 'index';
         z-index: 11;
         width: fit-content;
     }
+
     select.booking_group-field {
         -webkit-appearance: none;
         -moz-appearance: none;
@@ -83,7 +84,7 @@ $page = 'index';
                         </div>
                     </div>
                     <div class="booking_group d-flex flex-column">
-                        <label class="booking_group-label h5" for="institute">{{ __('Institute') }}</label>
+                        <label class="booking_group-label h5" for="institute">{{ __('Institutes') }}</label>
                         <div class="booking_group-wrapper">
                             <i class="icon-location icon"></i>
                             <select class="booking_group-field field" name="institute" id="institute">
