@@ -846,9 +846,10 @@ return $checkInDate->diffInDays($checkOutDate);
         const serviceBoxes = document.querySelectorAll(".service-box");
         const totalOverview = document.getElementById("total-overview");
         const subTotalOverview = document.getElementById("subtotal-overview");
-        const subTotal = Number(subTotalOverview.innerText.replace(/\W+/, ""));
-        const serviceFeeRate = Number("{{ config('hostel.booking.service_fee_rate', 0.05) }}");
         const serviceFeeOverview = document.getElementById("service-fee-overview");
+        
+        const subTotal = Number(subTotalOverview.innerText.replace(/\W+/, ""));
+        const serviceFeeRate = Number("{{ config('hostel.booking.service_fee_rate', 0.05) }}".replace(/\W+/, ""));
 
         paymentMethodSelect.addEventListener('change', function() {
             if (["credit_card", "debit_card"].includes(this.value)) {
@@ -864,7 +865,7 @@ return $checkInDate->diffInDays($checkOutDate);
 
                 serviceBoxes.forEach(serviceBox => {
                     if (serviceBox.checked) {
-                        serviceFees += Number(serviceBox.getAttribute("data-fee"));
+                        serviceFees += Number(serviceBox.getAttribute("data-fee").replace(/\W+/, ""));
 
                     }
                 });

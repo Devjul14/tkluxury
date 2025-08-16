@@ -1,4 +1,5 @@
 @use('Illuminate\Support\Number')
+@use("Carbon\Carbon")
 @use('App\Services\IconifyService')
 
 @extends('layouts.app')
@@ -275,7 +276,6 @@ $page = 'room';
                         </span>
                         <div class="booking" autocomplete="off" data-type="booking">
                             <input type="hidden" name="property_id" value="{{ $property->id }}">
-
                             <div class="booking_group d-flex flex-column">
                                 <label class="booking_group-label h5" for="checkIn">Check-in</label>
                                 <div class="booking_group-wrapper">
@@ -288,7 +288,7 @@ $page = 'room';
                                         id="checkIn"
                                         name="check_in"
                                         placeholder="Add arrival date"
-                                        value="{{ old('check_in', session()->get('check_in_filter') ?? request('check_in')) }}"
+                                        value="{{ old('check_in', session()->get('check_in_filter') ? Carbon::parse(session()->get('check_in_filter'))->format('m.d.Y') : request('check_in')) }}"
                                         readonly />
                                     <i class="icon-chevron_down icon"></i>
                                 </div>
@@ -309,7 +309,7 @@ $page = 'room';
                                         data-end="true"
                                         type="text"
                                         id="checkOut"
-                                        value="{{ old('check_out', session()->get('check_out_filter') ?? request('check_out')) }}"
+                                        value="{{ old('check_out', session()->get('check_out_filter') ? Carbon::parse(session()->get('check_out_filter'))->format('m.d.Y') : request('check_out')) }}"
                                         name="check_out"
                                         placeholder="Add departure date"
                                         readonly />

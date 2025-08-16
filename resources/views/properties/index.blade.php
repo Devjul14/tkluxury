@@ -231,17 +231,6 @@ $page = 'index';
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const fields = document.querySelectorAll('form input, form select');
-
-        fields.forEach((field) => {
-            field.addEventListener('change', function(e) {
-                // Do not submit for student input, it requires dropdown interaction
-                if (e.target.name !== 'student') {
-                    e.target.closest('form').submit();
-                }
-            });
-        });
-
         flatpickr(".flatpickr", {
             dateFormat: "Y-m-d",
         });
