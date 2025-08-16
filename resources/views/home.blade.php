@@ -15,9 +15,20 @@ $page = 'index';
         border: none;
     }
 
+    .hero.section {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .hero_main, 
+    .hero_main::before {
+        position: relative;
+        z-index: 2;
+        background: transparent;
+    }
     .hero_main form.booking {
         position: relative;
-        z-index: 11;
+        z-index: 2;
         width: fit-content;
     }
 
@@ -31,7 +42,7 @@ $page = 'index';
         position: absolute;
         right: 0;
         top: 0;
-        z-index: 10;
+        z-index: 1;
     }
 </style>
 @endpush
