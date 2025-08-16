@@ -35,14 +35,17 @@ class HomeController extends Controller
         }
 
         if ($request->filled('check_in') && $request->filled('check_out')) {
+            $checkInCarbon = Carbon::createFromFormat('m.d.Y', $request->check_in);
+            $checkOutCarbon = Carbon::createFromFormat('m.d.Y', $request->check_out);
+
             session()->put('check_in_filter', $request->check_in);
             session()->put('check_out_filter', $request->check_out);
 
-            $properties->whereDoesntHave('bookings', function ($query) use ($request) {
-                $query->where(function ($q) use ($request) {
+            $properties->whereDoesntHave('bookings', function ($query) use ($checkInCarbon, $checkOutCarbon) {
+                $query->where(function ($q) use ($checkInCarbon, $checkOutCarbon) {
                     $q
-                        ->where('check_in_date', '<', $request->check_out)
-                        ->where('check_out_date', '>', $request->check_in);
+                        ->where('check_in_date', '<', $checkOutCarbon)
+                        ->where('check_out_date', '>', $checkInCarbon);
                 });
             });
         }
@@ -55,33 +58,7 @@ class HomeController extends Controller
 
         $properties = $properties->get();
 
-        $featuredRooms = Cache::remember('featuredRooms', 60, function () use ($request) {
-            $featuredRooms = Room::where('is_available', true);
-
-            if ($request->filled('check_in') && $request->filled('check_out')) {
-                $checkInCarbon = Carbon::createFromFormat('m.d.Y', $request->check_in);
-                $checkOutCarbon = Carbon::createFromFormat('m.d.Y', $request->check_out);
-
-                $featuredRooms->whereHas('bookings', function ($query) use ($checkInCarbon, $checkOutCarbon) {
-                    $query
-                        ->whereNot('check_in_date', '>=', $checkInCarbon)
-                        ->whereNot('check_out_date', '<=', $checkOutCarbon);
-                });
-            }
-
-            if ($request->filled('adults')) {
-                $guests = $request->adults;
-                $featuredRooms->where('capacity', '>=', $guests);
-            }
-
-            if ($request->filled('institute')) {
-                $featuredRooms->whereHas('property', function ($query) use ($request) {
-                    $query->where('institute_id', $request->institute);
-                });
-            }
-
-            return $featuredRooms->get();
-        });
+        $featuredRooms = Room::whereIn('property_id', $properties->pluck('id')->toArray())->get();
 
         $roomPromo = $featuredRooms->count() > 0 ? $featuredRooms->random() : null;
         $galleryImages = Cache::remember('galleryImages', 10, function () {

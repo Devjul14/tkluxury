@@ -33,7 +33,7 @@ $page = 'index';
     }
 
     .pickmeup.pmu-view-days {
-        display: none;
+        z-index: 999999;
     }
 
     .flatpickr-calendar {
@@ -87,19 +87,18 @@ $page = 'index';
         <div class="hero_main" style="width: 100% !important">
             <form class="booking" action="{{ route('properties.index') }}" method="get" autocomplete="off" data-type="booking" data-aos="fade-up" style="width: 100% !important">
                 <div class="item-wrapper d-sm-flex flex-wrap flex-lg-nowrap align-items-lg-center" style="width: 100% !important">
-                    <div class="booking_group d-flex flex-column">
+                <div class="booking_group d-flex flex-column">
                         <label class="booking_group-label h5" for="checkIn">{{ __('Check in')}}</label>
                         <div class="booking_group-wrapper">
                             <i class="icon-calendar icon"></i>
                             <input
-                                class="booking_group-field field required flatpickr"
+                                class="booking_group-field field required"
                                 data-type="date"
                                 data-start="true"
                                 type="text"
                                 id="checkIn"
-                                placeholder="{{ __('Add date')}}"
                                 name="check_in"
-                                value="{{ request('check_in', old('check_in')) }}"
+                                value="{{ old('check_in', request('check_in')) }}"
                                 readonly />
                             <i class="icon-chevron_down icon"></i>
                         </div>
@@ -109,19 +108,18 @@ $page = 'index';
                         <div class="booking_group-wrapper">
                             <i class="icon-calendar icon"></i>
                             <input
-                                class="booking_group-field field required flatpickr"
+                                class="booking_group-field field required"
                                 data-type="date"
                                 data-end="true"
                                 type="text"
                                 id="checkOut"
                                 name="check_out"
-                                placeholder="{{ __('Add date')}}"
-                                value="{{ request('check_out', old('check_out')) }}"
+                                value="{{ old('check_out', request('check_out')) }}"
                                 readonly />
                             <i class="icon-chevron_down icon"></i>
                         </div>
                     </div>
-
+                    
                     <div class="booking_group d-flex flex-column">
                         <label class="booking_group-label h5" for="institute">{{ __('Institutes')}}</label>
                         <div class="booking_group-wrapper">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Institute;
 use App\Models\Property;
 use App\Models\Service;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\App;
@@ -32,14 +33,17 @@ class PropertyController extends Controller
         }
 
         if ($request->filled('check_in') && $request->filled('check_out')) {
+            $checkInCarbon = Carbon::createFromFormat('m.d.Y', $request->check_in);
+            $checkOutCarbon = Carbon::createFromFormat('m.d.Y', $request->check_out);
+
             session()->put('check_in_filter', $request->check_in);
             session()->put('check_out_filter', $request->check_out);
 
-            $properties->whereDoesntHave('bookings', function ($query) use ($request) {
-                $query->where(function ($q) use ($request) {
+            $properties->whereDoesntHave('bookings', function ($query) use ($checkInCarbon, $checkOutCarbon) {
+                $query->where(function ($q) use ($checkInCarbon, $checkOutCarbon) {
                     $q
-                        ->where('check_in_date', '<', $request->check_out)
-                        ->where('check_out_date', '>', $request->check_in);
+                        ->where('check_in_date', '<', $checkOutCarbon)
+                        ->where('check_out_date', '>', $checkInCarbon);
                 });
             });
         }
