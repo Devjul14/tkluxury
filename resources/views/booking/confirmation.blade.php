@@ -406,12 +406,12 @@ $page = 'confirmation';
                             <span class="detail-value">${{ number_format($booking->room->price, 2) }}</span>
                         </div>
                         @endif
-                        @if ($booking->property)
+                        <!-- @if ($booking->property)
                         <div class="detail-item">
                             <span class="detail-label">Subtotal:</span>
                             <span class="detail-value">${{ number_format($booking->subtotal, 2) }}</span>
                         </div>
-                        @endif
+                        @endif -->
                         @if($booking->tax > 0)
                         <div class="detail-item">
                             <span class="detail-label">Tax:</span>
