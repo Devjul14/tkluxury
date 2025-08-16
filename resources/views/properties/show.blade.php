@@ -227,7 +227,7 @@ $page = 'room';
                         </div>
                     </section>
 
-                    <section class="facilities">
+                    <!-- <section class="facilities">
                         <h4 class="facilities_header">Services</h4>
                         <div class="facilities_list d-sm-flex flex-wrap">
                             @foreach($services as $service)
@@ -239,7 +239,7 @@ $page = 'room';
                             </label>
                             @endforeach
                         </div>
-                    </section>
+                    </section> -->
 
                     <div class="rating">
                         <span class="rating_summary">
