@@ -814,7 +814,14 @@ return $checkInDate->diffInDays($checkOutDate);
                                 <span class="value" id="total-overview">{{ Number::currency($booking->total_amount, env('APP_DEFAULT_CURRENCY', 'IDR')) }}</span>
                             </div>
                             <div class="checkout_main-sidebar_summary_pricing_item checkout_main-sidebar_summary_pricing_item--total">
-                                <span class="label">Down Payment:</span>
+                                <span class="label">
+                                    Down Payment:
+                                    @if($booking->property)
+                                        <p class="checkout_main-sidebar_summary_pricing_item--total-text" style="font-size: .8rem;">
+                                            {{ $booking->property->down_payment_type }} ({{ ceil($booking->property->down_payment_value) . ($booking->property->down_payment_type == "percentage" ? "%" : "") }})
+                                        </p>
+                                    @endif
+                                </span>
                                 <span class="value">{{ Number::currency($booking->down_payment_amount, env('APP_DEFAULT_CURRENCY', 'IDR')) }}</span>
                             </div>
                         </div>
