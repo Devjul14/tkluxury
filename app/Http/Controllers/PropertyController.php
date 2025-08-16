@@ -35,13 +35,11 @@ class PropertyController extends Controller
             session()->put('check_in_filter', $request->check_in);
             session()->put('check_out_filter', $request->check_out);
 
-            $properties->whereHas('rooms', function ($query) use ($request) {
-                $query->whereDoesntHave('bookings', function ($query) use ($request) {
-                    $query->where(function ($q) use ($request) {
-                        $q
-                            ->where('check_in_date', '<', $request->check_out)
-                            ->where('check_out_date', '>', $request->check_in);
-                    });
+            $properties->whereDoesntHave('bookings', function ($query) use ($request) {
+                $query->where(function ($q) use ($request) {
+                    $q
+                        ->where('check_in_date', '<', $request->check_out)
+                        ->where('check_out_date', '>', $request->check_in);
                 });
             });
         }
