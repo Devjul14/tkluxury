@@ -685,7 +685,7 @@ return $checkInDate->diffInDays($checkOutDate);
                                             <span class="icon">
                                                 <input 
                                                     data-fee="{{ $service->price }}" 
-                                                    type="checkbox" {{ in_array($service->id, $booking->services->pluck("id")->toArray()) ? "checked" : '' }} 
+                                                    type="checkbox" {{ $booking->services && in_array($service->id, $booking->services->pluck("id")->toArray()) ? "checked" : '' }} 
                                                     id="service-{{ $service->id }}" 
                                                     name="services[]" value="{{ $service->id }}" 
                                                     class="service-box checkbox_input"
@@ -774,15 +774,16 @@ return $checkInDate->diffInDays($checkOutDate);
                             </div>
                         </div>
 
-                        <div class="checkout_main-sidebar_summary_details">
-                            @foreach ($booking->services as $service)
-                            <div class="checkout_main-sidebar_summary_details_item">
-                                <span class="label">{{ $service->title }}:</span>
-                                <span class="value">{{ $service->price }}</span>
+                        @if($booking->services)
+                            <div class="checkout_main-sidebar_summary_details">
+                                @foreach ($booking->services as $service)
+                                <div class="checkout_main-sidebar_summary_details_item">
+                                    <span class="label">{{ $service->title }}:</span>
+                                    <span class="value">{{ $service->price }}</span>
+                                </div>
+                                @endforeach
                             </div>
-                            @endforeach
-                        </div>
-
+                        @endif
                         <div class="checkout_main-sidebar_summary_pricing">
                             <div class="checkout_main-sidebar_summary_pricing_item">
                                 <span class="label">Price per month:</span>
@@ -793,10 +794,7 @@ return $checkInDate->diffInDays($checkOutDate);
                                 <span class="value">{{ Number::currency($booking->property->price_per_month, env('APP_DEFAULT_CURRENCY', 'USD')) }}</span>
                                 @endif
                             </div>
-                            <div class="checkout_main-sidebar_summary_pricing_item">
-                                <span class="label">Subtotal:</span>
-                                <span class="value" id="subtotal-overview">{{ Number::currency($booking->subtotal, env('APP_DEFAULT_CURRENCY', 'IDR')) }}</span>
-                            </div>
+                            
                             @if($booking->tax > 0)
                             <div class="checkout_main-sidebar_summary_pricing_item">
                                 <span class="label">Tax:</span>
@@ -822,11 +820,15 @@ return $checkInDate->diffInDays($checkOutDate);
                                         </p>
                                     @endif
                                 </span>
-                                <span class="value">{{ Number::currency($booking->down_payment_amount, env('APP_DEFAULT_CURRENCY', 'IDR')) }}</span>
+                                <span class="value">{{ Number::currency($booking->down_payment_amount ?? 0, env('APP_DEFAULT_CURRENCY', 'IDR')) }}</span>
                             </div>
                         </div>
 
-                        <button class="checkout_main-sidebar_summary_submit" type="submit" form="checkout-form">
+                        <button 
+                            @if($booking->status !== "pending") disabled @endif 
+                            class="checkout_main-sidebar_summary_submit" 
+                            type="submit" form="checkout-form"
+                        >
                             <span class="checkout_main-sidebar_summary_submit-text">Complete Booking</span>
                             <i class="icon-arrow_right icon"></i>
                         </button>
@@ -845,6 +847,8 @@ return $checkInDate->diffInDays($checkOutDate);
 
 @push('scripts')
 <script src="{{ asset('asset/js/common.min.js') }}"></script>
+
+@if($booking->status === "pending")
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const paymentMethodSelect = document.getElementById('payment_method');
@@ -852,10 +856,9 @@ return $checkInDate->diffInDays($checkOutDate);
         const buttonSubmits = document.querySelectorAll('button[type="submit"]');
         const serviceBoxes = document.querySelectorAll(".service-box");
         const totalOverview = document.getElementById("total-overview");
-        const subTotalOverview = document.getElementById("subtotal-overview");
         const serviceFeeOverview = document.getElementById("service-fee-overview");
         
-        const subTotal = Number(subTotalOverview.innerText.replace(/\W+/, ""));
+        const subTotal = Number("{{ $booking->monthly_rent * $booking->duration_months}}");
         const serviceFeeRate = Number("{{ config('hostel.booking.service_fee_rate', 0.05) }}".replace(/\W+/, ""));
 
         paymentMethodSelect.addEventListener('change', function() {
@@ -879,7 +882,6 @@ return $checkInDate->diffInDays($checkOutDate);
 
                 let total = subTotal * serviceFeeRate + serviceFees;
 
-                console.log({ serviceFees, total })
                 totalOverview.innerText = `$${total.toLocaleString()}`;
                 serviceFeeOverview.innerText = `$${serviceFees.toLocaleString()}`;
             });
@@ -894,4 +896,5 @@ return $checkInDate->diffInDays($checkOutDate);
         });
     })
 </script>
+@endif
 @endpush
