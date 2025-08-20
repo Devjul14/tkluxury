@@ -21,10 +21,10 @@ $page = 'contacts';
 <main>
     <!-- contact info section start -->
     <section class="contacts_main section">
-        <div class="container container--contacts d-xl-flex align-items-center">
-            <div class="contacts_info col-xl-7" data-aos="fade-up">
+        <div class="container container--contacts">
+            <div class="contacts_info" data-aos="fade-up">
                 <div class="contacts_info-header">
-                    <h2 class="contacts_info-header_title">{{ __('Contact Us') }}</h2>
+                    <!-- <h2 class="contacts_info-header_title">{{ __('Contact Us') }}</h2> -->
                     <p class="contacts_info-header_text">
                         {{__('Get in touch with us for any questions or assistance')}}
                     </p>
@@ -39,31 +39,31 @@ $page = 'contacts';
                             </svg>
                         </span>
                         <div class="wrapper d-flex flex-column">
-                            <a class="link" href="tel:+1234567890">(329) 580-7077</a>
-                            <a class="link" href="tel:+1234567890">(650) 382-5020</a>
+                            <a class="link" href="tel:+1234567890">{{ setting('phone_primary', '0060175137449') }}</a>
+                            <!-- <a class="link" href="tel:+1234567890">(650) 382-5020</a> -->
                         </div>
                     </div>
                     <div class="contacts_info-main_block d-sm-flex align-items-start">
                         <i class="icon-email icon"></i>
                         <div class="wrapper d-flex flex-column">
-                            <a class="link" href="mailto:example@domain.com">contact@example.com</a>
-                            <a class="link" href="mailto:example@domain.com">contact@example.com</a>
+                            <a class="link" href="mailto:support@tkluxuryhouses.com">{{ setting('email', 'support@tkluxuryhouses.com') }}</a>
+                            <!-- <a class="link" href="mailto:example@domain.com">contact@example.com</a> -->
                         </div>
                     </div>
-                    <div class="contacts_info-main_block d-sm-flex align-items-start">
+                    <!-- <div class="contacts_info-main_block d-sm-flex align-items-start">
                         <i class="icon-location icon"></i>
                         <div class="wrapper d-flex flex-column">
                             <a class="link">54826 Fadel Circles</a>
                             <a class="link">Darrylstad, AZ 90995</a>
                         </div>
-                    </div>
-                    <div class="contacts_info-main_block d-sm-flex align-items-start">
+                    </div> -->
+                    <!-- <div class="contacts_info-main_block d-sm-flex align-items-start">
                         <i class="icon-clock icon"></i>
                         <div class="wrapper d-flex flex-column">
                             <a class="link">Everyday</a>
                             <a class="link">10 am — 20 pm</a>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <!-- <div class="contacts_info-footer">
                     <h4 class="contacts_info-footer_header">Vel turpis nunc eget lorem dolor sed ?</h4>
@@ -77,21 +77,12 @@ $page = 'contacts';
                     </div>
                 </div> -->
             </div>
-            <div class="contacts_map">
-                <div style="width: 100%; height: 100%;">
-                    <iframe
-                        width="100%"
-                        height="100%"
-                        style="border:0"
-                        loading="lazy"
-                        allowfullscreen
-                        referrerpolicy="no-referrer-when-downgrade"
-                        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAFmDPs9yBFzKNC6o0ozgOP5c_Rmrz7F1k&q={{ setting('map', '3.139003,101.686855') }}&zoom=12&maptype=roadmap">
-                    </iframe>
-                </div>
-            </div>
+            
         </div>
     </section>
+
+    
+    
     <!-- contact info section end -->
     <!-- contact form section start -->
     <!-- <section class="contacts_secondary section">

@@ -41,10 +41,10 @@
                 <h4 class="footer_main-block_header">{{ __('Contact Us')}}</h4>
                 <ul class="footer_main-block_contacts">
                     <li class="list-item d-flex">
-                        <i class="icon-location icon"></i>
+                        <i class="icon-email icon"></i>
                         <p class="wrapper">
-                            <span class="linebreak">{{ setting('address_line1', '54826 Fadel Circles') }}</span>
-                            <span class="linebreak">{{ setting('address_line2', 'Darrylstad, AZ 90995') }}</span>
+                            <span class="linebreak">{{ setting('email', 'support@tkluxuryhouses.com') }}</span>
+                            <!-- <span class="linebreak">{{ setting('address_line2', 'Darrylstad, AZ 90995') }}</span> -->
                         </p>
                     </li>
                     <li class="list-item d-flex">
