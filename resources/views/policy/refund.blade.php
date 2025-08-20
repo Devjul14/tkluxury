@@ -12,7 +12,7 @@ $page = 'faq';
         <div class="page_header">
             <h1 class="page_header-title" data-aos="fade-up">{{ __('Refund Policy') }}</h1>
             <p class="page_header-text" data-aos="fade-up" data-aos-delay="50">
-                {{ __('Lorem ipsum, dolor sit amet consectetur adipisicing.') }}
+                {{ __('This Refund Policy explains the conditions under which refunds may be issued for bookings made through our student housing rental platform.') }}
             </p>
         </div>
     </div>
@@ -22,27 +22,39 @@ $page = 'faq';
     <div class="container">
         <div class="rules_header text-center mb-4">
             <p class="rules_header-text" data-aos="fade-up" data-aos-delay="50">
-                {{ __('Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus maxime similique suscipit voluptatem id debitis nobis harum iure animi provident aperiam cumque eaque possimus voluptatum porro ea fugit deserunt, numquam reiciendis magnam in est! Pariatur nesciunt eum molestias, dolore corporis sint ratione recusandae atque voluptas commodi vel blanditiis maxime asperiores veritatis architecto, vitae delectus! Modi, doloremque eos ratione dolores fugit nam inventore facere similique, architecto deleniti assumenda repellendus magni nemo iste nisi fugiat voluptate magnam porro! Aperiam aut recusandae excepturi!') }}
+                {{ __('By making a booking, you agree to this Refund Policy. We encourage you to review these terms before completing your reservation.') }}
             </p>
         </div>
         <div class="rules_main">
             <div class="rules_main-grid">
                 <div class="rules_main-grid_item mb-4" data-aos="fade-up">
-                    <h5 class="rules_main-grid_item-title mb-2">{{ __('Lorem ipsum dolor sit.') }}</h5>
+                    <h5 class="rules_main-grid_item-title mb-2">{{ __('1. Eligibility for Refunds') }}</h5>
                     <ul class="rules_main-grid_item-list">
-                        <li>{{ __('Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis magnam, incidunt iste iusto velit voluptate!') }}</li>
-                        <li>{{ __('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni, illo.') }}</li>
-                        <li>{{ __('Lorem ipsum dolor sit amet consectetur adipisicing.') }}</li>
-                        <li>{{ __('Lorem ipsum dolor sit amet.') }}</li>
+                        <li>{{ __('Refund requests must be submitted within the timeframe specified at the time of booking.') }}</li>
+                        <li>{{ __('Only cancellations made in accordance with the stated cancellation policy are eligible for refunds.') }}</li>
+                        <li>{{ __('No-shows or late cancellations may not qualify for a refund.') }}</li>
                     </ul>
                 </div>
                 <div class="rules_main-grid_item mb-4" data-aos="fade-up">
-                    <h5 class="rules_main-grid_item-title mb-2">{{ __('Lorem ipsum dolor sit.') }}</h5>
+                    <h5 class="rules_main-grid_item-title mb-2">{{ __('2. Non-Refundable Fees') }}</h5>
                     <ul class="rules_main-grid_item-list">
-                        <li>{{ __('Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis magnam, incidunt iste iusto velit voluptate!') }}</li>
-                        <li>{{ __('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni, illo.') }}</li>
-                        <li>{{ __('Lorem ipsum dolor sit amet consectetur adipisicing.') }}</li>
-                        <li>{{ __('Lorem ipsum dolor sit amet.') }}</li>
+                        <li>{{ __('Certain fees, including administrative charges or processing fees, are non-refundable.') }}</li>
+                        <li>{{ __('Special promotional bookings may also be non-refundable unless otherwise stated.') }}</li>
+                    </ul>
+                </div>
+                <div class="rules_main-grid_item mb-4" data-aos="fade-up">
+                    <h5 class="rules_main-grid_item-title mb-2">{{ __('3. Refund Processing') }}</h5>
+                    <ul class="rules_main-grid_item-list">
+                        <li>{{ __('Approved refunds will be processed within 7–14 business days.') }}</li>
+                        <li>{{ __('Refunds will be issued to the original payment method used at the time of booking.') }}</li>
+                        <li>{{ __('We are not responsible for delays caused by your bank or payment provider.') }}</li>
+                    </ul>
+                </div>
+                <div class="rules_main-grid_item mb-4" data-aos="fade-up">
+                    <h5 class="rules_main-grid_item-title mb-2">{{ __('4. Force Majeure') }}</h5>
+                    <ul class="rules_main-grid_item-list">
+                        <li>{{ __('In cases of natural disasters, pandemics, or government restrictions, refunds may be adjusted according to applicable laws and our discretion.') }}</li>
+                        <li>{{ __('We may provide credit vouchers instead of cash refunds in such circumstances.') }}</li>
                     </ul>
                 </div>
             </div>
@@ -50,6 +62,7 @@ $page = 'faq';
     </div>
 </section>
 @endsection
+
 
 @push('scripts')
 <script src="{{ asset('asset/js/common.min.js') }}"></script>

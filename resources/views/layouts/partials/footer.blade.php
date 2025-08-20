@@ -25,6 +25,15 @@
                     <li class="list-item">
                         <a class="link underlined underlined--white nav-item" data-page="rooms" href="{{ route('properties.index') }}">{{ __('Properties')}}</a>
                     </li>
+                    <li class="list-item">
+                        <a class="link underlined underlined--white nav-item" data-page="rooms" href="{{ route('term') }}">{{ __('Terms & Conditions')}}</a>
+                    </li>
+                    <li class="list-item">
+                        <a class="link underlined underlined--white nav-item" data-page="rooms" href="{{ route('privacy_policy') }}">{{ __('Privacy Policy')}}</a>
+                    </li>
+                    <li class="list-item">
+                        <a class="link underlined underlined--white nav-item" data-page="rooms" href="{{ route('refund_policy') }}">{{ __('Refund Policy')}}</a>
+                    </li>
                 </ul>
             </div>
 
