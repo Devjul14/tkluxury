@@ -14,31 +14,18 @@ $page = 'payment';
         <div class="card-body">
 
             @session('error')
-                <div class="alert alert-danger" role="alert"> 
-                    {{ $value }}
-                </div>
+            <div class="alert alert-danger" role="alert">
+                {{ $value }}
+            </div>
             @endsession
 
             @session('success')
-                <div class="alert alert-success" role="alert"> 
-                    {{ $value }}
-                </div>
+            <div class="alert alert-success" role="alert">
+                {{ $value }}
+            </div>
             @endsession
 
-            <form action="{{ route('razorpay.payment.store') }}" method="POST" class="text-center">
-                @csrf
-                <script src="https://checkout.razorpay.com/v1/checkout.js"
-                        data-key="{{ env('RAZORPAY_KEY') }}"
-                        data-amount="1000"
-                        data-buttontext="Pay 10 MYR"
-                        data-name="tkluxuryhouses.com"
-                        data-description="Rozerpay"
-                        data-image="https://tkluxuryhouses.com/storage/settings/01K2C25396FS73V5SQWVKNY5SN.png"
-                        data-prefill.name="name"
-                        data-prefill.email="email"
-                        data-theme.color="#ff7529">
-                </script>
-            </form>
+
         </div>
     </div>
 </div>

@@ -131,6 +131,11 @@ $page = 'confirmation';
         color: var(--success-color);
     }
 
+    .badge-pending {
+        background-color: rgba(255, 152, 0, 0.15);
+        color: var(--warning-color);
+    }
+
     /* Booking Header */
     .booking-header {
         display: flex;
@@ -279,6 +284,22 @@ $page = 'confirmation';
         background-color: rgba(74, 107, 255, 0.05);
     }
 
+    .razorpay-payment-button {
+        background-color: #3a5bef;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.85rem 1.5rem;
+        color: #fff;
+        border-radius: var(--radius-sm);
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: var(--transition);
+        cursor: pointer;
+        text-decoration: none;
+    }
+
     /* Special Requests */
     .special-requests {
         background: #fff;
@@ -346,21 +367,28 @@ $page = 'confirmation';
 
                     <div class="booking-header">
                         <span class="booking-number">#{{ $booking->booking_reference }}</span>
-                        <span class="status-badge status-success">
+                        <span
+                            class="status-badge {{ $booking->status === 'confirmed' ? 'status-success' : 'badge-pending' }}">
+                            @if ($booking->status === 'pending')
+                            <i class="icon-clock"></i>
+                            @elseif($booking->status === 'confirmed')
                             <i class="icon-check"></i>
-                            Confirmed
+                            @endif
+                            {{ $booking->status }}
                         </span>
                     </div>
 
                     <div class="room-card">
-                        @if($booking->room)
+                        @if ($booking->room)
                         <div class="room-media">
-                            <img src="{{ $booking->room->image ? asset($booking->room->image) : asset('img/hero.webp') }}" alt="{{ $booking->room->name }}" />
+                            <img src="{{ $booking->room->image ? asset($booking->room->image) : asset('img/hero.webp') }}"
+                                alt="{{ $booking->room->name }}" />
                         </div>
                         @endif
-                        @if($booking->property)
+                        @if ($booking->property)
                         <div class="room-media">
-                            <img src="{{ $booking->property->getThumbnailAttribute() ? asset($booking->property->getThumbnailAttribute()) : asset('img/hero.webp') }}" alt="{{ $booking->property->name }}" />
+                            <img src="{{ $booking->property->getThumbnailAttribute() ? asset($booking->property->getThumbnailAttribute()) : asset('img/hero.webp') }}"
+                                alt="{{ $booking->property->name }}" />
                         </div>
                         @endif
                         @if ($booking->room)
@@ -380,21 +408,25 @@ $page = 'confirmation';
                     <div class="mb-3">
                         <div class="detail-item">
                             <span class="detail-label">Check-in:</span>
-                            <span class="detail-value">{{ Carbon::parse($booking->check_in_date)->format('l, M d, Y') }}</span>
+                            <span
+                                class="detail-value">{{ Carbon::parse($booking->check_in_date)->format('l, M d, Y') }}</span>
                         </div>
                         <div class="detail-item">
                             <span class="detail-label">Check-out:</span>
-                            <span class="detail-value">{{ Carbon::parse($booking->check_out_date)->format('l, M d, Y') }}</span>
+                            <span
+                                class="detail-value">{{ Carbon::parse($booking->check_out_date)->format('l, M d, Y') }}</span>
                         </div>
                         @if ($booking->room)
                         <div class="detail-item">
                             <span class="detail-label">Guests:</span>
-                            <span class="detail-value">{{ $booking->room->capacity }} {{ Str::plural('person', $booking->room->capacity) }}</span>
+                            <span class="detail-value">{{ $booking->room->capacity }}
+                                {{ Str::plural('person', $booking->room->capacity) }}</span>
                         </div>
                         @endif
                         <div class="detail-item">
                             <span class="detail-label">Nights:</span>
-                            <span class="detail-value">{{ Carbon::parse($booking->check_in_date)->diffInDays(Carbon::parse($booking->check_out_date)) }}</span>
+                            <span
+                                class="detail-value">{{ Carbon::parse($booking->check_in_date)->diffInDays(Carbon::parse($booking->check_out_date)) }}</span>
                         </div>
                     </div>
 
@@ -412,13 +444,13 @@ $page = 'confirmation';
                             <span class="detail-value">${{ number_format($booking->subtotal, 2) }}</span>
                         </div>
                         @endif
-                        @if($booking->tax > 0)
+                        @if ($booking->tax > 0)
                         <div class="detail-item">
                             <span class="detail-label">Tax:</span>
                             <span class="detail-value">${{ number_format($booking->tax, 2) }}</span>
                         </div>
                         @endif
-                        @if($booking->service_fee > 0)
+                        @if ($booking->service_fee > 0)
                         <div class="detail-item">
                             <span class="detail-label">Service Fee:</span>
                             <span class="detail-value">${{ number_format($booking->service_fee, 2) }}</span>
@@ -426,11 +458,13 @@ $page = 'confirmation';
                         @endif
                         <div class="detail-item">
                             <span class="detail-label">Total:</span>
-                            <span class="detail-value detail-total">${{ number_format($booking->total_amount, 2) }}</span>
+                            <span
+                                class="detail-value detail-total">${{ number_format($booking->total_amount, 2) }}</span>
                         </div>
                         <div class="detail-item">
                             <span class="detail-label">Down Payment:</span>
-                            <span class="detail-value detail-total">${{ number_format($booking->down_payment_amount, 2) }}</span>
+                            <span
+                                class="detail-value detail-total">${{ number_format($booking->down_payment_amount, 2) }}</span>
                         </div>
                     </div>
                 </div>
@@ -451,13 +485,13 @@ $page = 'confirmation';
                             <span class="detail-label">Phone:</span>
                             <span class="detail-value">{{ $booking->student->phone }}</span>
                         </div>
-                        @if($booking->special_requests)
+                        @if ($booking->special_requests)
                         <div class="detail-item">
                             <span class="detail-label">Special Requests:</span>
                             <span class="detail-value">{{ $booking->special_requests }}</span>
                         </div>
                         @endif
-                        @if($booking->student->address)
+                        @if ($booking->student->address)
                         <div class="detail-item">
                             <span class="detail-label">Address:</span>
                             <span class="detail-value">{{ $booking->student->address }}</span>
@@ -481,7 +515,7 @@ $page = 'confirmation';
                 </div>
 
                 <!-- Special Requests -->
-                @if($booking->special_requests)
+                @if ($booking->special_requests)
                 <div class="special-requests" data-aos="fade-up">
                     <h3 class="section-title">Special Requests</h3>
                     <p>{{ $booking->special_requests }}</p>
@@ -489,15 +523,40 @@ $page = 'confirmation';
                 @endif
 
                 <!-- Action Buttons -->
+
                 <div class="action-buttons" data-aos="fade-up">
                     <a class="btn btn-primary" href="{{ route('home') }}">
                         <i class="icon-home"></i>
                         Back to Home
                     </a>
-                    <a class="btn btn-outline" href="{{ route('booking.download', $booking->booking_reference) }}" target="_blank">
+                    <a class="btn btn-outline" href="{{ route('booking.download', $booking->booking_reference) }}"
+                        target="_blank">
                         <i class="icon-download"></i>
                         Download Receipt
                     </a>
+                    <!-- <button id="pay-btn" class="btn btn-primary" type="button">
+                            <i class="icon-money"></i>
+                            Pay Now
+                        </button> -->
+
+
+                    @if ($booking->status === 'pending')
+                    <form action="{{ route('razorpay.payment.store') }}" method="POST" class="text-center">
+                        @csrf
+                        <script src="https://checkout.razorpay.com/v1/checkout.js"
+                            data-key="{{ env('RAZORPAY_KEY') }}"
+                            data-amount="{{ floatval($booking->down_payment_amount) }}"
+                            data-buttontext="Pay ${{ floatval($booking->down_payment_amount) }}"
+                            data-name="tkluxuryhouses.com"
+                            data-callback="{{ route('razorpay.payment.callback') }}"
+                            data-description="Rozerpay"
+                            data-currency="MYR"
+                            data-image="https://tkluxuryhouses.com/storage/settings/01K2C25396FS73V5SQWVKNY5SN.png"
+                            data-prefill.name="name"
+                            data-prefill.email="email"
+                            data-theme.color="#ff7529"></script>
+                    </form>
+                    @endif
                 </div>
             </div>
 
@@ -510,7 +569,9 @@ $page = 'confirmation';
                             <i class="icon-email info-icon"></i>
                             <div>
                                 <h4 class="info-title">Confirmation Email</h4>
-                                <p class="info-text">We've sent a detailed confirmation email to {{ $booking->student->email }}</p>
+                                <p class="info-text">We've sent a detailed confirmation email to
+                                    {{ $booking->student->email }}
+                                </p>
                             </div>
                         </div>
                         <div class="info-item">
@@ -524,14 +585,17 @@ $page = 'confirmation';
                             <i class="icon-location info-icon"></i>
                             <div>
                                 <h4 class="info-title">Location</h4>
-                                <p class="info-text">{{ config('contact.address.line1') }}, {{ config('contact.address.line2') }}</p>
+                                <p class="info-text">{{ config('contact.address.line1') }},
+                                    {{ config('contact.address.line2') }}
+                                </p>
                             </div>
                         </div>
                         <div class="info-item">
                             <i class="icon-call info-icon"></i>
                             <div>
                                 <h4 class="info-title">Need Help?</h4>
-                                <p class="info-text">Contact us at {{ config('contact.phone.primary') }} for any questions</p>
+                                <p class="info-text">Contact us at {{ config('contact.phone.primary') }} for any
+                                    questions</p>
                             </div>
                         </div>
                     </div>
@@ -544,21 +608,25 @@ $page = 'confirmation';
                             <i class="icon-phone info-icon"></i>
                             <div>
                                 <h4 class="info-title">Phone</h4>
-                                <a href="tel:{{ config('contact.phone.primary') }}" class="info-text">{{ config('contact.phone.primary') }}</a>
+                                <a href="tel:{{ config('contact.phone.primary') }}"
+                                    class="info-text">{{ config('contact.phone.primary') }}</a>
                             </div>
                         </div>
                         <div class="info-item">
                             <i class="icon-email info-icon"></i>
                             <div>
                                 <h4 class="info-title">Email</h4>
-                                <a href="mailto:{{ config('contact.email.primary') }}" class="info-text">{{ config('contact.email.primary') }}</a>
+                                <a href="mailto:{{ config('contact.email.primary') }}"
+                                    class="info-text">{{ config('contact.email.primary') }}</a>
                             </div>
                         </div>
                         <div class="info-item">
                             <i class="icon-location info-icon"></i>
                             <div>
                                 <h4 class="info-title">Address</h4>
-                                <p class="info-text">{{ config('contact.address.line1') }}<br>{{ config('contact.address.line2') }}</p>
+                                <p class="info-text">
+                                    {{ config('contact.address.line1') }}<br>{{ config('contact.address.line2') }}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -581,4 +649,56 @@ $page = 'confirmation';
         // document.querySelector('.action-buttons').appendChild(printButton);
     });
 </script>
+
+@if ($booking->status === 'pending')
+<script>
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     function loadPaymentSnap() {
+    //         const booking = @json($booking);
+    //         const orderIdFromServer = booking.booking_reference;
+    //         const amountFromServer = booking.down_payment_amount;
+
+    //         var options = {
+    //             "key": "{{ env('RAZORPAY_KEY') }}", // Masukkan Key ID Anda dari Dashboard Razorpay
+    //             "amount": amountFromServer, // Amount dalam unit mata uang terkecil (misal: 50000 untuk Rp 500.00)
+    //             "currency": "INR", // Ganti dengan mata uang yang sesuai, misal: "IDR" jika didukung
+    //             "name": "{{ setting('name', 'Luxury') }}",
+    //             "description": "Down Payment for Booking {{ $booking->booking_reference }}",
+    //             "image": "{{ asset('storage/' . (setting('brand_logo') ?? 'img/brand.jpg')) }}", // URL logo Anda
+    //             "order_id": "{{ 'order_' . time() }}",
+    //             "handler": function(response) {
+    //                 // Fungsi ini akan dieksekusi setelah pembayaran berhasil
+    //                 alert("Pembayaran berhasil! ID Pembayaran: " + response.razorpay_payment_id);
+    //                 alert("Order ID: " + response.razorpay_order_id);
+    //                 alert("Signature: " + response.razorpay_signature);
+    //             },
+    //             "prefill": {
+    //                 "name": "{{ $booking->student->name }}",
+    //                 "email": "{{ $booking->student->email }}",
+    //                 "contact": "{{ $booking->student->phone }}"
+    //             },
+    //             "notes": {
+    //                 "address": "{{ $booking->student->address }}"
+    //             },
+    //             "theme": {
+    //                 "color": "{{ setting('primary_color', '#ff7529') }}"
+    //             }
+    //         };
+
+    //         var rzp1 = new Razorpay(options);
+
+    //         // Menangani error jika popup gagal dibuka
+    //         rzp1.on('payment.failed', function(response) {
+    //             alert("Pembayaran gagal! Kode: " + response.error.code);
+    //             alert("Deskripsi: " + response.error.description);
+    //         });
+
+    //         // Buka popup checkout
+    //         rzp1.open();
+    //     }
+    //     const payBtn = document.querySelector("#pay-btn");
+    //     payBtn.addEventListener("click", loadPaymentSnap);
+    // });
+</script>
+ @endif
 @endpush

@@ -65,6 +65,7 @@ Route::get('/booking/download/{id}', [BookingController::class, 'download'])->na
 //payment route
 Route::get('razorpay-payment', [RazorpayPaymentController::class, 'index']);
 Route::post('razorpay-payment', [RazorpayPaymentController::class, 'store'])->name('razorpay.payment.store');
+Route::get('razorpay-payment/callback', [RazorpayPaymentController::class, 'callback'])->name('razorpay.payment.callback');
 
 // Contact routes
 Route::get('/contacts', [ContactController::class, 'index'])->name('contacts.index');
