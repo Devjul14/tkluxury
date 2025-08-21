@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\RazorpayPaymentController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\App;
@@ -60,6 +61,11 @@ Route::post('/booking/store', [BookingController::class, 'store'])->name('bookin
 Route::post('/booking/process', [BookingController::class, 'process'])->name('booking.process');
 Route::get('/booking/confirmed', [BookingController::class, 'confirmation'])->name('booking.confirmation');
 Route::get('/booking/download/{id}', [BookingController::class, 'download'])->name('booking.download');
+
+//payment route
+Route::get('razorpay-payment', [RazorpayPaymentController::class, 'index']);
+Route::post('razorpay-payment', [RazorpayPaymentController::class, 'store'])->name('razorpay.payment.store');
+Route::get('razorpay-payment/callback', [RazorpayPaymentController::class, 'callback'])->name('razorpay.payment.callback');
 
 // Contact routes
 Route::get('/contacts', [ContactController::class, 'index'])->name('contacts.index');
