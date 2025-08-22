@@ -31,8 +31,8 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->colors([
-                'primary' => Color::Blue, // Mengubah warna utama menjadi biru
-                'gray' => Color::Slate,    // Mengubah warna abu-abu menjadi slate
+                'primary' => Color::Blue,
+                'gray' => Color::Slate,
             ])
             ->login()
             ->registration()

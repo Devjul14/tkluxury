@@ -7,6 +7,11 @@ use Filament\Widgets\ChartWidget;
 
 class TopBookedRoomsWidget extends ChartWidget
 {
+    public static function canView(): bool
+    {
+        return false;
+    }
+
     protected static ?string $heading = 'Top 5 Most Booked Rooms';
     protected static ?int $sort = 5;
 
