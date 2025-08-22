@@ -21,6 +21,11 @@ class RoomResource extends Resource
     protected static ?string $navigationGroup = 'Property Management';
 
     protected static ?int $navigationSort = 3;
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false; // supaya tidak tampil di sidebar
+    }
+
 
     public static function form(Form $form): Form
     {

@@ -7,6 +7,11 @@ use Filament\Widgets\ChartWidget;
 
 class TopPropertiesByRoomsWidget extends ChartWidget
 {
+    public static function canView(): bool
+    {
+        return false;
+    }
+
     protected static ?string $heading = 'Top 5 Properties by Total Rooms';
     protected static ?int $sort = 4;
 

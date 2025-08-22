@@ -115,7 +115,7 @@ class PropertyResource extends Resource
                             ->hiddenLabel(),
                     ])
                     ->columns(1),
-                    Forms\Components\Section::make('Room Information')
+                Forms\Components\Section::make('Room Information')
                     ->schema([
                         Forms\Components\TextInput::make('total_rooms')
                             ->required()
@@ -148,11 +148,11 @@ class PropertyResource extends Resource
                             ->numeric()
                             ->prefix('$'),
                         Forms\Components\TextInput::make('monthly_expenses')
-                        ->label('Monthly Rental')
+                            ->label('Monthly Rental')
                             ->numeric()
                             ->prefix('$')
                             ->default(0),
-                       Forms\Components\Select::make('down_payment_type')
+                        Forms\Components\Select::make('down_payment_type')
                             ->label('Down Payment Type')
                             ->options([
                                 'fixed' => 'Fixed Value',
@@ -165,10 +165,10 @@ class PropertyResource extends Resource
                             ->label('Down Payment Value')
                             ->required()
                             ->numeric()
-                            ->prefix(fn ($get) => $get('down_payment_type') === 'fixed' ? '$' : null)
-                            ->suffix(fn ($get) => $get('down_payment_type') === 'percentage' ? '%' : null)
+                            ->prefix(fn($get) => $get('down_payment_type') === 'fixed' ? '$' : null)
+                            ->suffix(fn($get) => $get('down_payment_type') === 'percentage' ? '%' : null)
                             ->default(config('hostel.booking.down_payment_rate', 0.1) * 100)
-                            ])
+                    ])
                     ->columns(3),
                 Forms\Components\Section::make('Availability')
                     ->schema([
@@ -235,12 +235,25 @@ class PropertyResource extends Resource
                 Tables\Columns\TextColumn::make('price_per_month')
                     ->money('USD')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('total_rooms')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('available_rooms')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('down_payment_value')
+                    ->formatStateUsing(function ($state, $record) {
+                        if ($record->down_payment_type === 'percentage') {
+                            return $state . '%';
+                        }
+                        if ($record->down_payment_type === 'fixed') {
+                            return '$' . number_format($state, 2);
+                        }
+                        return $state;
+                    })
+                    ->color(function ($record) {
+                        return match ($record->down_payment_type) {
+                            'fixed' => 'success',
+                            'percentage' => 'warning',
+                            default => 'secondary',
+                        };
+                    })
+                    ->searchable(),
+
                 Tables\Columns\TextColumn::make('occupancy_rate')
                     ->label('Occupancy')
                     ->suffix('%')

@@ -10,7 +10,12 @@ use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 class BookingPipelineWidget extends BaseWidget
 {
     protected static ?int $sort = 1;
-    protected ?string $heading = 'Booking Status Overview';
+
+    // pakai getter untuk heading supaya bisa translatable
+    public function getHeading(): string
+    {
+        return __('Booking Status Overview');
+    }
 
     public static function canView(): bool
     {
@@ -20,9 +25,9 @@ class BookingPipelineWidget extends BaseWidget
     protected function getStats(): array
     {
         $statuses = [
-            'pending' => 'warning',
+            'pending'   => 'warning',
             'confirmed' => 'primary',
-            'active' => 'success',
+            'active'    => 'success',
             'completed' => 'info',
             'cancelled' => 'danger',
         ];
@@ -40,9 +45,9 @@ class BookingPipelineWidget extends BaseWidget
             $difference = $todayCount - $yesterdayCount;
 
             $description = match (true) {
-                $difference > 0 => "+{$difference} from yesterday",
-                $difference < 0 => "{$difference} from yesterday",
-                default => 'No change',
+                $difference > 0 => "+{$difference} " . __('from yesterday'),
+                $difference < 0 => "{$difference} " . __('from yesterday'),
+                default => __('No change'),
             };
 
             $descriptionColor = match (true) {
@@ -57,7 +62,7 @@ class BookingPipelineWidget extends BaseWidget
                 default => 'heroicon-m-minus',
             };
 
-            $stats[] = Stat::make(ucfirst($status), $total)
+            $stats[] = Stat::make(__('status.' . $status), $total) // <-- pakai __()
                 ->description($description)
                 ->descriptionColor($color)
                 ->descriptionIcon($descriptionIcon)

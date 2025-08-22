@@ -87,7 +87,7 @@ $page = 'index';
         <div class="hero_main" style="width: 100% !important">
             <form class="booking" action="{{ route('properties.index') }}" method="get" autocomplete="off" data-type="booking" data-aos="fade-up" style="width: 100% !important">
                 <div class="item-wrapper d-sm-flex flex-wrap flex-lg-nowrap align-items-lg-center" style="width: 100% !important">
-                <div class="booking_group d-flex flex-column">
+                    <div class="booking_group d-flex flex-column">
                         <label class="booking_group-label h5" for="checkIn">{{ __('Check in')}}</label>
                         <div class="booking_group-wrapper">
                             <i class="icon-calendar icon"></i>
@@ -119,7 +119,7 @@ $page = 'index';
                             <i class="icon-chevron_down icon"></i>
                         </div>
                     </div>
-                    
+
                     <div class="booking_group d-flex flex-column">
                         <label class="booking_group-label h5" for="institute">{{ __('Institutes')}}</label>
                         <div class="booking_group-wrapper">
@@ -194,10 +194,10 @@ $page = 'index';
                             {{ $property->title ?? 'Lorem ipsum' }}
                         </a>
                         <div class="main_amenities">
-                            <span class="main_amenities-item d-inline-flex align-items-center">
+                            <!-- <span class="main_amenities-item d-inline-flex align-items-center">
                                 <i class="icon-user icon"></i>
                                 {{ __('Available room')}} {{ $property->available_rooms }}
-                            </span>
+                            </span> -->
                             <span class="main_amenities-item d-inline-flex align-items-center">
                                 <i class="icon-bunk_bed icon"></i>
                                 {{ __('Type')}} {{ $property->property_type }}

@@ -19,13 +19,14 @@ $page = 'index';
         position: relative;
         overflow: hidden;
     }
-    
-    .hero_main, 
+
+    .hero_main,
     .hero_main::before {
         position: relative;
         z-index: 2;
         background: transparent;
     }
+
     .hero_main form.booking {
         position: relative;
         z-index: 2;
@@ -188,10 +189,10 @@ $page = 'index';
                             {{ $property->title ?? 'Lorem ipsum' }}
                         </a>
                         <div class="main_amenities">
-                            <span class="main_amenities-item d-inline-flex align-items-center">
+                            <!-- <span class="main_amenities-item d-inline-flex align-items-center">
                                 <i class="icon-user icon"></i>
                                 {{ __('Available room')}} {{ $property->available_rooms }}
-                            </span>
+                            </span> -->
                             <span class="main_amenities-item d-inline-flex align-items-center">
                                 <i class="icon-bunk_bed icon"></i>
                                 {{ __('Type')}} {{ $property->property_type }}
@@ -915,9 +916,9 @@ $page = 'index';
                     {{ __('Find properties near by institutes') }}
                 </h2>
 
-                <h2 class="contacts_info-header_title" data-aos="fade-down">
+                <p class="about_main-content_text" data-aos="fade-up" data-aos-delay="50">
                     {{ __('Discover student accommodations conveniently located near top universities, colleges, and learning centers. Save time on commuting and focus more on your studies and student life.') }}
-                </h2>
+                </p>
             </div>
             <!-- <ul class="contacts_info-list col-xl-7 d-md-flex flex-wrap">
                 <li class="contacts_info-list_item col-md-6 d-flex align-items-center" data-order="1" data-aos="fade-up">

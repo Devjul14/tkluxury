@@ -9,10 +9,13 @@ use Illuminate\Support\Facades\DB;
 
 class OccupancyWidget extends ChartWidget
 {
-    protected static ?string $heading = 'Occupancy Rate';
     protected static ?int $sort = 3;
 
     public ?string $filter = 'yearly';
+    public function getHeading(): string
+    {
+        return __('Occupancy Rate');
+    }
 
     public static function canView(): bool
     {
@@ -28,10 +31,10 @@ class OccupancyWidget extends ChartWidget
     protected function getFilters(): ?array
     {
         return [
-            'daily' => 'Daily',
-            'weekly' => 'Weekly',
-            'yearly' => 'Yearly',
-            '5_years' => 'Last 5 Years',
+            'daily'     => __('Daily'),
+            'weekly'    => __('Weekly'),
+            'yearly'    => __('Yearly'),
+            '5_years'   => __('Last 5 Years'),
         ];
     }
 

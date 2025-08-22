@@ -10,15 +10,21 @@ use Illuminate\Support\Carbon;
 class RevenueChart extends LineChartWidget
 {
     protected static ?int $sort = 2;
-    protected static ?string $heading = 'Revenue';
+
     public ?string $filter = 'monthly';  // default filter
+
+    // 🔹 Heading bisa ditranslate
+    public function getHeading(): string
+    {
+        return __('Revenue');
+    }
 
     public function getFilters(): ?array
     {
         return [
-            'daily' => 'Daily',
-            'weekly' => 'Weekly',
-            'monthly' => 'Monthly',
+            'daily'   => __('Daily'),
+            'weekly'  => __('Weekly'),
+            'monthly' => __('Monthly'),
         ];
     }
 
@@ -114,19 +120,19 @@ class RevenueChart extends LineChartWidget
             'labels' => $labels,
             'datasets' => [
                 [
-                    'label' => 'Tax',
+                    'label' => __('Tax'),
                     'data' => $taxData,
                     'borderColor' => 'rgba(239, 68, 68, 0.8)',
                     'backgroundColor' => 'rgba(239, 68, 68, 0.3)',
                 ],
                 [
-                    'label' => 'Service Fee',
+                    'label' => __('Service Fee'),
                     'data' => $servicesData,
                     'borderColor' => 'rgba(59, 130, 246, 0.8)',
                     'backgroundColor' => 'rgba(59, 130, 246, 0.3)',
                 ],
                 [
-                    'label' => 'Rent Fee',
+                    'label' => __('Rent Fee'),
                     'data' => $rentFeesData,
                     'borderColor' => 'rgba(34, 197, 94, 0.8)',
                     'backgroundColor' => 'rgba(34, 197, 94, 0.3)',
