@@ -16,11 +16,23 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ServiceResource extends Resource
 {
-    protected static ?string $navigationGroup = 'Maintenance & Operations';
     protected static ?int $navigationSort = 2;
     protected static ?string $navigationIcon = 'heroicon-o-cog';
-    protected static ?string $modelLabel = 'Service';
-    protected static ?string $pluralModelLabel = 'Services';
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('navigations.group_properties');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('navigations.services');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('navigations.services');
+    }
 
     public static function form(Form $form): Form
     {

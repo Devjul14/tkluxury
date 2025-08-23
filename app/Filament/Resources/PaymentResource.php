@@ -5,11 +5,11 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\PaymentResource\Pages;
 use App\Filament\Resources\PaymentResource\RelationManagers;
 use App\Models\Payment;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Forms;
+use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -18,9 +18,22 @@ class PaymentResource extends Resource
     protected static ?string $model = Payment::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-credit-card';
-    
-    protected static ?string $navigationGroup = 'Financial Management';
-    
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('navigations.group_financial_management');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('navigations.payments');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('navigations.payments');
+    }
+
     protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
@@ -61,8 +74,8 @@ class PaymentResource extends Resource
                                 'stripe' => 'Stripe',
                             ])
                             ->required(),
-                    ])->columns(2),
-                
+                    ])
+                    ->columns(2),
                 Forms\Components\Section::make('Payment Details')
                     ->schema([
                         Forms\Components\DatePicker::make('payment_date')
@@ -81,8 +94,8 @@ class PaymentResource extends Resource
                             ->required(),
                         Forms\Components\TextInput::make('transaction_id')
                             ->maxLength(255),
-                    ])->columns(2),
-                
+                    ])
+                    ->columns(2),
                 Forms\Components\Section::make('Additional Information')
                     ->schema([
                         Forms\Components\Textarea::make('description')
@@ -93,7 +106,8 @@ class PaymentResource extends Resource
                             ->columnSpanFull(),
                         Forms\Components\FileUpload::make('receipt')
                             ->directory('payments/receipts'),
-                    ])->columns(1),
+                    ])
+                    ->columns(1),
             ]);
     }
 
@@ -128,7 +142,7 @@ class PaymentResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'pending' => 'warning',
                         'processing' => 'info',
                         'completed' => 'success',
@@ -176,11 +190,11 @@ class PaymentResource extends Resource
                         return $query
                             ->when(
                                 $data['payment_date_from'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('payment_date', '>=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('payment_date', '>=', $date),
                             )
                             ->when(
                                 $data['payment_date_until'],
-                                fn (Builder $query, $date): Builder => $query->whereDate('payment_date', '<=', $date),
+                                fn(Builder $query, $date): Builder => $query->whereDate('payment_date', '<=', $date),
                             );
                     }),
             ])

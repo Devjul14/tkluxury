@@ -4,19 +4,19 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ContractResource\Pages;
 use App\Filament\Resources\ContractResource\RelationManagers;
+use App\Mail\ContractSent;
 use App\Models\Contract;
-use Filament\Forms;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Table;
+use Filament\Forms;
+use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Tables\Actions\Action;
-use App\Mail\ContractSent;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
-use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Storage;
 
 class ContractResource extends Resource
 {
@@ -24,7 +24,20 @@ class ContractResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
-    protected static ?string $navigationGroup = 'Financial Management';
+    public static function getNavigationGroup(): ?string
+    {
+        return __('navigations.group_financial_management');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('navigations.contracts');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('navigations.contracts');
+    }
 
     protected static ?int $navigationSort = 2;
 
@@ -55,8 +68,8 @@ class ContractResource extends Resource
                                 'terminated' => 'Terminated',
                             ])
                             ->required(),
-                    ])->columns(2),
-
+                    ])
+                    ->columns(2),
                 Forms\Components\Section::make('Contract Details')
                     ->schema([
                         Forms\Components\DatePicker::make('start_date')
@@ -76,8 +89,8 @@ class ContractResource extends Resource
                             ->required()
                             ->numeric()
                             ->prefix('$'),
-                    ])->columns(2),
-
+                    ])
+                    ->columns(2),
                 Forms\Components\Section::make('Terms and Conditions')
                     ->schema([
                         Forms\Components\RichEditor::make('terms_and_conditions')
@@ -86,8 +99,8 @@ class ContractResource extends Resource
                         Forms\Components\Textarea::make('special_conditions')
                             ->maxLength(65535)
                             ->columnSpanFull(),
-                    ])->columns(1),
-
+                    ])
+                    ->columns(1),
                 Forms\Components\Section::make('Signatures')
                     ->schema([
                         Forms\Components\DatePicker::make('student_signed_date'),
@@ -97,8 +110,8 @@ class ContractResource extends Resource
                             ->directory('contracts/signatures'),
                         Forms\Components\FileUpload::make('landlord_signature')
                             ->directory('contracts/signatures'),
-                    ])->columns(2),
-
+                    ])
+                    ->columns(2),
                 Forms\Components\Section::make('Additional Information')
                     ->schema([
                         Forms\Components\Textarea::make('notes')
@@ -107,7 +120,8 @@ class ContractResource extends Resource
                         Forms\Components\FileUpload::make('attachments')
                             ->multiple()
                             ->directory('contracts/attachments'),
-                    ])->columns(1),
+                    ])
+                    ->columns(1),
             ]);
     }
 

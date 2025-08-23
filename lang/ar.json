@@ -232,5 +232,6 @@
     "Delete Selected": "حذف المحدد",
     "Filter by Status": "تصفية حسب الحالة",
     "Filter by Property": "تصفية حسب العقار",
-    "Filter by Student": "تصفية حسب الطالب"
+    "Filter by Student": "تصفية حسب الطالب",
+    "navigations.properties": "إدارة العقارات"
 }

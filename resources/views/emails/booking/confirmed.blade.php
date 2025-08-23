@@ -68,10 +68,10 @@
                         <span class="detail-label">Price per month:</span>
                         <span class="detail-value">${{ number_format($booking->monthly_rent, 2) }}</span>
                     </div>
-                    <div class="detail-row">
+                    <!-- <div class="detail-row">
                         <span class="detail-label">Subtotal:</span>
                         <span class="detail-value">${{ number_format($booking->subtotal, 2) }}</span>
-                    </div>
+                    </div> -->
                     @if($booking->tax > 0)
                     <div class="detail-row">
                         <span class="detail-label">Tax:</span>
