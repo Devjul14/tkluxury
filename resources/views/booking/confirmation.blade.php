@@ -467,9 +467,9 @@ $page = 'confirmation';
                                 class="detail-value detail-total">${{ number_format($booking->down_payment_amount, 2) }}</span>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
-                <!-- Guest Information -->
+               
                 <div class="card" data-aos="fade-up">
                     <h3 class="section-title">Guest Information</h3>
                     <div>
@@ -543,6 +543,7 @@ $page = 'confirmation';
                     @if ($booking->status === 'pending')
                     <form action="{{ route('razorpay.payment.store') }}" method="POST" class="text-center">
                         @csrf
+                        <input type="hidden" name="booking_id" value="{{ $booking->id }}">
                         <script src="https://checkout.razorpay.com/v1/checkout.js"
                             data-key="{{ env('RAZORPAY_KEY') }}"
                             data-amount="{{ floatval($booking->down_payment_amount) }}"
