@@ -5,17 +5,17 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\InstituteResource\Pages;
 use App\Filament\Resources\InstituteResource\RelationManagers;
 use App\Models\Institute;
-use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Dotswan\MapPicker\Fields\Map;
-use Illuminate\Database\Eloquent\Model;
-use Filament\Forms\Set;
-use Filament\Tables;
-use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\ViewField;
+use Filament\Forms\Form;
+use Filament\Forms\Set;
+use Filament\Resources\Resource;
+use Filament\Tables\Table;
+use Filament\Forms;
+use Filament\Tables;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class InstituteResource extends Resource
 {
@@ -23,7 +23,20 @@ class InstituteResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
 
-    protected static ?string $navigationGroup = 'Property Management';
+    public static function getNavigationGroup(): ?string
+    {
+        return __('navigations.group_properties');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('navigations.institutes');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('navigations.institute');
+    }
 
     protected static ?int $navigationSort = 1;
 
@@ -43,8 +56,8 @@ class InstituteResource extends Resource
                         Forms\Components\Textarea::make('description')
                             ->maxLength(65535)
                             ->columnSpanFull(),
-                    ])->columns(2),
-
+                    ])
+                    ->columns(2),
                 Forms\Components\Section::make('Contact Information')
                     ->schema([
                         Forms\Components\TextInput::make('contact_email')
@@ -56,9 +69,8 @@ class InstituteResource extends Resource
                         Forms\Components\TextInput::make('website')
                             ->url()
                             ->maxLength(255),
-                    ])->columns(3),
-
-
+                    ])
+                    ->columns(3),
                 Forms\Components\Section::make('Address')
                     ->schema([
                         Forms\Components\Textarea::make('address')
@@ -78,7 +90,6 @@ class InstituteResource extends Resource
                             ->maxLength(255),
                     ])
                     ->columns(2),
-
                 Forms\Components\Section::make('Location Map')
                     ->schema([
                         Forms\Components\Grid::make(3)
@@ -103,7 +114,6 @@ class InstituteResource extends Resource
                             ->hiddenLabel(),
                     ])
                     ->columns(1),
-
                 Forms\Components\Section::make('Settings')
                     ->schema([
                         Forms\Components\FileUpload::make('logo')
@@ -118,7 +128,8 @@ class InstituteResource extends Resource
                             ->required(),
                         Forms\Components\Toggle::make('is_active')
                             ->required(),
-                    ])->columns(3),
+                    ])
+                    ->columns(3),
             ]);
     }
 

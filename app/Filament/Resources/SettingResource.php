@@ -25,14 +25,29 @@ class SettingResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    // public static function getNavigationLabel(): string
+    // {
+    //     return 'Site Settings';
+    // }
+
+    // public static function getNavigationGroup(): ?string
+    // {
+    //     return 'Configuration';
+    // }
+
     public static function getNavigationLabel(): string
     {
-        return 'Site Settings';
+        return __('navigations.settings');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('navigations.settings');
     }
 
     public static function getNavigationGroup(): ?string
     {
-        return 'Configuration';
+        return __('navigations.group_configurations');
     }
 
     public static function getNavigationIcon(): string

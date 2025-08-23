@@ -102,7 +102,8 @@ class BookingController extends Controller
             }
 
             $booking->tax = ($totalRentAmount) * config('hostel.booking.tax_rate', 0.08);
-            $booking->service_fee = (($totalRentAmount) * config('hostel.booking.service_fee_rate', 0.05)) + $serviceFees;
+            $booking->service_fee = $serviceFees > 0 ? (($booking->subtotal) * config('hostel.booking.service_fee_rate', 0.05)) + $serviceFees : 0;
+
             $booking->total_amount = $totalAmount;
             $booking->setRelation('room', $room);
         }
@@ -116,6 +117,7 @@ class BookingController extends Controller
 
             $services = Service::whereIn('id', $data['services'] ?? [])->get();
             $serviceFees = $services->sum('price');
+
             $booking->duration_months = $durationMonths;
             $booking->booking_reference = $bookingReference;
             $booking->security_deposit = $property->security_deposit;
@@ -129,7 +131,8 @@ class BookingController extends Controller
                 $booking->down_payment_amount = $totalRentAmount * config('hostel.booking.down_payment_rate', 0.1);
             }
             $booking->tax = ($totalRentAmount) * config('hostel.booking.tax_rate', 0.08);
-            $booking->service_fee = (($totalRentAmount) * config('hostel.booking.service_fee_rate', 0.05)) + $serviceFees;
+            $booking->service_fee = $serviceFees > 0 ? (($booking->subtotal) * config('hostel.booking.service_fee_rate', 0.05)) + $serviceFees : 0;
+
             $booking->total_amount = $totalAmount;
             $booking->setRelation('property', $property);
         }
@@ -240,7 +243,7 @@ class BookingController extends Controller
         $booking->special_requests = $request->special_requests;
 
         $serviceFees = $services->sum('price');
-        $booking->service_fee = (($booking->subtotal) * config('hostel.booking.service_fee_rate', 0.05)) + $serviceFees;
+        $booking->service_fee = $serviceFees > 0 ? (($booking->subtotal) * config('hostel.booking.service_fee_rate', 0.05)) + $serviceFees : 0;
 
         // create student data
         $generatedPassword = Str::random(8) . str_pad(random_int(1, 100), 2, '0', STR_PAD_LEFT);

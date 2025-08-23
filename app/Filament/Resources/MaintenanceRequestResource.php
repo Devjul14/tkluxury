@@ -5,11 +5,11 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\MaintenanceRequestResource\Pages;
 use App\Filament\Resources\MaintenanceRequestResource\RelationManagers;
 use App\Models\MaintenanceRequest;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Forms;
+use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -18,9 +18,17 @@ class MaintenanceRequestResource extends Resource
     protected static ?string $model = MaintenanceRequest::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-wrench-screwdriver';
-    
-    protected static ?string $navigationGroup = 'Maintenance & Operations';
-    
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('navigations.group_maintenance_operations');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('navigations.maintenance_requests');
+    }
+
     protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
@@ -58,8 +66,8 @@ class MaintenanceRequestResource extends Resource
                                 'cancelled' => 'Cancelled',
                             ])
                             ->required(),
-                    ])->columns(2),
-                
+                    ])
+                    ->columns(2),
                 Forms\Components\Section::make('Issue Details')
                     ->schema([
                         Forms\Components\TextInput::make('title')
@@ -91,8 +99,8 @@ class MaintenanceRequestResource extends Resource
                                 'exterior' => 'Exterior',
                                 'other' => 'Other',
                             ]),
-                    ])->columns(2),
-                
+                    ])
+                    ->columns(2),
                 Forms\Components\Section::make('Scheduling')
                     ->schema([
                         Forms\Components\DatePicker::make('request_date')
@@ -102,8 +110,8 @@ class MaintenanceRequestResource extends Resource
                         Forms\Components\TimePicker::make('preferred_time_slot')
                             ->required(),
                         Forms\Components\DatePicker::make('completion_date'),
-                    ])->columns(2),
-                
+                    ])
+                    ->columns(2),
                 Forms\Components\Section::make('Assignment')
                     ->schema([
                         Forms\Components\Select::make('assigned_staff_id')
@@ -115,8 +123,8 @@ class MaintenanceRequestResource extends Resource
                         Forms\Components\TextInput::make('actual_cost')
                             ->numeric()
                             ->prefix('$'),
-                    ])->columns(3),
-                
+                    ])
+                    ->columns(3),
                 Forms\Components\Section::make('Additional Information')
                     ->schema([
                         Forms\Components\FileUpload::make('photos')
@@ -129,7 +137,8 @@ class MaintenanceRequestResource extends Resource
                         Forms\Components\Textarea::make('resolution_notes')
                             ->maxLength(65535)
                             ->columnSpanFull(),
-                    ])->columns(1),
+                    ])
+                    ->columns(1),
             ]);
     }
 
@@ -154,7 +163,7 @@ class MaintenanceRequestResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('priority')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'low' => 'success',
                         'medium' => 'info',
                         'high' => 'warning',
@@ -162,7 +171,7 @@ class MaintenanceRequestResource extends Resource
                     }),
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'pending' => 'warning',
                         'assigned' => 'info',
                         'in_progress' => 'primary',
