@@ -5,23 +5,22 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\PropertyResource\Pages;
 use App\Filament\Resources\PropertyResource\RelationManagers;
 use App\Models\Property;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\ViewField;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
 use Filament\Forms;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Database\Eloquent\Model;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Set;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Http;
 use Exception;
-use Filament\Forms\Components\ViewField;
-
 
 class PropertyResource extends Resource
 {
@@ -29,7 +28,20 @@ class PropertyResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-home-modern';
 
-    protected static ?string $navigationGroup = 'Property Management';
+    public static function getNavigationGroup(): ?string
+    {
+        return __('navigations.group_properties');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('navigations.properties');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('navigations.properties');
+    }
 
     protected static ?int $navigationSort = 2;
 
@@ -81,7 +93,6 @@ class PropertyResource extends Resource
                             ->maxLength(255),
                     ])
                     ->columns(2),
-
                 Forms\Components\Section::make('Location Map')
                     ->schema([
                         // These fields are now in a new section with a 3-column layout.
@@ -106,7 +117,6 @@ class PropertyResource extends Resource
                                 //     ->label('Distance to Institute (km)')
                                 //     ->columnSpan(1),
                             ]),
-
                         // The ViewField for the map remains, now in its own section.
                         ViewField::make('location_map')
                             ->label('Location on Map')
@@ -160,7 +170,6 @@ class PropertyResource extends Resource
                             ])
                             ->default('percentage')
                             ->reactive(),
-
                         Forms\Components\TextInput::make('down_payment_value')
                             ->label('Down Payment Value')
                             ->required()
@@ -253,7 +262,6 @@ class PropertyResource extends Resource
                         };
                     })
                     ->searchable(),
-
                 Tables\Columns\TextColumn::make('occupancy_rate')
                     ->label('Occupancy')
                     ->suffix('%')

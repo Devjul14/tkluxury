@@ -19,7 +19,22 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
-    protected static ?string $navigationGroup = 'Student Management';
+    // protected static ?string $navigationGroup = 'Student Management';
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('navigations.group_student_management');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('navigations.users');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('navigations.users');
+    }
 
     protected static ?int $navigationSort = 1;
 

@@ -5,11 +5,11 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ReviewResource\Pages;
 use App\Filament\Resources\ReviewResource\RelationManagers;
 use App\Models\Review;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Forms;
+use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -18,9 +18,22 @@ class ReviewResource extends Resource
     protected static ?string $model = Review::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-right';
-    
-    protected static ?string $navigationGroup = 'Student Management';
-    
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('navigations.group_student_management');
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('navigations.reviews');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('navigations.reviews');
+    }
+
     protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
@@ -44,8 +57,8 @@ class ReviewResource extends Resource
                             ->required()
                             ->maxLength(65535)
                             ->columnSpanFull(),
-                    ])->columns(2),
-                
+                    ])
+                    ->columns(2),
                 Forms\Components\Section::make('Ratings')
                     ->schema([
                         Forms\Components\Select::make('overall_rating')
@@ -102,8 +115,8 @@ class ReviewResource extends Resource
                                 5 => '5 Stars',
                             ])
                             ->required(),
-                    ])->columns(3),
-                
+                    ])
+                    ->columns(3),
                 Forms\Components\Section::make('Review Status')
                     ->schema([
                         Forms\Components\Select::make('status')
@@ -120,8 +133,8 @@ class ReviewResource extends Resource
                             ->required(),
                         Forms\Components\DatePicker::make('review_date')
                             ->required(),
-                    ])->columns(2),
-                
+                    ])
+                    ->columns(2),
                 Forms\Components\Section::make('Additional Information')
                     ->schema([
                         Forms\Components\FileUpload::make('photos')
@@ -131,7 +144,8 @@ class ReviewResource extends Resource
                         Forms\Components\Textarea::make('admin_notes')
                             ->maxLength(65535)
                             ->columnSpanFull(),
-                    ])->columns(1),
+                    ])
+                    ->columns(1),
             ]);
     }
 
@@ -150,13 +164,13 @@ class ReviewResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('overall_rating')
                     ->label('Rating')
-                    ->formatStateUsing(fn (int $state): string => str_repeat('⭐', $state))
+                    ->formatStateUsing(fn(int $state): string => str_repeat('⭐', $state))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('content')
                     ->limit(50),
                 Tables\Columns\TextColumn::make('status')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'pending' => 'warning',
                         'approved' => 'success',
                         'rejected' => 'danger',
