@@ -177,49 +177,49 @@ class BookingController extends Controller
             'special_requests' => 'nullable|string|max:255',
             'payment_method' => 'required|in:debit_card,credit_card,cash,paypal,bank_transfer',
             // Card fields (only checked if payment is card-based)
-            'card_number' => [
-                'nullable',  // Allows empty values
-                'required_if:payment_method,debit_card,credit_card',  // Required only for cards
-                'string',
-                'min:13',
-                'max:19',
-                function ($attribute, $value, $fail) use ($request) {
-                    if (in_array($request->payment_method, ['debit_card', 'credit_card']) && !preg_match('/^[0-9]{13,19}$/', $value)) {
-                        $fail('Invalid card number. Must be 13-19 digits.');
-                    }
-                },
-            ],
-            'expiry_date' => [
-                'nullable',
-                'required_if:payment_method,debit_card,credit_card',
-                'string',
-                function ($attribute, $value, $fail) use ($request) {
-                    if (in_array($request->payment_method, ['debit_card', 'credit_card']) && !preg_match('/^(0[1-9]|1[0-2])\/?([0-9]{2})$/', $value)) {
-                        $fail('Expiry date must be in MM/YY format.');
-                    }
-                },
-            ],
-            'cvv' => [
-                'nullable',
-                'required_if:payment_method,debit_card,credit_card',
-                'string',
-                'min:3',
-                'max:4',
-                function ($attribute, $value, $fail) use ($request) {
-                    if (in_array($request->payment_method, ['debit_card', 'credit_card']) && !preg_match('/^[0-9]{3,4}$/', $value)) {
-                        $fail('CVV must be 3 or 4 digits.');
-                    }
-                },
-            ],
-            'card_holder' => [
-                'nullable',
-                'required_if:payment_method,debit_card,credit_card',
-                'string',
-                'max:255',
-            ],
-            // Other payment methods (example)
-            'paypal_email' => 'nullable|required_if:payment_method,paypal|email',
-            'bank_account' => 'nullable|required_if:payment_method,bank_transfer|string',
+            // 'card_number' => [
+            //     'nullable',  // Allows empty values
+            //     'required_if:payment_method,debit_card,credit_card',  // Required only for cards
+            //     'string',
+            //     'min:13',
+            //     'max:19',
+            //     function ($attribute, $value, $fail) use ($request) {
+            //         if (in_array($request->payment_method, ['debit_card', 'credit_card']) && !preg_match('/^[0-9]{13,19}$/', $value)) {
+            //             $fail('Invalid card number. Must be 13-19 digits.');
+            //         }
+            //     },
+            // ],
+            // 'expiry_date' => [
+            //     'nullable',
+            //     'required_if:payment_method,debit_card,credit_card',
+            //     'string',
+            //     function ($attribute, $value, $fail) use ($request) {
+            //         if (in_array($request->payment_method, ['debit_card', 'credit_card']) && !preg_match('/^(0[1-9]|1[0-2])\/?([0-9]{2})$/', $value)) {
+            //             $fail('Expiry date must be in MM/YY format.');
+            //         }
+            //     },
+            // ],
+            // 'cvv' => [
+            //     'nullable',
+            //     'required_if:payment_method,debit_card,credit_card',
+            //     'string',
+            //     'min:3',
+            //     'max:4',
+            //     function ($attribute, $value, $fail) use ($request) {
+            //         if (in_array($request->payment_method, ['debit_card', 'credit_card']) && !preg_match('/^[0-9]{3,4}$/', $value)) {
+            //             $fail('CVV must be 3 or 4 digits.');
+            //         }
+            //     },
+            // ],
+            // 'card_holder' => [
+            //     'nullable',
+            //     'required_if:payment_method,debit_card,credit_card',
+            //     'string',
+            //     'max:255',
+            // ],
+            // // Other payment methods (example)
+            // 'paypal_email' => 'nullable|required_if:payment_method,paypal|email',
+            // 'bank_account' => 'nullable|required_if:payment_method,bank_transfer|string',
             // Misc
             'terms' => 'required|accepted',
             'date_of_birth' => 'required|date|before:-18 years',
@@ -228,14 +228,14 @@ class BookingController extends Controller
         ]);
 
         // Remove card data if payment is not card-based
-        if (!in_array($validated['payment_method'], ['debit_card', 'credit_card'])) {
-            $validated = array_diff_key($validated, array_flip([
-                'card_number',
-                'expiry_date',
-                'cvv',
-                'card_holder'
-            ]));
-        }
+        // if (!in_array($validated['payment_method'], ['debit_card', 'credit_card'])) {
+        //     $validated = array_diff_key($validated, array_flip([
+        //         'card_number',
+        //         'expiry_date',
+        //         'cvv',
+        //         'card_holder'
+        //     ]));
+        // }
 
         $services = Service::whereIn('id', $validated['services'] ?? [])->get();
         $booking = session()->get('booking');
